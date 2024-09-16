@@ -1,4 +1,3 @@
-// src/TransactionForm.js
 import React, { useState } from "react";
 
 function TransactionForm({ onAddTransaction }) {
@@ -20,19 +19,15 @@ function TransactionForm({ onAddTransaction }) {
     e.preventDefault();
     const { amount, description, date } = formState;
 
-    // Convert amount to a number
     const numericAmount = parseFloat(amount);
 
-    // Basic validation
     if (!numericAmount || !description || !date) {
       alert("Please fill out all fields correctly.");
       return;
     }
 
-    // Call the parent function to add the transaction
     onAddTransaction({ amount: numericAmount, description, date });
 
-    // Clear form fields
     setFormState({ amount: "", description: "", date: "" });
   };
 

@@ -1,4 +1,3 @@
-// src/components/TransactionItem.js
 import React, { useState } from "react";
 import TransactionEditForm from "./TransactionEditForm";
 
@@ -10,7 +9,6 @@ function TransactionItem({
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
-  // Handle save
   const handleSave = (updatedTransaction) => {
     onUpdateTransaction(updatedTransaction);
     setIsEditing(false);
@@ -26,7 +24,6 @@ function TransactionItem({
         />
       ) : (
         <>
-          {/* Display Fields */}
           <span className="w-1/5">{transaction.date}</span>
           <span className="w-48">{transaction.description}</span>
           <span

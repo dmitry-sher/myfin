@@ -1,36 +1,29 @@
-// src/App.js
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 
 function App() {
-  // Load transactions from localStorage
   const loadTransactions = () => {
     const storedTransactions = localStorage.getItem("transactions");
     return storedTransactions ? JSON.parse(storedTransactions) : [];
   };
 
-  // State to hold transactions
   const [transactions, setTransactions] = useState(loadTransactions);
 
-  // Save transactions to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
   }, [transactions]);
 
-  // Calculate the running balance
   const balance = transactions.reduce(
     (acc, transaction) => acc + transaction.amount,
     0
   );
 
-  // Function to add a new transaction
   const addTransaction = (transaction) => {
     setTransactions((prev) => [{ ...transaction, id: uuidv4() }, ...prev]);
   };
 
-  // Function to update an existing transaction
   const updateTransaction = (updatedTransaction) => {
     setTransactions((prev) =>
       prev.map((transaction) =>
@@ -41,9 +34,8 @@ function App() {
     );
   };
 
-  // Function to delete a transaction
   const deleteTransaction = (id) => {
-    if (!window.confirm('are you sure?')) return;
+    if (!window.confirm("are you sure?")) return;
     setTransactions((prev) =>
       prev.filter((transaction) => transaction.id !== id)
     );
@@ -60,7 +52,6 @@ function App() {
           </span>
         </h2>
 
-        {/* Add Transaction Form */}
         <TransactionForm onAddTransaction={addTransaction} />
 
         <h3 className="text-lg font-semibold mb-2">Transactions</h3>

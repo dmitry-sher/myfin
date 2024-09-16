@@ -1,10 +1,8 @@
-// src/components/TransactionEditForm.js
 import React, { useState } from "react";
 
 function TransactionEditForm({ transaction, onSave, onCancel }) {
   const [editState, setEditState] = useState({ ...transaction });
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditState((prev) => ({
@@ -13,18 +11,15 @@ function TransactionEditForm({ transaction, onSave, onCancel }) {
     }));
   };
 
-  // Handle save
   const handleSave = () => {
     const { amount, description, date } = editState;
     const numericAmount = parseFloat(amount);
 
-    // Basic validation
     if (!numericAmount || !description || !date) {
       alert("Please fill out all fields correctly.");
       return;
     }
 
-    // Call the onSave function with the updated transaction
     onSave({ ...editState, amount: numericAmount });
   };
 
