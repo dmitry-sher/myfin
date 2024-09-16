@@ -1,6 +1,6 @@
 import React, { useState, FC } from "react";
 import TransactionEditForm from "./TransactionEditForm";
-import { Transaction } from "../types/transaction";
+import { Transaction } from "../types/entities";
 
 interface TransactionItemProps {
   transaction: Transaction;

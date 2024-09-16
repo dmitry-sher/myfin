@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import TransactionItem from "./TransactionItem";
-import { Transaction } from "../types/transaction";
+import { Transaction } from "../types/entities";
 
 interface TransactionListProps {
   transactions: Transaction[];
