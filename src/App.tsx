@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
+import { Transaction } from "./types/transaction";
 
 function App() {
-  const loadTransactions = () => {
+  const loadTransactions = (): Transaction[] => {
     const storedTransactions = localStorage.getItem("transactions");
     return storedTransactions ? JSON.parse(storedTransactions) : [];
   };
 
-  const [transactions, setTransactions] = useState(loadTransactions);
+  const [transactions, setTransactions] =
+    useState<Transaction[]>(loadTransactions);
 
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -20,11 +22,11 @@ function App() {
     0
   );
 
-  const addTransaction = (transaction) => {
+  const addTransaction = (transaction: Omit<Transaction, "id">) => {
     setTransactions((prev) => [{ ...transaction, id: uuidv4() }, ...prev]);
   };
 
-  const updateTransaction = (updatedTransaction) => {
+  const updateTransaction = (updatedTransaction: Transaction) => {
     setTransactions((prev) =>
       prev.map((transaction) =>
         transaction.id === updatedTransaction.id
@@ -34,8 +36,8 @@ function App() {
     );
   };
 
-  const deleteTransaction = (id) => {
-    if (!window.confirm("are you sure?")) return;
+  const deleteTransaction = (id: string) => {
+    if (!window.confirm("Are you sure?")) return;
     setTransactions((prev) =>
       prev.filter((transaction) => transaction.id !== id)
     );

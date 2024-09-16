@@ -1,18 +1,25 @@
-import React from "react";
+import React, { FC } from "react";
 import TransactionItem from "./TransactionItem";
+import { Transaction } from "../types/transaction";
 
-function TransactionList({
+interface TransactionListProps {
+  transactions: Transaction[];
+  onUpdateTransaction: (updatedTransaction: Transaction) => void;
+  onDeleteTransaction: (id: string) => void;
+}
+
+export const TransactionList: FC<TransactionListProps> = ({
   transactions,
   onUpdateTransaction,
   onDeleteTransaction,
-}) {
-  const parseDate = (dateStr) => {
+}) => {
+  const parseDate = (dateStr: string): Date => {
     const [day, month] = dateStr.split("/").map(Number);
     return new Date(new Date().getFullYear(), month - 1, day);
   };
 
   const sortedTransactions = [...transactions].sort((a, b) => {
-    return parseDate(a.date) - parseDate(b.date);
+    return parseDate(a.date).getTime() - parseDate(b.date).getTime();
   });
 
   let runningBalance = 0;
@@ -27,7 +34,7 @@ function TransactionList({
         <span className="w-1/5 text-right">Actions</span>
       </div>
       <ul className="space-y-2">
-        {sortedTransactions.map((transaction, index) => {
+        {sortedTransactions.map((transaction) => {
           runningBalance += transaction.amount;
 
           return (
@@ -43,6 +50,6 @@ function TransactionList({
       </ul>
     </div>
   );
-}
+};
 
 export default TransactionList;

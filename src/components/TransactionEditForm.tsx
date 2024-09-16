@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FC } from "react";
+import { Transaction } from "../types/transaction";
 
-function TransactionEditForm({ transaction, onSave, onCancel }) {
-  const [editState, setEditState] = useState({ ...transaction });
+interface TransactionEditFormProps {
+  transaction: Transaction;
+  onSave: (updatedTransaction: Transaction) => void;
+  onCancel: () => void;
+}
 
-  const handleChange = (e) => {
+export const TransactionEditForm: FC<TransactionEditFormProps> = ({
+  transaction,
+  onSave,
+  onCancel,
+}) => {
+  const [editState, setEditState] = useState<Transaction>({ ...transaction });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditState((prev) => ({
       ...prev,
@@ -13,7 +24,7 @@ function TransactionEditForm({ transaction, onSave, onCancel }) {
 
   const handleSave = () => {
     const { amount, description, date } = editState;
-    const numericAmount = parseFloat(amount);
+    const numericAmount = parseFloat(amount.toString());
 
     if (!numericAmount || !description || !date) {
       alert("Please fill out all fields correctly.");
@@ -42,7 +53,7 @@ function TransactionEditForm({ transaction, onSave, onCancel }) {
       <input
         type="text"
         name="amount"
-        value={editState.amount}
+        value={editState.amount.toString()}
         onChange={handleChange}
         className="w-1/4 p-1 border rounded"
       />
@@ -60,6 +71,6 @@ function TransactionEditForm({ transaction, onSave, onCancel }) {
       </button>
     </div>
   );
-}
+};
 
 export default TransactionEditForm;

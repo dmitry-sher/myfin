@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent, FC } from "react";
 
-function TransactionForm({ onAddTransaction }) {
-  const [formState, setFormState] = useState({
+export interface NewTransaction {
+  amount: number;
+  description: string;
+  date: string;
+}
+
+interface TransactionFormProps {
+  onAddTransaction: (transaction: NewTransaction) => void;
+}
+
+interface FormState {
+  amount: string;
+  description: string;
+  date: string;
+}
+
+export const TransactionForm: FC<TransactionFormProps> = ({
+  onAddTransaction,
+}) => {
+  const [formState, setFormState] = useState<FormState>({
     amount: "",
     description: "",
     date: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
       ...prev,
@@ -15,7 +33,7 @@ function TransactionForm({ onAddTransaction }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const { amount, description, date } = formState;
 
@@ -62,6 +80,6 @@ function TransactionForm({ onAddTransaction }) {
       </button>
     </form>
   );
-}
+};
 
 export default TransactionForm;

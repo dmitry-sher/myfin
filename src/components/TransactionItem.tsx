@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import TransactionEditForm from "./TransactionEditForm";
+import { Transaction } from "../types/transaction";
 
-function TransactionItem({
+interface TransactionItemProps {
+  transaction: Transaction;
+  balance: number;
+  onUpdateTransaction: (updatedTransaction: Transaction) => void;
+  onDeleteTransaction: (id: string) => void;
+}
+
+export const TransactionItem: FC<TransactionItemProps> = ({
   transaction,
   balance,
   onUpdateTransaction,
   onDeleteTransaction,
-}) {
+}) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSave = (updatedTransaction) => {
+  const handleSave = (updatedTransaction: Transaction) => {
     onUpdateTransaction(updatedTransaction);
     setIsEditing(false);
   };
@@ -59,6 +67,6 @@ function TransactionItem({
       )}
     </li>
   );
-}
+};
 
 export default TransactionItem;
