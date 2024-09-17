@@ -2,7 +2,6 @@ import React, { FC, useEffect } from "react";
 import Select from "react-select";
 import { Plan } from "../types/entities";
 
-// Define the props for PlanSelector
 interface PlanSelectorProps {
   plans: Plan[];
   selectedPlanId: string | null;
@@ -14,17 +13,14 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   selectedPlanId,
   onSelectPlan,
 }) => {
-  // Create options for react-select
   const options = plans.map((plan) => ({
     value: plan.id,
     label: plan.name,
   }));
 
-  // Find the currently selected plan
   const selectedOption =
     options.find((option) => option.value === selectedPlanId) || null;
 
-  // Handle selection change
   const handleChange = (selectedOption: any) => {
     onSelectPlan(selectedOption ? selectedOption.value : null);
   };

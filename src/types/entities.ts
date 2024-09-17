@@ -1,4 +1,3 @@
-// Define the type for a Transaction
 export interface Transaction {
   id: string;
   amount: number;
@@ -6,7 +5,6 @@ export interface Transaction {
   date: string;
 }
 
-// Define the type for a Plan
 export interface Plan {
   id: string;
   name: string;
