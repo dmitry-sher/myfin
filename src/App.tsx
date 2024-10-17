@@ -1,12 +1,15 @@
-import React from "react";
-import { useAppDispatch, useAppSelector } from "./store";
-import {
-  addTransaction,
-  updateTransaction,
-  deleteTransaction,
-} from "./slices/plansSlice";
+import React, { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import PlanSelector from "./components/PlanSelector";
 import PlanView from "./components/PlanView";
+import {
+  addPlan,
+  addTransaction,
+  deleteTransaction,
+  updateTransaction
+} from "./slices/plansSlice";
+import { useAppDispatch, useAppSelector } from "./store";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -16,6 +19,15 @@ function App() {
   );
 
   const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
+
+  useEffect(() => {
+    if (!plans || plans.length === 0) {
+      addPlan({
+        newPlanName: "My First plan",
+        newPlanId: uuidv4()
+      });
+    }
+  }, [plans, dispatch]);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">

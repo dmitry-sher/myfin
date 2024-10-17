@@ -1,4 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent, FC } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import { faAdd } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface NewTransaction {
   amount: number;
@@ -17,19 +19,19 @@ interface FormState {
 }
 
 export const TransactionForm: FC<TransactionFormProps> = ({
-  onAddTransaction,
+  onAddTransaction
 }) => {
   const [formState, setFormState] = useState<FormState>({
     amount: "",
     description: "",
-    date: "",
+    date: ""
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -76,7 +78,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         className="w-1/4 p-2 border rounded"
       />
       <button type="submit" className="p-2 bg-blue-500 text-white rounded">
-        Add
+        <FontAwesomeIcon icon={faAdd} />
       </button>
     </form>
   );

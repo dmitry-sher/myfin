@@ -1,7 +1,9 @@
 import React, { FC } from "react";
+
+import { Plan, Transaction } from "../types/entities";
+
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
-import { Plan, Transaction } from "../types/entities";
 
 type PlanViewProps = {
   selectedPlan?: Plan;
@@ -17,9 +19,11 @@ export const PlanView: FC<PlanViewProps> = ({
   selectedPlan,
   addTransaction,
   updateTransaction,
-  deleteTransaction,
+  deleteTransaction
 }) => {
-  if (!selectedPlan) return null;
+  if (!selectedPlan) {
+    return null;
+  }
 
   return (
     <div>

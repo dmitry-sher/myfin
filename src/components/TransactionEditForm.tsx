@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
+
 import { Transaction } from "../types/entities";
 
 interface TransactionEditFormProps {
@@ -10,7 +11,7 @@ interface TransactionEditFormProps {
 export const TransactionEditForm: FC<TransactionEditFormProps> = ({
   transaction,
   onSave,
-  onCancel,
+  onCancel
 }) => {
   const [editState, setEditState] = useState<Transaction>({ ...transaction });
 
@@ -18,7 +19,7 @@ export const TransactionEditForm: FC<TransactionEditFormProps> = ({
     const { name, value } = e.target;
     setEditState((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 

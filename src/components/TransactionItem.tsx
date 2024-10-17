@@ -1,6 +1,10 @@
-import React, { useState, FC } from "react";
-import TransactionEditForm from "./TransactionEditForm";
+import React, { FC, useState } from "react";
+import { faClose, faEdit } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Transaction } from "../types/entities";
+
+import TransactionEditForm from "./TransactionEditForm";
 
 interface TransactionItemProps {
   transaction: Transaction;
@@ -13,7 +17,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   transaction,
   balance,
   onUpdateTransaction,
-  onDeleteTransaction,
+  onDeleteTransaction
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -54,13 +58,20 @@ export const TransactionItem: FC<TransactionItemProps> = ({
               onClick={() => setIsEditing(true)}
               className="p-1 bg-blue-500 text-white rounded"
             >
-              Edit
+              <FontAwesomeIcon icon={faEdit} />
             </button>
             <button
-              onClick={() => onDeleteTransaction(transaction.id)}
+              onClick={() => {
+                const message = `Are you sure to delete transaction from ${transaction.date} for ${transaction.amount} (${transaction.description})?`;
+                // eslint-disable-next-line no-restricted-globals
+                if (!confirm(message)) {
+                  return;
+                }
+                onDeleteTransaction(transaction.id);
+              }}
               className="p-1 bg-red-500 text-white rounded"
             >
-              Х
+              <FontAwesomeIcon icon={faClose} />
             </button>
           </div>
         </>

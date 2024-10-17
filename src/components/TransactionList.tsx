@@ -1,6 +1,8 @@
 import React, { FC } from "react";
-import TransactionItem from "./TransactionItem";
+
 import { Transaction } from "../types/entities";
+
+import TransactionItem from "./TransactionItem";
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -11,7 +13,7 @@ interface TransactionListProps {
 export const TransactionList: FC<TransactionListProps> = ({
   transactions,
   onUpdateTransaction,
-  onDeleteTransaction,
+  onDeleteTransaction
 }) => {
   const parseDate = (dateStr: string): Date => {
     const [day, month] = dateStr.split("/").map(Number);
