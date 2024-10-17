@@ -22,10 +22,10 @@ function App() {
 
   useEffect(() => {
     if (!plans || plans.length === 0) {
-      addPlan({
+      dispatch(addPlan({
         newPlanName: "My First plan",
         newPlanId: uuidv4()
-      });
+      }));
     }
   }, [plans, dispatch]);
 

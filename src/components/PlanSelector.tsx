@@ -76,9 +76,10 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   };
 
   const handleCreatePlan = () => {
+    const newPlanName = uuidv4().substring(0, 6);
     dispatch(
       addPlan({
-        newPlanName: uuidv4(),
+        newPlanName,
         newPlanId: uuidv4()
       })
     );

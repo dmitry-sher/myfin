@@ -2,6 +2,7 @@
   "name": "myfin",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://dmitrysher.club/myfin",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
@@ -30,7 +31,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "deploy": "react-scripts build && cd build && rm -rf *.tar.bz2 && tar -cjf build.tar.bz2 * && scp build.tar sweb:/home/a/aperturesc/sherclub/public_html/myfin/ && ssh sweb -c 'cd /home/a/aperturesc/sherclub/public_html/myfin/ && rm -rf static index.html && tar -xjf deploy.tar.bz2 && rm deploy.tar.bz2'"
   },
   "browserslist": {
     "production": [
