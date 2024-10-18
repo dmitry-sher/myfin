@@ -38,7 +38,6 @@ module.exports = {
     "block-spacing": "error",
     "brace-style": ["error", "stroustrup"],
     "comma-spacing": "error",
-    curly: "error",
     "dot-notation": "error",
     eqeqeq: "error",
     "@stylistic/js/no-multi-spaces": "error",

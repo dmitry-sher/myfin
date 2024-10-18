@@ -48,11 +48,45 @@ const plansSlice = createSlice({
         name: newPlanName,
         transactions: existingPlan.transactions.map((t) => ({
           ...t,
-          id: uuidv4()
-        }))
+          id: uuidv4(),
+        })),
       };
 
       state.push(newPlan);
+    },
+    exportPlan: (state, action: PayloadAction<string>) => {
+      const planId = action.payload;
+      const plan = state.find((p) => p.id === planId);
+
+      if (!plan) {
+        console.error("Plan not found");
+        return;
+      }
+
+      const jsonPlan = JSON.stringify(plan, null, 2);
+      const blob = new Blob([jsonPlan], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${plan.name}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    },
+    importPlanTransactions: (
+      state,
+      action: PayloadAction<{ planId: string; transactions: Transaction[] }>
+    ) => {
+      const { planId, transactions } = action.payload;
+      const plan = state.find((p) => p.id === planId);
+
+      if (plan) {
+        plan.transactions = transactions.map((transaction) => ({
+          ...transaction,
+          id: uuidv4(), // Optionally assign new IDs to the imported transactions
+        }));
+      }
     },
     renamePlan: (
       state,
@@ -113,18 +147,20 @@ const plansSlice = createSlice({
           (t) => t.id !== transactionId
         );
       }
-    }
-  }
+    },
+  },
 });
 
 export const {
   addPlan,
   copyPlan,
+  exportPlan,
+  importPlanTransactions,
   renamePlan,
   removePlan,
   addTransaction,
   updateTransaction,
-  deleteTransaction
+  deleteTransaction,
 } = plansSlice.actions;
 
 export default plansSlice.reducer;
