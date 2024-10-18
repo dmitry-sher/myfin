@@ -30,8 +30,8 @@ function App() {
   }, [plans, dispatch]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="mx-auto bg-white shadow-md rounded-lg p-6">
+    <div className="min-h-screen bg-gray-100 sm:p-4">
+      <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6">
         <h1 className="text-2xl font-bold mb-4">MyFin</h1>
 
         <PlanSelector

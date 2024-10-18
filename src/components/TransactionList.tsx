@@ -13,7 +13,7 @@ interface TransactionListProps {
 export const TransactionList: FC<TransactionListProps> = ({
   transactions,
   onUpdateTransaction,
-  onDeleteTransaction
+  onDeleteTransaction,
 }) => {
   const parseDate = (dateStr: string): Date => {
     const [day, month] = dateStr.split("/").map(Number);
@@ -28,12 +28,16 @@ export const TransactionList: FC<TransactionListProps> = ({
 
   return (
     <div>
-      <div className="flex justify-between font-semibold p-2 border-b">
-        <span className="w-1/5">Date</span>
-        <span className="w-1/5">Description</span>
-        <span className="w-1/5 text-right">Amount</span>
-        <span className="w-1/5 text-right">Balance</span>
-        <span className="w-1/5 text-right">Actions</span>
+      <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 border-b">
+        <div className="sm:w-2/5 w-full flex">
+          <span className="sm:w-1/2 w-1/5">Date</span>
+          <span className="sm:w-1/2 w-4/5 text-center">Description</span>
+        </div>
+        <div className="sm:w-3/5 w-full flex">
+          <span className="w-1/3 sm:text-right">Amount</span>
+          <span className="w-1/3 sm:text-right">Balance</span>
+          <span className="w-1/3 text-right">Actions</span>
+        </div>
       </div>
       <ul className="space-y-2">
         {sortedTransactions.map((transaction) => {

@@ -4,7 +4,7 @@ import {
   faClose,
   faCopy,
   faEdit,
-  faFolderPlus
+  faFolderPlus,
 } from "@fortawesome/free-solid-svg-icons"; // Import icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
@@ -14,7 +14,7 @@ import {
   addPlan,
   copyPlan,
   removePlan,
-  renamePlan
+  renamePlan,
 } from "../slices/plansSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 import { Plan } from "../types/entities";
@@ -31,7 +31,7 @@ interface PlanSelectorProps {
 export const PlanSelector: FC<PlanSelectorProps> = ({
   plans,
   selectedPlanId,
-  onSelectPlan
+  onSelectPlan,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -39,7 +39,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
 
   const options = plans.map((plan) => ({
     value: plan.id,
-    label: plan.name
+    label: plan.name,
   }));
 
   const selectedOption =
@@ -56,7 +56,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
       const action = {
         planId: selectedPlanId!,
         newPlanName,
-        newPlanId: uuidv4()
+        newPlanId: uuidv4(),
       };
       dispatch(copyPlan(action));
 
@@ -80,7 +80,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     dispatch(
       addPlan({
         newPlanName,
-        newPlanId: uuidv4()
+        newPlanId: uuidv4(),
       })
     );
   };
@@ -100,42 +100,50 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   }, [plans, onSelectPlan]);
 
   return (
-    <div className="mb-4 flex items-center space-x-4">
-      <Select
-        options={options}
-        value={selectedOption}
-        onChange={handleChange}
-        placeholder="Select a plan..."
-        isClearable
-        className="flex-1"
-      />
-      <button
-        className="bg-green-500 text-white py-2 px-4 rounded"
-        onClick={handleCreatePlan}
-      >
-        <FontAwesomeIcon icon={faFolderPlus} />
-      </button>
-      <button
-        className="bg-blue-500 text-white py-2 px-4 rounded"
-        onClick={handleDuplicatePlan}
-        disabled={!selectedPlanId}
-      >
-        <FontAwesomeIcon icon={faCopy} />
-      </button>
-      <button
-        className="bg-green-500 text-white py-2 px-4 rounded"
-        onClick={handleOpenRenameModal}
-        disabled={!selectedPlanId}
-      >
-        <FontAwesomeIcon icon={faEdit} />
-      </button>
-      <button
-        className="bg-red-500 text-white py-2 px-4 rounded"
-        onClick={handleRemovePlan}
-        disabled={!selectedPlanId}
-      >
-        <FontAwesomeIcon icon={faClose} />
-      </button>
+    <div className="mb-4 flex flex-col-reverse sm:flex-row items-center sm:space-x-4">
+      <div className="w-full sm:w-1/2">
+        <Select
+          options={options}
+          value={selectedOption}
+          onChange={handleChange}
+          placeholder="Select a plan..."
+          isClearable
+          className="flex-1"
+        />
+      </div>
+      <div className="w-full sm:w-fit sm:block flex justify-between mb-2 sm:mb-0">
+        <button
+          className="bg-green-500 text-white py-2 px-4 rounded sm:mr-2"
+          onClick={handleCreatePlan}
+        >
+          <div className="sm:hidden">New</div>
+          <FontAwesomeIcon icon={faFolderPlus} title="Add plan" className="hidden sm:block" />
+        </button>
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded sm:mr-2"
+          onClick={handleDuplicatePlan}
+          disabled={!selectedPlanId}
+        >
+          <div className="sm:hidden">Copy</div>
+          <FontAwesomeIcon icon={faCopy} title="Duplicate" className="hidden sm:block" />
+        </button>
+        <button
+          className="bg-green-500 text-white py-2 px-4 rounded sm:mr-2"
+          onClick={handleOpenRenameModal}
+          disabled={!selectedPlanId}
+        >
+          <div className="sm:hidden">Rename</div>
+          <FontAwesomeIcon icon={faEdit} title="Rename" className="hidden sm:block" />
+        </button>
+        <button
+          className="bg-red-500 text-white py-2 px-4 rounded sm:mr-2"
+          onClick={handleRemovePlan}
+          disabled={!selectedPlanId}
+        >
+          <div className="sm:hidden">Remove</div>
+          <FontAwesomeIcon icon={faClose} title="Remove" className="hidden sm:block" />
+        </button>
+      </div>
 
       {modalIsOpen && selectedPlanId ? (
         <ModalComponent title="Rename Plan">

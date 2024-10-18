@@ -37,7 +37,6 @@ module.exports = {
     // errors
     "block-spacing": "error",
     "brace-style": ["error", "stroustrup"],
-    "comma-dangle": ["error", "never"],
     "comma-spacing": "error",
     curly: "error",
     "dot-notation": "error",
