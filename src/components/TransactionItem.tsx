@@ -21,7 +21,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleSave = (updatedTransaction: Transaction) => {
+  const handleSave = (updatedTransaction: Transaction): void => {
     onUpdateTransaction(updatedTransaction);
     setIsEditing(false);
   };

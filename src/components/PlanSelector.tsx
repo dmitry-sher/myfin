@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from "react";
-import Select from "react-select";
+import Select, { SingleValue } from "react-select";
 import {
   faClose,
   faCopy,
@@ -32,6 +32,11 @@ interface PlanSelectorProps {
   onSelectPlan: (planId: string) => void;
 }
 
+type OptionType = {
+  value: string;
+  label: string;
+};
+
 export const PlanSelector: FC<PlanSelectorProps> = ({
   plans,
   selectedPlanId,
@@ -41,7 +46,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const modalIsOpen = useAppSelector((state) => state.modal.isOpen);
 
-  const options = plans.map((plan) => ({
+  const options: OptionType[] = plans.map((plan) => ({
     value: plan.id,
     label: plan.name,
   }));
@@ -49,8 +54,8 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   const selectedOption =
     options.find((option) => option.value === selectedPlanId) || null;
 
-  const handleChange = (selectedOption: any) => {
-    onSelectPlan(selectedOption ? selectedOption.value : null);
+  const handleChange = (newSelectedOption: SingleValue<OptionType>) => {
+    onSelectPlan(newSelectedOption ? newSelectedOption.value : "");
   };
 
   const handleDuplicatePlan = () => {
@@ -58,7 +63,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     if (selectedPlan) {
       const newPlanName = `${selectedPlan.name} copy`;
       const action = {
-        planId: selectedPlanId!,
+        planId: selectedPlanId || "",
         newPlanName,
         newPlanId: uuidv4(),
       };

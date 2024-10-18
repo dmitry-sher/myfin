@@ -29,16 +29,12 @@ module.exports = {
     JSX: true
   },
   rules: {
-    // disable the rule for all files
-    "no-shadow": "off",
-    "no-unused-vars": "off",
-    "prettier/prettier": "off",
-
     // errors
     "block-spacing": "error",
     "brace-style": ["error", "stroustrup"],
     "comma-spacing": "error",
     "dot-notation": "error",
+    "no-shadow": "error",
     eqeqeq: "error",
     "@stylistic/js/no-multi-spaces": "error",
     "@stylistic/js/no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }],
@@ -128,7 +124,7 @@ module.exports = {
           }
         ],
         "@typescript-eslint/explicit-function-return-type": "warn",
-        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/no-shadow": "warn",
         "@typescript-eslint/no-unused-vars": ["error"]
       }
