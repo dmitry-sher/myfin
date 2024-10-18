@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 import { Transaction } from "../types/entities";
+import { groupTransactions } from "../utils/groupTransactions";
+import { sortTransactions } from "../utils/sortTransactions";
 
 import TransactionItem from "./TransactionItem";
 
@@ -15,14 +17,10 @@ export const TransactionList: FC<TransactionListProps> = ({
   onUpdateTransaction,
   onDeleteTransaction,
 }) => {
-  const parseDate = (dateStr: string): Date => {
-    const [day, month] = dateStr.split("/").map(Number);
-    return new Date(new Date().getFullYear(), month - 1, day);
-  };
-
-  const sortedTransactions = [...transactions].sort((a, b) => {
-    return parseDate(a.date).getTime() - parseDate(b.date).getTime();
-  });
+  const transactionsByMonth = useMemo(
+    () => groupTransactions(sortTransactions(transactions)),
+    [transactions]
+  );
 
   let runningBalance = 0;
 
@@ -40,17 +38,51 @@ export const TransactionList: FC<TransactionListProps> = ({
         </div>
       </div>
       <ul className="space-y-2">
-        {sortedTransactions.map((transaction) => {
-          runningBalance += transaction.amount;
+        {Object.keys(transactionsByMonth).map((monthKey) => {
+          const monthTransactions = transactionsByMonth[monthKey];
+
+          let monthlyInTotal = 0;
+          let monthlyOutTotal = 0;
 
           return (
-            <TransactionItem
-              key={transaction.id}
-              transaction={transaction}
-              balance={runningBalance}
-              onUpdateTransaction={onUpdateTransaction}
-              onDeleteTransaction={onDeleteTransaction}
-            />
+            <div key={monthKey}>
+              {monthTransactions.map((transaction) => {
+                runningBalance += transaction.amount;
+
+                if (transaction.amount > 0) {
+                  monthlyInTotal += transaction.amount;
+                }
+                else {
+                  monthlyOutTotal += transaction.amount;
+                }
+
+                return (
+                  <TransactionItem
+                    key={transaction.id}
+                    transaction={transaction}
+                    balance={runningBalance}
+                    onUpdateTransaction={onUpdateTransaction}
+                    onDeleteTransaction={onDeleteTransaction}
+                  />
+                );
+              })}
+              <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 border-t mb-6">
+                <div className="sm:w-2/5 w-full flex">
+                  <span className="hidden sm:block sm:w-1/2 w-1/5"></span>
+                  <span className="sm:w-1/2 w-full text-center">
+                    {monthKey} Totals
+                  </span>
+                </div>
+                <div className="sm:w-3/5 w-full flex">
+                  <span className="w-1/2 sm:text-right">
+                    In: {monthlyInTotal.toFixed(2)}
+                  </span>
+                  <span className="w-1/2 text-right">
+                    Out: {monthlyOutTotal.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
           );
         })}
       </ul>

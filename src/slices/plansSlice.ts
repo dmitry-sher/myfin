@@ -9,6 +9,7 @@ const plansSlice = createSlice({
   name: "plans",
   initialState,
   reducers: {
+    // PLANS
     addPlan: (
       state,
       action: PayloadAction<{
@@ -84,7 +85,7 @@ const plansSlice = createSlice({
       if (plan) {
         plan.transactions = transactions.map((transaction) => ({
           ...transaction,
-          id: uuidv4(), // Optionally assign new IDs to the imported transactions
+          id: uuidv4(),
         }));
       }
     },
@@ -98,7 +99,6 @@ const plansSlice = createSlice({
         plan.name = newName;
       }
     },
-    // Add this to your plansSlice
     removePlan: (state, action: PayloadAction<string>) => {
       const planId = action.payload;
       const planIndex = state.findIndex((plan) => plan.id === planId);
@@ -108,6 +108,7 @@ const plansSlice = createSlice({
       }
     },
 
+    // TRANSACTIONS
     addTransaction: (
       state,
       action: PayloadAction<{
@@ -119,6 +120,18 @@ const plansSlice = createSlice({
       const plan = state.find((p) => p.id === planId);
       if (plan) {
         plan.transactions.unshift({ ...transaction, id: uuidv4() });
+      }
+    },
+    deleteTransaction: (
+      state,
+      action: PayloadAction<{ planId: string; transactionId: string }>
+    ) => {
+      const { planId, transactionId } = action.payload;
+      const plan = state.find((p) => p.id === planId);
+      if (plan) {
+        plan.transactions = plan.transactions.filter(
+          (t) => t.id !== transactionId
+        );
       }
     },
     updateTransaction: (
@@ -134,18 +147,6 @@ const plansSlice = createSlice({
         if (index !== -1) {
           plan.transactions[index] = updatedTransaction;
         }
-      }
-    },
-    deleteTransaction: (
-      state,
-      action: PayloadAction<{ planId: string; transactionId: string }>
-    ) => {
-      const { planId, transactionId } = action.payload;
-      const plan = state.find((p) => p.id === planId);
-      if (plan) {
-        plan.transactions = plan.transactions.filter(
-          (t) => t.id !== transactionId
-        );
       }
     },
   },

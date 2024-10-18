@@ -121,8 +121,8 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
               transactions: parsedTransactions,
             })
           );
-        // eslint-disable-next-line brace-style
-        } catch (error) {
+        }
+        catch (error) {
           console.error("Invalid JSON file:", error);
         }
       };
