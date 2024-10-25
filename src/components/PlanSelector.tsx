@@ -22,6 +22,7 @@ import {
 } from "../slices/plansSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 import { Plan } from "../types/entities";
+import { savedPlan2Plan } from "../utils/savedPlanToPlan";
 
 import ModalComponent from "./ModalComponent";
 import RenamePlanForm from "./RenamePlanForm";
@@ -85,13 +86,15 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   };
 
   const handleCreatePlan = () => {
-    const newPlanName = uuidv4().substring(0, 6);
+    const newPlanId = uuidv4();
+    const newPlanName = newPlanId.substring(0, 6);
     dispatch(
       addPlan({
         newPlanName,
-        newPlanId: uuidv4(),
+        newPlanId,
       })
     );
+    setTimeout(() => onSelectPlan(newPlanId), 50);
   };
 
   const handleRemovePlan = () => {
@@ -119,7 +122,9 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
       reader.onload = (e) => {
         try {
           const jsonContent = e.target?.result as string;
-          const parsedTransactions = JSON.parse(jsonContent).transactions;
+          const parsedTransactions = savedPlan2Plan(
+            JSON.parse(jsonContent)
+          ).transactions;
           dispatch(
             importPlanTransactions({
               planId: selectedPlanId,

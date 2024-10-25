@@ -1,14 +1,9 @@
 import { RootState } from "../store";
-import { SavedPlan } from "../types/entities";
+
+import { plan2SavedPlan } from "./planToSavedPlan";
 
 export const saveStore = (state: RootState["plans"]): void => {
-  const preparedPlans: SavedPlan[] = state.map((plan) => ({
-    ...plan,
-    transactions: plan.transactions.map((tr) => ({
-      ...tr,
-      trueDate: tr.trueDate.toISOString(),
-    })),
-  }));
+  const preparedPlans = state.map(plan2SavedPlan);
   try {
     const serializedState = JSON.stringify(preparedPlans);
     localStorage.setItem("plans", serializedState);

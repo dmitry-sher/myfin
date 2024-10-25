@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useState } from "react";
 
 import { Transaction } from "../types/entities";
+import { printDate } from "../utils/printDate";
 
 interface TransactionEditFormProps {
   transaction: Transaction;
@@ -11,15 +12,18 @@ interface TransactionEditFormProps {
 export const TransactionEditForm: FC<TransactionEditFormProps> = ({
   transaction,
   onSave,
-  onCancel
+  onCancel,
 }) => {
-  const [editState, setEditState] = useState<Transaction>({ ...transaction });
+  const [editState, setEditState] = useState<Transaction>({
+    ...transaction,
+    date: printDate(transaction),
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditState((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 

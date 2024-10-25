@@ -1,20 +1,15 @@
-import { Plan } from "../types/entities";
+import { Plan, SavedPlan } from "../types/entities";
 
-import { parseDateEx } from "./parseDateEx";
+import { savedPlan2Plan } from "./savedPlanToPlan";
 import { saveStore } from "./saveStore";
 
 export const loadAndPrepareTransactions = (): Plan[] => {
   try {
-    const plans: Plan[] = JSON.parse(localStorage.getItem("plans") || "[]");
-    for (const plan of plans) {
-      for (const transaction of plan.transactions) {
-        if (!transaction.trueDate)
-          transaction.trueDate = parseDateEx(transaction.date);
-        else transaction.trueDate = new Date(transaction.trueDate);
-      }
-    }
+    const savedPlans: SavedPlan[] = JSON.parse(
+      localStorage.getItem("plans") || "[]"
+    );
+    const plans = savedPlans.map(savedPlan2Plan);
     saveStore(plans);
-    console.error("[loadAndPrepareTransactions] plans = ", plans);
     return plans;
   }
   catch (e) {

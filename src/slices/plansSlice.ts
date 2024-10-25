@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Plan, Transaction } from "../types/entities";
 import { loadAndPrepareTransactions } from "../utils/loadAndPrepareTransactions";
+import { parseDateEx } from "../utils/parseDateEx";
+import { plan2SavedPlan } from "../utils/planToSavedPlan";
 
 const initialState: Plan[] = loadAndPrepareTransactions();
 
@@ -65,7 +67,7 @@ const plansSlice = createSlice({
         return;
       }
 
-      const jsonPlan = JSON.stringify(plan, null, 2);
+      const jsonPlan = JSON.stringify(plan2SavedPlan(plan), null, 2);
       const blob = new Blob([jsonPlan], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -146,7 +148,10 @@ const plansSlice = createSlice({
           (t) => t.id === updatedTransaction.id
         );
         if (index !== -1) {
-          plan.transactions[index] = updatedTransaction;
+          plan.transactions[index] = {
+            ...updatedTransaction,
+            trueDate: parseDateEx(updatedTransaction.date),
+          };
         }
       }
     },
