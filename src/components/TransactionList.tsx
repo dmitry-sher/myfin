@@ -26,7 +26,7 @@ export const TransactionList: FC<TransactionListProps> = ({
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 border-b">
+      <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 border-b mb-6">
         <div className="sm:w-2/5 w-full flex">
           <span className="sm:w-1/2 w-1/5">Date</span>
           <span className="sm:w-1/2 w-4/5 text-center">Description</span>
@@ -46,6 +46,9 @@ export const TransactionList: FC<TransactionListProps> = ({
 
           return (
             <div key={monthKey}>
+              <div className="text-center font-semibold p-2 border-b">
+                {monthKey}
+              </div>
               {monthTransactions.map((transaction) => {
                 runningBalance += transaction.amount;
 
@@ -66,7 +69,7 @@ export const TransactionList: FC<TransactionListProps> = ({
                   />
                 );
               })}
-              <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 border-t mb-6">
+              <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 mb-6">
                 <div className="sm:w-2/5 w-full flex">
                   <span className="hidden sm:block sm:w-1/2 w-1/5"></span>
                   <span className="sm:w-1/2 w-full text-center">

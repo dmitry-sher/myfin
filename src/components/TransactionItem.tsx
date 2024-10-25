@@ -3,6 +3,7 @@ import { faClose, faEdit } from "@fortawesome/free-solid-svg-icons"; // Import i
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Transaction } from "../types/entities";
+import { printDate } from "../utils/printDate";
 
 import TransactionEditForm from "./TransactionEditForm";
 
@@ -26,6 +27,10 @@ export const TransactionItem: FC<TransactionItemProps> = ({
     setIsEditing(false);
   };
 
+  const { isDone } = transaction;
+  const cbxProps: Record<string, unknown> = {};
+  if (isDone) cbxProps.checked = true;
+
   return (
     <li className="flex justify-between items-center p-2 border-b flex-col sm:flex-row">
       {isEditing ? (
@@ -37,7 +42,10 @@ export const TransactionItem: FC<TransactionItemProps> = ({
       ) : (
         <>
           <div className="flex sm:w-3/5 w-full">
-            <span className="w-1/5">{transaction.date}</span>
+            <span className="mr-2">
+              <input type="checkbox" {...cbxProps}></input>
+            </span>
+            <span className="w-1/5">{printDate(transaction)}</span>
             <span className="w-48">{transaction.description}</span>
           </div>
           <div className="flex sm:w-2/5 w-full justify-between">

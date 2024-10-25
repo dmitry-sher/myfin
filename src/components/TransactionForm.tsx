@@ -2,10 +2,14 @@ import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { faAdd } from "@fortawesome/free-solid-svg-icons"; // Import icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { parseDateEx } from "../utils/parseDateEx";
+
 export interface NewTransaction {
   amount: number;
   description: string;
   date: string;
+  isDone: boolean;
+  trueDate: Date;
 }
 
 interface TransactionFormProps {
@@ -19,23 +23,23 @@ interface FormState {
 }
 
 export const TransactionForm: FC<TransactionFormProps> = ({
-  onAddTransaction
+  onAddTransaction,
 }) => {
   const [formState, setFormState] = useState<FormState>({
     amount: "",
     description: "",
-    date: ""
+    date: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormState((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
     const { amount, description, date } = formState;
 
@@ -46,7 +50,13 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       return;
     }
 
-    onAddTransaction({ amount: numericAmount, description, date });
+    onAddTransaction({
+      amount: numericAmount,
+      description,
+      date,
+      isDone: false,
+      trueDate: parseDateEx(date)
+    });
 
     setFormState({ amount: "", description: "", date: "" });
   };

@@ -3,26 +3,21 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import modalReducer from "./slices/modalSlice";
 import plansReducer from "./slices/plansSlice";
-
-export const saveState = (state: RootState["plans"]): void => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("plans", serializedState);
-  }
-  catch (err) {
-    console.error("Could not save state", err);
-  }
-};
+import { saveStore } from "./utils/saveStore";
 
 export const store = configureStore({
   reducer: {
     plans: plansReducer,
-    modal: modalReducer
-  }
+    modal: modalReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 store.subscribe(() => {
-  saveState(store.getState().plans);
+  saveStore(store.getState().plans);
 });
 
 export type RootState = ReturnType<typeof store.getState>;

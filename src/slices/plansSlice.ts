@@ -2,8 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 import { Plan, Transaction } from "../types/entities";
+import { loadAndPrepareTransactions } from "../utils/loadAndPrepareTransactions";
 
-const initialState: Plan[] = JSON.parse(localStorage.getItem("plans") || "[]");
+const initialState: Plan[] = loadAndPrepareTransactions();
 
 const plansSlice = createSlice({
   name: "plans",
