@@ -27,9 +27,22 @@ export const TransactionItem: FC<TransactionItemProps> = ({
     setIsEditing(false);
   };
 
+  const handleIsDonePress = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const updatedTransaction = {
+      ...transaction,
+      isDone: e.target.checked,
+    };
+    // eslint-disable-next-line no-console
+    console.log("[handleIsDonePress]", {
+      transaction,
+      updatedTransaction,
+    });
+    onUpdateTransaction(updatedTransaction);
+  };
+
   const { isDone } = transaction;
   const cbxProps: Record<string, unknown> = {};
-  if (isDone) cbxProps.checked = true;
+  cbxProps.checked = isDone;
 
   return (
     <li className="flex justify-between items-center p-2 border-b flex-col sm:flex-row">
@@ -43,7 +56,11 @@ export const TransactionItem: FC<TransactionItemProps> = ({
         <>
           <div className="flex sm:w-3/5 w-full">
             <span className="mr-2">
-              <input type="checkbox" {...cbxProps}></input>
+              <input
+                type="checkbox"
+                onChange={handleIsDonePress}
+                {...cbxProps}
+              ></input>
             </span>
             <span className="w-1/5">{printDate(transaction)}</span>
             <span className="w-48">{transaction.description}</span>
