@@ -1,8 +1,11 @@
 import React, { FC, useState } from "react";
-import { faClose, faEdit } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import { faClose, faEdit, faRepeat } from "@fortawesome/free-solid-svg-icons"; // Import icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { openModal, setTransactionForRepeat } from "../slices/modalSlice";
+import { useAppDispatch } from "../store";
 import { Transaction } from "../types/entities";
+import { ModalCode } from "../utils/const";
 import { printDate } from "../utils/printDate";
 
 import TransactionEditForm from "./TransactionEditForm";
@@ -21,6 +24,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   onDeleteTransaction,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleSave = (updatedTransaction: Transaction): void => {
     onUpdateTransaction(updatedTransaction);
@@ -32,17 +36,26 @@ export const TransactionItem: FC<TransactionItemProps> = ({
       ...transaction,
       isDone: e.target.checked,
     };
-    // eslint-disable-next-line no-console
-    console.log("[handleIsDonePress]", {
-      transaction,
-      updatedTransaction,
-    });
     onUpdateTransaction(updatedTransaction);
   };
 
   const { isDone } = transaction;
   const cbxProps: Record<string, unknown> = {};
   cbxProps.checked = isDone;
+
+  const handleEdit = () => setIsEditing(true);
+  const handleDelete = () => {
+    const message = `Are you sure to delete transaction from ${transaction.date} for ${transaction.amount} (${transaction.description})?`;
+    // eslint-disable-next-line no-restricted-globals
+    if (!confirm(message)) {
+      return;
+    }
+    onDeleteTransaction(transaction.id);
+  };
+  const handleRepeat = () => {
+    dispatch(setTransactionForRepeat(transaction));
+    dispatch(openModal(ModalCode.repeatItem));
+  };
 
   return (
     <li className="flex justify-between items-center p-2 border-b flex-col sm:flex-row">
@@ -83,23 +96,22 @@ export const TransactionItem: FC<TransactionItemProps> = ({
             </span>
             <div className="flex items-center space-x-2 text-right">
               <button
-                onClick={() => setIsEditing(true)}
+                onClick={handleEdit}
                 className="p-1 bg-blue-500 text-white rounded"
               >
                 <FontAwesomeIcon icon={faEdit} />
               </button>
               <button
-                onClick={() => {
-                  const message = `Are you sure to delete transaction from ${transaction.date} for ${transaction.amount} (${transaction.description})?`;
-                  // eslint-disable-next-line no-restricted-globals
-                  if (!confirm(message)) {
-                    return;
-                  }
-                  onDeleteTransaction(transaction.id);
-                }}
+                onClick={handleDelete}
                 className="p-1 bg-red-500 text-white rounded"
               >
                 <FontAwesomeIcon icon={faClose} />
+              </button>
+              <button
+                onClick={handleRepeat}
+                className="p-1 bg-green-500 text-white rounded"
+              >
+                <FontAwesomeIcon icon={faRepeat} />
               </button>
             </div>
           </div>

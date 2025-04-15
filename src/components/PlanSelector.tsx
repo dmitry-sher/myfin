@@ -22,6 +22,7 @@ import {
 } from "../slices/plansSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 import { Plan } from "../types/entities";
+import { ModalCode } from "../utils/const";
 import { savedPlan2Plan } from "../utils/savedPlanToPlan";
 
 import ModalComponent from "./ModalComponent";
@@ -45,7 +46,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const modalIsOpen = useAppSelector((state) => state.modal.isOpen);
+  const modalIsOpen = useAppSelector((state) => state.modal.modalState[ModalCode.renamePlan]);
 
   const options: OptionType[] = plans.map((plan) => ({
     value: plan.id,
@@ -75,13 +76,13 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   };
 
   const handleOpenRenameModal = () => {
-    dispatch(openModal());
+    dispatch(openModal(ModalCode.renamePlan));
   };
 
   const handleRenamePlan = (newName: string) => {
     if (selectedPlanId) {
       dispatch(renamePlan({ planId: selectedPlanId, newName }));
-      dispatch(closeModal());
+      dispatch(closeModal(ModalCode.renamePlan));
     }
   };
 
@@ -228,7 +229,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
       </div>
 
       {modalIsOpen && selectedPlanId ? (
-        <ModalComponent title="Rename Plan">
+        <ModalComponent title="Rename Plan" code={ModalCode.renamePlan}>
           <RenamePlanForm
             currentName={
               plans.find((plan) => plan.id === selectedPlanId)?.name || ""

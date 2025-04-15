@@ -10,18 +10,20 @@ interface ModalComponentProps {
   children: ReactNode;
   onClose?: () => void;
   title?: string;
+  code: string;
 }
 
 const ModalComponent: FC<ModalComponentProps> = ({
   children,
   onClose,
-  title = "Modal"
+  title = "Modal",
+  code
 }) => {
   const dispatch = useAppDispatch();
-  const modalIsOpen = useAppSelector((state) => state.modal.isOpen);
+  const modalIsOpen = useAppSelector((state) => state.modal.modalState[code]);
 
   const handleCloseModal = () => {
-    dispatch(closeModal());
+    dispatch(closeModal(code));
     if (onClose) {
       onClose();
     }

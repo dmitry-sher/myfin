@@ -24,7 +24,7 @@ export function parseDateEx(inputDate: string): Date {
     if (isBeforeJulyFirst) {
       return new Date(currentYear, month - 1, +day);
     }
-    else {
+    if (!isBeforeJulyFirst) {
       return month < 7
         ? new Date(currentYear + 1, month - 1, +day)
         : new Date(currentYear, month - 1, +day);

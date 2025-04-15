@@ -24,8 +24,14 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   let monthlyInTotalFact = 0;
   let monthlyOutTotalFact = 0;
   let runningBalance = startingRunningBalance;
-  const isAllDone = monthTransactions.reduce((acc, next) => acc && next.isDone, true);
-  const isNoneDone = !monthTransactions.reduce((acc, next) => acc || next.isDone, false);
+  const isAllDone = monthTransactions.reduce(
+    (acc, next) => acc && next.isDone,
+    true
+  );
+  const isNoneDone = !monthTransactions.reduce(
+    (acc, next) => acc || next.isDone,
+    false
+  );
   const showPlanFact = !(isAllDone || isNoneDone);
 
   return (
@@ -40,7 +46,7 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
           }
           monthlyInTotalPlan += transaction.amount;
         }
-        else {
+        if (transaction.amount <= 0) {
           if (transaction.isDone) {
             monthlyOutTotalFact += transaction.amount;
           }
@@ -64,10 +70,12 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
         </div>
         <div className="sm:w-3/5 w-full flex">
           <span className="w-1/2 sm:text-right">
-            In: {monthlyInTotalPlan.toFixed(2)}{showPlanFact ? ` / ${monthlyInTotalFact.toFixed(2)}` : ""}
+            In: {monthlyInTotalPlan.toFixed(2)}
+            {showPlanFact ? ` / ${monthlyInTotalFact.toFixed(2)}` : ""}
           </span>
           <span className="w-1/2 text-right">
-            Out: {monthlyOutTotalPlan.toFixed(2)}{showPlanFact ? ` / ${monthlyOutTotalFact.toFixed(2)}` : ""}
+            Out: {monthlyOutTotalPlan.toFixed(2)}
+            {showPlanFact ? ` / ${monthlyOutTotalFact.toFixed(2)}` : ""}
           </span>
         </div>
       </div>
