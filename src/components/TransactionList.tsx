@@ -41,7 +41,7 @@ export const TransactionList: FC<TransactionListProps> = ({
         {Object.keys(transactionsByMonth).map((monthKey) => {
           const monthTransactions = transactionsByMonth[monthKey];
           const startingRunningBalance = runningBalance;
-          runningBalance += monthTransactions.reduce((acc, next) => acc + next.amount, runningBalance);
+          runningBalance = monthTransactions.reduce((acc, next) => acc + next.amount, runningBalance);
 
           return (
             <TransactionMonth
