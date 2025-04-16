@@ -102,16 +102,16 @@ export const TransactionItem: FC<TransactionItemProps> = ({
                 <FontAwesomeIcon icon={faEdit} />
               </button>
               <button
-                onClick={handleDelete}
-                className="p-1 bg-red-500 text-white rounded"
-              >
-                <FontAwesomeIcon icon={faClose} />
-              </button>
-              <button
                 onClick={handleRepeat}
                 className="p-1 bg-green-500 text-white rounded"
               >
                 <FontAwesomeIcon icon={faRepeat} />
+              </button>
+              <button
+                onClick={handleDelete}
+                className="p-1 bg-red-500 text-white rounded"
+              >
+                <FontAwesomeIcon icon={faClose} />
               </button>
             </div>
           </div>
