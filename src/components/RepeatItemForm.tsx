@@ -27,14 +27,14 @@ const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
 
   if (!transaction) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
 
     onSubmit(transaction, repeatPeriod, repeats);
     dispatch(closeModal(ModalCode.repeatItem));
   };
 
-  const handlePeriodChange = (repeatType: RepeatType) => {
+  const handlePeriodChange = (repeatType: RepeatType): void => {
     setRepeatPeriod(repeatType);
     if (
       repeatType === RepeatType.monthly &&
@@ -50,7 +50,7 @@ const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
     }
   };
 
-  const handleRepeatsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRepeatsChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setRepeats(Number(e.target.value));
   };
 
@@ -78,7 +78,7 @@ const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
           name="period"
           value={RepeatType.weekly}
           id="period_weekly"
-          onChange={() => handlePeriodChange(RepeatType.weekly)}
+          onChange={(): void => handlePeriodChange(RepeatType.weekly)}
           {...weeklyProps}
         />
         <label htmlFor="period_weekly">Weekly</label>{" "}
@@ -87,7 +87,7 @@ const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
           name="period"
           value={RepeatType.monthly}
           id="period_monthly"
-          onChange={() => handlePeriodChange(RepeatType.monthly)}
+          onChange={(): void => handlePeriodChange(RepeatType.monthly)}
           {...monthlyProps}
         />
         <label htmlFor="period_monthly">Monthly</label>

@@ -22,7 +22,7 @@ const ModalComponent: FC<ModalComponentProps> = ({
   const dispatch = useAppDispatch();
   const modalIsOpen = useAppSelector((state) => state.modal.modalState[code]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     dispatch(closeModal(code));
     if (onClose) {
       onClose();

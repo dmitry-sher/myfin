@@ -56,11 +56,11 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   const selectedOption =
     options.find((option) => option.value === selectedPlanId) || null;
 
-  const handleChange = (newSelectedOption: SingleValue<OptionType>) => {
+  const handleChange = (newSelectedOption: SingleValue<OptionType>): void => {
     onSelectPlan(newSelectedOption ? newSelectedOption.value : "");
   };
 
-  const handleDuplicatePlan = () => {
+  const handleDuplicatePlan = (): void => {
     const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
     if (selectedPlan) {
       const newPlanName = `${selectedPlan.name} copy`;
@@ -75,18 +75,18 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     }
   };
 
-  const handleOpenRenameModal = () => {
+  const handleOpenRenameModal = (): void => {
     dispatch(openModal(ModalCode.renamePlan));
   };
 
-  const handleRenamePlan = (newName: string) => {
+  const handleRenamePlan = (newName: string): void => {
     if (selectedPlanId) {
       dispatch(renamePlan({ planId: selectedPlanId, newName }));
       dispatch(closeModal(ModalCode.renamePlan));
     }
   };
 
-  const handleCreatePlan = () => {
+  const handleCreatePlan = (): void => {
     const newPlanId = uuidv4();
     const newPlanName = newPlanId.substring(0, 6);
     dispatch(
@@ -98,7 +98,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     setTimeout(() => onSelectPlan(newPlanId), 50);
   };
 
-  const handleRemovePlan = () => {
+  const handleRemovePlan = (): void => {
     // eslint-disable-next-line no-restricted-globals
     if (selectedPlanId && confirm("Are you sure to delete plan?")) {
       dispatch(removePlan(selectedPlanId));
@@ -106,21 +106,21 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     }
   };
 
-  const handleExport = () => {
+  const handleExport = (): void => {
     if (!selectedPlanId) return;
 
     dispatch(exportPlan(selectedPlanId));
   };
 
-  const triggerFileDialog = () => {
+  const triggerFileDialog = (): void => {
     fileInputRef.current?.click();
   };
 
-  const handleImportPlan = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImportPlan = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
     if (file && selectedPlanId) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = (e): void => {
         try {
           const jsonContent = e.target?.result as string;
           const parsedTransactions = savedPlan2Plan(
@@ -141,7 +141,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     }
   };
 
-  useEffect(() => {
+  useEffect((): void => {
     if (plans && plans.length === 1) {
       onSelectPlan(plans[0].id);
     }

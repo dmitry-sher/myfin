@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import ModalComponent from "./components/ModalComponent";
@@ -16,7 +16,7 @@ import { ModalCode, RepeatType } from "./utils/const";
 import { repeatTransaction } from "./utils/repeatTransaction";
 import { useAppDispatch, useAppSelector } from "./store";
 
-function App() {
+const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
   const transactionToRepeat = useAppSelector(
@@ -28,7 +28,7 @@ function App() {
 
   const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
 
-  useEffect(() => {
+  useEffect((): void => {
     if (!plans || plans.length === 0) {
       dispatch(
         addPlan({
@@ -43,7 +43,7 @@ function App() {
     transaction: Transaction,
     period: RepeatType,
     repeats: number
-  ) => {
+  ): void => {
     // eslint-disable-next-line no-console
     console.log("[handleRepeat]", { transaction, period, repeats });
     repeatTransaction({
@@ -53,6 +53,22 @@ function App() {
       period,
       repeats,
     });
+  };
+
+  const handleAddTransaction = (
+    planId: string,
+    transaction: Omit<Transaction, "id">
+  ): void => {
+    dispatch(addTransaction({ planId, transaction }));
+  };
+  const handleUpdateTransaction = (
+    planId: string,
+    updatedTransaction: Transaction
+  ): void => {
+    dispatch(updateTransaction({ planId, updatedTransaction }));
+  };
+  const handleDeleteTransaction = (planId: string, id: string): void => {
+    dispatch(deleteTransaction({ planId, transactionId: id }));
   };
 
   return (
@@ -68,15 +84,9 @@ function App() {
 
         <PlanView
           selectedPlan={selectedPlan}
-          addTransaction={(planId, transaction) =>
-            dispatch(addTransaction({ planId, transaction }))
-          }
-          updateTransaction={(planId, updatedTransaction) =>
-            dispatch(updateTransaction({ planId, updatedTransaction }))
-          }
-          deleteTransaction={(planId, id) =>
-            dispatch(deleteTransaction({ planId, transactionId: id }))
-          }
+          addTransaction={handleAddTransaction}
+          updateTransaction={handleUpdateTransaction}
+          deleteTransaction={handleDeleteTransaction}
         />
 
         <ModalComponent code={ModalCode.repeatItem} title="Repeat item">
@@ -88,6 +98,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

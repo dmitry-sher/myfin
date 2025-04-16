@@ -43,8 +43,8 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   const cbxProps: Record<string, unknown> = {};
   cbxProps.checked = isDone;
 
-  const handleEdit = () => setIsEditing(true);
-  const handleDelete = () => {
+  const handleEdit = (): void => setIsEditing(true);
+  const handleDelete = (): void => {
     const message = `Are you sure to delete transaction from ${transaction.date} for ${transaction.amount} (${transaction.description})?`;
     // eslint-disable-next-line no-restricted-globals
     if (!confirm(message)) {
@@ -52,10 +52,11 @@ export const TransactionItem: FC<TransactionItemProps> = ({
     }
     onDeleteTransaction(transaction.id);
   };
-  const handleRepeat = () => {
+  const handleRepeat = (): void => {
     dispatch(setTransactionForRepeat(transaction));
     dispatch(openModal(ModalCode.repeatItem));
   };
+  const handleCancel = (): void => setIsEditing(false);
 
   return (
     <li className="flex justify-between items-center p-2 border-b flex-col sm:flex-row">
@@ -63,7 +64,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
         <TransactionEditForm
           transaction={transaction}
           onSave={handleSave}
-          onCancel={() => setIsEditing(false)}
+          onCancel={handleCancel}
         />
       ) : (
         <>
