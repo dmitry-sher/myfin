@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { Transaction } from "../types/entities";
 
 import TransactionItem from "./TransactionItem";
+import { ViewAmount } from "./ViewAmount";
 
 interface TransactionMonthProps {
   monthKey: string;
@@ -24,6 +25,7 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   let monthlyInTotalFact = 0;
   let monthlyOutTotalFact = 0;
   let runningBalance = startingRunningBalance;
+  let runningBalanceFact = startingRunningBalance;
   const isAllDone = monthTransactions.reduce(
     (acc, next) => acc && next.isDone,
     true
@@ -39,6 +41,9 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
       <div className="text-center font-semibold p-2 border-b">{monthKey}</div>
       {monthTransactions.map((transaction) => {
         runningBalance += transaction.amount;
+        if (transaction.isDone) {
+          runningBalanceFact += transaction.amount;
+        }
 
         if (transaction.amount > 0) {
           if (transaction.isDone) {
@@ -69,14 +74,27 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
           <span className="sm:w-1/2 w-full text-center">{monthKey} Totals</span>
         </div>
         <div className="sm:w-3/5 w-full flex">
-          <span className="w-1/2 sm:text-right">
-            In: {monthlyInTotalPlan.toFixed(2)}
-            {showPlanFact ? ` / ${monthlyInTotalFact.toFixed(2)}` : ""}
-          </span>
-          <span className="w-1/2 text-right">
-            Out: {monthlyOutTotalPlan.toFixed(2)}
-            {showPlanFact ? ` / ${monthlyOutTotalFact.toFixed(2)}` : ""}
-          </span>
+          <ViewAmount
+            className="w-1/2 sm:text-right"
+            balancePlan={monthlyInTotalPlan}
+            balanceFact={monthlyInTotalFact}
+            showPlanFact={showPlanFact}
+            label="In"
+          />
+          <ViewAmount
+            className="w-1/2 text-right"
+            balancePlan={monthlyOutTotalPlan}
+            balanceFact={monthlyOutTotalFact}
+            showPlanFact={showPlanFact}
+            label="Out"
+          />
+          <ViewAmount
+            className="w-1/2 text-right"
+            balancePlan={runningBalance}
+            balanceFact={runningBalanceFact}
+            showPlanFact={showPlanFact}
+            label="Balance"
+          />
         </div>
       </div>
     </div>

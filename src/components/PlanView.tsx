@@ -36,17 +36,17 @@ export const PlanView: FC<PlanViewProps> = ({
       </h2>
 
       <TransactionForm
-        onAddTransaction={(transaction) =>
+        onAddTransaction={(transaction): void =>
           addTransaction(selectedPlan.id, transaction)
         }
       />
 
       <TransactionList
         transactions={selectedPlan.transactions}
-        onUpdateTransaction={(transaction) =>
+        onUpdateTransaction={(transaction): void =>
           updateTransaction(selectedPlan.id, transaction)
         }
-        onDeleteTransaction={(id) => deleteTransaction(selectedPlan.id, id)}
+        onDeleteTransaction={(id): void => deleteTransaction(selectedPlan.id, id)}
       />
     </div>
   );

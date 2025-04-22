@@ -8,7 +8,7 @@ interface RenamePlanFormProps {
 const RenamePlanForm: FC<RenamePlanFormProps> = ({ currentName, onSubmit }) => {
   const [newName, setNewName] = useState(currentName);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     if (newName.trim()) {
       onSubmit(newName);
@@ -24,7 +24,7 @@ const RenamePlanForm: FC<RenamePlanFormProps> = ({ currentName, onSubmit }) => {
         <input
           type="text"
           value={newName}
-          onChange={(e) => setNewName(e.target.value)}
+          onChange={(e): void => setNewName(e.target.value)}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           placeholder="Enter new plan name"
         />

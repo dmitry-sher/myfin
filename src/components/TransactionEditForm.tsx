@@ -27,7 +27,7 @@ export const TransactionEditForm: FC<TransactionEditFormProps> = ({
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = (): void => {
     const { amount, description, date } = editState;
     const numericAmount = parseFloat(amount.toString());
 
