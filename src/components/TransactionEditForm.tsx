@@ -19,7 +19,7 @@ export const TransactionEditForm: FC<TransactionEditFormProps> = ({
     date: printDate(transaction),
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setEditState((prev) => ({
       ...prev,

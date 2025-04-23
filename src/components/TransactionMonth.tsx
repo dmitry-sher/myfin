@@ -25,7 +25,8 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   let monthlyInTotalFact = 0;
   let monthlyOutTotalFact = 0;
   let runningBalance = startingRunningBalance;
-  let runningBalanceFact = startingRunningBalance;
+  let monthBalance = 0;
+  let monthBalanceFact = 0;
   const isAllDone = monthTransactions.reduce(
     (acc, next) => acc && next.isDone,
     true
@@ -41,8 +42,9 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
       <div className="text-center font-semibold p-2 border-b">{monthKey}</div>
       {monthTransactions.map((transaction) => {
         runningBalance += transaction.amount;
+        monthBalance += transaction.amount;
         if (transaction.isDone) {
-          runningBalanceFact += transaction.amount;
+          monthBalanceFact += transaction.amount;
         }
 
         if (transaction.amount > 0) {
@@ -90,8 +92,8 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
           />
           <ViewAmount
             className="w-1/2 text-right"
-            balancePlan={runningBalance}
-            balanceFact={runningBalanceFact}
+            balancePlan={monthBalance}
+            balanceFact={monthBalanceFact}
             showPlanFact={showPlanFact}
             label="Balance"
           />
