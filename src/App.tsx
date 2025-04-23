@@ -28,24 +28,25 @@ const App: FC = () => {
 
   const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
 
-  useEffect((): void => {
-    if (!plans || plans.length === 0) {
-      dispatch(
-        addPlan({
-          newPlanName: "My First plan",
-          newPlanId: uuidv4(),
-        })
-      );
+  useEffect(() => {
+    const hash = window.location.hash.replace(/^#/, "");
+    if (hash && hash !== selectedPlanId) {
+      setSelectedPlanId(hash);
     }
-  }, [plans, dispatch]);
+
+    if (!plans || plans.length === 0) {
+      const newPlanId = uuidv4();
+      dispatch(addPlan({ newPlanName: "My First plan", newPlanId }));
+      setSelectedPlanId(newPlanId);
+      window.location.hash = newPlanId;
+    }
+  }, [plans, dispatch, selectedPlanId]);
 
   const handleRepeat = (
     transaction: Transaction,
     period: RepeatType,
     repeats: number
   ): void => {
-    // eslint-disable-next-line no-console
-    console.log("[handleRepeat]", { transaction, period, repeats });
     repeatTransaction({
       dispatch,
       transaction,
@@ -61,14 +62,21 @@ const App: FC = () => {
   ): void => {
     dispatch(addTransaction({ planId, transaction }));
   };
+
   const handleUpdateTransaction = (
     planId: string,
     updatedTransaction: Transaction
   ): void => {
     dispatch(updateTransaction({ planId, updatedTransaction }));
   };
+
   const handleDeleteTransaction = (planId: string, id: string): void => {
     dispatch(deleteTransaction({ planId, transactionId: id }));
+  };
+
+  const handleSelectPlan = (planId: string): void => {
+    setSelectedPlanId(planId);
+    window.location.hash = planId;
   };
 
   return (
@@ -79,7 +87,7 @@ const App: FC = () => {
         <PlanSelector
           plans={plans}
           selectedPlanId={selectedPlanId}
-          onSelectPlan={setSelectedPlanId}
+          onSelectPlan={handleSelectPlan}
         />
 
         <PlanView
