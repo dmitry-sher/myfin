@@ -8,7 +8,7 @@ import { Transaction } from "../types/entities";
 import { ModalCode } from "../utils/const";
 import { printDate } from "../utils/printDate";
 
-import TransactionEditForm from "./TransactionEditForm";
+import { TransactionEditForm } from "./TransactionEditForm";
 
 interface TransactionItemProps {
   transaction: Transaction;
@@ -121,5 +121,3 @@ export const TransactionItem: FC<TransactionItemProps> = ({
     </li>
   );
 };
-
-export default TransactionItem;

@@ -18,7 +18,7 @@ interface RepeatItemFormProps {
 const DEFAULT_WEEKLY_REPEATS = 4;
 const DEFAULT_MONTHLY_REPEATS = 1;
 
-const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
+export const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
   const [repeatPeriod, setRepeatPeriod] = useState<RepeatType>(
     RepeatType.weekly
   );
@@ -107,5 +107,3 @@ const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit }) => {
     </form>
   );
 };
-
-export default RepeatItemForm;

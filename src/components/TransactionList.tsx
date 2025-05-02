@@ -4,7 +4,7 @@ import { Transaction } from "../types/entities";
 import { groupTransactions } from "../utils/groupTransactions";
 import { sortTransactions } from "../utils/sortTransactions";
 
-import TransactionMonth from "./TransactionMonth";
+import { TransactionMonth } from "./TransactionMonth";
 
 interface TransactionListProps {
   transactions: Transaction[];
@@ -41,7 +41,10 @@ export const TransactionList: FC<TransactionListProps> = ({
         {Object.keys(transactionsByMonth).map((monthKey) => {
           const monthTransactions = transactionsByMonth[monthKey];
           const startingRunningBalance = runningBalance;
-          runningBalance = monthTransactions.reduce((acc, next) => acc + next.amount, runningBalance);
+          runningBalance = monthTransactions.reduce(
+            (acc, next) => acc + next.amount,
+            runningBalance
+          );
 
           return (
             <TransactionMonth
@@ -58,5 +61,3 @@ export const TransactionList: FC<TransactionListProps> = ({
     </div>
   );
 };
-
-export default TransactionList;

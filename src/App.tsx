@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import ModalComponent from "./components/ModalComponent";
-import PlanSelector from "./components/PlanSelector";
-import PlanView from "./components/PlanView";
-import RepeatItemForm from "./components/RepeatItemForm";
+import { ModalComponent } from "./components/ModalComponent";
+import { PlanSelector } from "./components/PlanSelector";
+import { PlanView } from "./components/PlanView";
+import { RepeatItemForm } from "./components/RepeatItemForm";
 import {
   addPlan,
   addTransaction,
@@ -16,7 +16,7 @@ import { ModalCode, RepeatType } from "./utils/const";
 import { repeatTransaction } from "./utils/repeatTransaction";
 import { useAppDispatch, useAppSelector } from "./store";
 
-const App: FC = () => {
+export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
   const transactionToRepeat = useAppSelector(
@@ -107,5 +107,3 @@ const App: FC = () => {
     </div>
   );
 };
-
-export default App;

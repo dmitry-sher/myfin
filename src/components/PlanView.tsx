@@ -2,8 +2,8 @@ import React, { FC } from "react";
 
 import { Plan, Transaction } from "../types/entities";
 
-import TransactionForm from "./TransactionForm";
-import TransactionList from "./TransactionList";
+import { TransactionForm } from "./TransactionForm";
+import { TransactionList } from "./TransactionList";
 
 type PlanViewProps = {
   selectedPlan?: Plan;
@@ -19,7 +19,7 @@ export const PlanView: FC<PlanViewProps> = ({
   selectedPlan,
   addTransaction,
   updateTransaction,
-  deleteTransaction
+  deleteTransaction,
 }) => {
   if (!selectedPlan) {
     return null;
@@ -46,10 +46,10 @@ export const PlanView: FC<PlanViewProps> = ({
         onUpdateTransaction={(transaction): void =>
           updateTransaction(selectedPlan.id, transaction)
         }
-        onDeleteTransaction={(id): void => deleteTransaction(selectedPlan.id, id)}
+        onDeleteTransaction={(id): void =>
+          deleteTransaction(selectedPlan.id, id)
+        }
       />
     </div>
   );
 };
-
-export default PlanView;

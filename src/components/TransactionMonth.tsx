@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { Transaction } from "../types/entities";
 
-import TransactionItem from "./TransactionItem";
+import { TransactionItem } from "./TransactionItem";
 import { ViewAmount } from "./ViewAmount";
 
 interface TransactionMonthProps {
@@ -102,5 +102,3 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
     </div>
   );
 };
-
-export default TransactionMonth;

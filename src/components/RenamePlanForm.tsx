@@ -5,7 +5,7 @@ interface RenamePlanFormProps {
   onSubmit: (newName: string) => void;
 }
 
-const RenamePlanForm: FC<RenamePlanFormProps> = ({ currentName, onSubmit }) => {
+export const RenamePlanForm: FC<RenamePlanFormProps> = ({ currentName, onSubmit }) => {
   const [newName, setNewName] = useState(currentName);
 
   const handleSubmit = (e: React.FormEvent): void => {
@@ -38,5 +38,3 @@ const RenamePlanForm: FC<RenamePlanFormProps> = ({ currentName, onSubmit }) => {
     </form>
   );
 };
-
-export default RenamePlanForm;

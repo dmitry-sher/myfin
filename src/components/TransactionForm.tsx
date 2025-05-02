@@ -93,5 +93,3 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     </form>
   );
 };
-
-export default TransactionForm;

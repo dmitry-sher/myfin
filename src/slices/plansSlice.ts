@@ -92,6 +92,12 @@ const plansSlice = createSlice({
         }));
       }
     },
+    setDefaultPlan: (state, action: PayloadAction<{ planId: string }>) => {
+      const { planId } = action.payload;
+      for (let i = 0; i < state.length; i++) {
+        state[i].isDefault = state[i].id === planId;
+      }
+    },
     renamePlan: (
       state,
       action: PayloadAction<{ planId: string; newName: string }>
@@ -168,6 +174,7 @@ export const {
   addTransaction,
   updateTransaction,
   deleteTransaction,
+  setDefaultPlan,
 } = plansSlice.actions;
 
 export default plansSlice.reducer;

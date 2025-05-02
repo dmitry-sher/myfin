@@ -13,7 +13,7 @@ interface ModalComponentProps {
   code: string;
 }
 
-const ModalComponent: FC<ModalComponentProps> = ({
+export const ModalComponent: FC<ModalComponentProps> = ({
   children,
   onClose,
   title = "Modal",
@@ -46,5 +46,3 @@ const ModalComponent: FC<ModalComponentProps> = ({
     </Modal>
   );
 };
-
-export default ModalComponent;

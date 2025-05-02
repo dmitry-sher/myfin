@@ -20,6 +20,7 @@ export interface Plan {
   id: string;
   name: string;
   transactions: Transaction[];
+  isDefault?: boolean;
 }
 
 export interface SavedPlan {

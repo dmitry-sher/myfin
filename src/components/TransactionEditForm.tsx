@@ -77,5 +77,3 @@ export const TransactionEditForm: FC<TransactionEditFormProps> = ({
     </div>
   );
 };
-
-export default TransactionEditForm;
