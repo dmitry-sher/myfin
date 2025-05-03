@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Header } from "./components/Header";
 import { ModalComponent } from "./components/ModalComponent";
+import { PlanHeader } from "./components/PlanHeader";
 import { PlanSelector } from "./components/PlanSelector";
 import { PlanView } from "./components/PlanView";
 import { RepeatItemForm } from "./components/RepeatItemForm";
@@ -20,7 +21,9 @@ import { useAppDispatch, useAppSelector } from "./store";
 export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
-  const isHeaderSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
+  const isHeaderSticky = useAppSelector(
+    (state): boolean => state.appSettings.isHeaderSticky
+  );
   const transactionToRepeat = useAppSelector(
     (state) => state.modal.repeatTransaction
   );
@@ -81,22 +84,34 @@ export const App: FC = () => {
     window.location.hash = planId;
   };
 
-  const wrapperClass = isHeaderSticky ? "overflow-y-auto h-[calc(100vh-100px)]" : "";
+  const wrapperClass = isHeaderSticky
+    ? "overflow-y-auto h-[calc(100vh-100px)]"
+    : "";
+
+  const headerClass = isHeaderSticky
+    ? "sticky top-0 z-10 bg-white border-b shadow-sm"
+    : "";
 
   return (
     <div className="min-h-screen bg-gray-100 sm:p-4">
       <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6">
         <div className={wrapperClass}>
-          <Header />
-          <PlanSelector
-            plans={plans}
-            selectedPlanId={selectedPlanId}
-            onSelectPlan={handleSelectPlan}
-          />
+          <div className={headerClass}>
+            <Header />
+            <PlanSelector
+              plans={plans}
+              selectedPlanId={selectedPlanId}
+              onSelectPlan={handleSelectPlan}
+            />
+
+            <PlanHeader
+              selectedPlan={selectedPlan}
+              addTransaction={handleAddTransaction}
+            />
+          </div>
 
           <PlanView
             selectedPlan={selectedPlan}
-            addTransaction={handleAddTransaction}
             updateTransaction={handleUpdateTransaction}
             deleteTransaction={handleDeleteTransaction}
           />

@@ -1,62 +1,31 @@
 import React, { FC } from "react";
 
-import { useAppSelector } from "../store";
 import { Plan, Transaction } from "../types/entities";
 
-import { TransactionForm } from "./TransactionForm";
 import { TransactionList } from "./TransactionList";
 
 type PlanViewProps = {
   selectedPlan?: Plan;
-  addTransaction: (
-    planId: string,
-    transaction: Omit<Transaction, "id">
-  ) => void;
   updateTransaction: (planId: string, updatedTransaction: Transaction) => void;
   deleteTransaction: (planId: string, id: string) => void;
 };
 
 export const PlanView: FC<PlanViewProps> = ({
   selectedPlan,
-  addTransaction,
   updateTransaction,
   deleteTransaction,
 }) => {
-  const isHeaderSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
   if (!selectedPlan) {
     return null;
   }
 
-  const wrapperClass = isHeaderSticky ? "overflow-y-auto h-[calc(100vh-200px)]" : "";
-  const headerClass = isHeaderSticky ? "sticky top-0 z-10 bg-white border-b shadow-sm" : "";
-
   return (
-    <div className={wrapperClass}>
-      <div className={headerClass}>
-        <h2 className="text-xl mb-4 mt-4">
-          Plan: {selectedPlan.name}
-          <span className="text-green-600 ml-2">
-            (Balance:{" "}
-            {selectedPlan.transactions.reduce((acc, t) => acc + t.amount, 0)})
-          </span>
-        </h2>
-
-        <TransactionForm
-          onAddTransaction={(transaction): void =>
-            addTransaction(selectedPlan.id, transaction)
-          }
-        />
-      </div>
-
-      <TransactionList
-        transactions={selectedPlan.transactions}
-        onUpdateTransaction={(transaction): void =>
-          updateTransaction(selectedPlan.id, transaction)
-        }
-        onDeleteTransaction={(id): void =>
-          deleteTransaction(selectedPlan.id, id)
-        }
-      />
-    </div>
+    <TransactionList
+      transactions={selectedPlan.transactions}
+      onUpdateTransaction={(transaction): void =>
+        updateTransaction(selectedPlan.id, transaction)
+      }
+      onDeleteTransaction={(id): void => deleteTransaction(selectedPlan.id, id)}
+    />
   );
 };
