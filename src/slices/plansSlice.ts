@@ -46,10 +46,11 @@ const plansSlice = createSlice({
         return;
       }
 
-      const newPlan = {
+      const newPlan: Plan = {
         ...existingPlan,
         id: newPlanId,
         name: newPlanName,
+        isDefault: false,
         transactions: existingPlan.transactions.map((t) => ({
           ...t,
           id: uuidv4(),
