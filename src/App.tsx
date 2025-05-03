@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { Header } from "./components/Header";
 import { ModalComponent } from "./components/ModalComponent";
 import { PlanSelector } from "./components/PlanSelector";
 import { PlanView } from "./components/PlanView";
@@ -19,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "./store";
 export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
+  const isHeaderSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
   const transactionToRepeat = useAppSelector(
     (state) => state.modal.repeatTransaction
   );
@@ -79,23 +81,26 @@ export const App: FC = () => {
     window.location.hash = planId;
   };
 
+  const wrapperClass = isHeaderSticky ? "overflow-y-auto h-[calc(100vh-100px)]" : "";
+
   return (
     <div className="min-h-screen bg-gray-100 sm:p-4">
       <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6">
-        <h1 className="text-2xl font-bold mb-4">MyFin</h1>
+        <div className={wrapperClass}>
+          <Header />
+          <PlanSelector
+            plans={plans}
+            selectedPlanId={selectedPlanId}
+            onSelectPlan={handleSelectPlan}
+          />
 
-        <PlanSelector
-          plans={plans}
-          selectedPlanId={selectedPlanId}
-          onSelectPlan={handleSelectPlan}
-        />
-
-        <PlanView
-          selectedPlan={selectedPlan}
-          addTransaction={handleAddTransaction}
-          updateTransaction={handleUpdateTransaction}
-          deleteTransaction={handleDeleteTransaction}
-        />
+          <PlanView
+            selectedPlan={selectedPlan}
+            addTransaction={handleAddTransaction}
+            updateTransaction={handleUpdateTransaction}
+            deleteTransaction={handleDeleteTransaction}
+          />
+        </div>
 
         <ModalComponent code={ModalCode.repeatItem} title="Repeat item">
           <RepeatItemForm

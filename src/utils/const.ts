@@ -8,3 +8,5 @@ export enum RepeatType {
     weekly = "weekly",
     monthly = "monthly",
 }
+
+export const monthKeyFormat = "MMM-yyyy";

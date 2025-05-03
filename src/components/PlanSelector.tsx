@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 
+import { useAppSelector } from "../store";
 import { Plan } from "../types/entities";
 
 import { AddPlanButton } from "./PlanButtons/AddPlanButton";
@@ -28,6 +29,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   selectedPlanId,
   onSelectPlan,
 }) => {
+  const isHeaderSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
   const options: OptionType[] = plans.map((plan) => ({
     value: plan.id,
     label: plan.name,
@@ -64,37 +66,41 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
 
   const selectedPlan = plans.find((p) => p.id === selectedPlanId) || null;
 
+  const headerClass = isHeaderSticky ? "sticky top-0 z-10 bg-white border-b shadow-sm" : "";
+
   return (
-    <PlanSelectorContext.Provider
-      value={{
-        plans,
-        selectedPlanId,
-        selectedPlan,
-        onSelectPlan,
-        disableableButtonClass,
-      }}
-    >
-      <div className="mb-4 flex flex-col-reverse sm:flex-row items-center sm:space-x-4">
-        <div className="w-full sm:w-1/2">
-          <Select
-            options={options}
-            value={selectedOption}
-            onChange={handleChange}
-            placeholder="Select a plan..."
-            isClearable
-            className="flex-1"
-          />
+    <div className={headerClass}>
+      <PlanSelectorContext.Provider
+        value={{
+          plans,
+          selectedPlanId,
+          selectedPlan,
+          onSelectPlan,
+          disableableButtonClass,
+        }}
+      >
+        <div className="mb-4 flex flex-col-reverse sm:flex-row items-center sm:space-x-4">
+          <div className="w-full sm:w-1/2">
+            <Select
+              options={options}
+              value={selectedOption}
+              onChange={handleChange}
+              placeholder="Select a plan..."
+              isClearable
+              className="flex-1"
+            />
+          </div>
+          <div className="w-full sm:w-fit sm:block flex mb-2 sm:mb-0 flex-wrap">
+            <AddPlanButton />
+            <DuplicatePlanButton />
+            <RenamePlanButton />
+            <RemovePlanButton />
+            <ExportPlanButton />
+            <ImportPlanButton />
+            <SetDefaultPlanButton />
+          </div>
         </div>
-        <div className="w-full sm:w-fit sm:block flex mb-2 sm:mb-0 flex-wrap">
-          <AddPlanButton />
-          <DuplicatePlanButton />
-          <RenamePlanButton />
-          <RemovePlanButton />
-          <ExportPlanButton />
-          <ImportPlanButton />
-          <SetDefaultPlanButton />
-        </div>
-      </div>
-    </PlanSelectorContext.Provider>
+      </PlanSelectorContext.Provider>
+    </div>
   );
 };

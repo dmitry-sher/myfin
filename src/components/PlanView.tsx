@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 
+import { useAppSelector } from "../store";
 import { Plan, Transaction } from "../types/entities";
 
 import { TransactionForm } from "./TransactionForm";
@@ -21,25 +22,31 @@ export const PlanView: FC<PlanViewProps> = ({
   updateTransaction,
   deleteTransaction,
 }) => {
+  const isHeaderSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
   if (!selectedPlan) {
     return null;
   }
 
-  return (
-    <div>
-      <h2 className="text-xl mb-4">
-        Plan: {selectedPlan.name}
-        <span className="text-green-600 ml-2">
-          (Balance:{" "}
-          {selectedPlan.transactions.reduce((acc, t) => acc + t.amount, 0)})
-        </span>
-      </h2>
+  const wrapperClass = isHeaderSticky ? "overflow-y-auto h-[calc(100vh-200px)]" : "";
+  const headerClass = isHeaderSticky ? "sticky top-0 z-10 bg-white border-b shadow-sm" : "";
 
-      <TransactionForm
-        onAddTransaction={(transaction): void =>
-          addTransaction(selectedPlan.id, transaction)
-        }
-      />
+  return (
+    <div className={wrapperClass}>
+      <div className={headerClass}>
+        <h2 className="text-xl mb-4 mt-4">
+          Plan: {selectedPlan.name}
+          <span className="text-green-600 ml-2">
+            (Balance:{" "}
+            {selectedPlan.transactions.reduce((acc, t) => acc + t.amount, 0)})
+          </span>
+        </h2>
+
+        <TransactionForm
+          onAddTransaction={(transaction): void =>
+            addTransaction(selectedPlan.id, transaction)
+          }
+        />
+      </div>
 
       <TransactionList
         transactions={selectedPlan.transactions}

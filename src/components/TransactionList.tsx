@@ -1,6 +1,8 @@
 import React, { FC, useMemo } from "react";
+import { format } from "date-fns";
 
 import { Transaction } from "../types/entities";
+import { monthKeyFormat } from "../utils/const";
 import { groupTransactions } from "../utils/groupTransactions";
 import { sortTransactions } from "../utils/sortTransactions";
 
@@ -21,6 +23,8 @@ export const TransactionList: FC<TransactionListProps> = ({
     () => groupTransactions(sortTransactions(transactions)),
     [transactions]
   );
+
+  const currentMonthKey = format(new Date(), monthKeyFormat);
 
   let runningBalance = 0;
 
@@ -54,6 +58,7 @@ export const TransactionList: FC<TransactionListProps> = ({
               onDeleteTransaction={onDeleteTransaction}
               monthKey={monthKey}
               monthTransactions={monthTransactions}
+              isCurrentMonth={monthKey === currentMonthKey}
             />
           );
         })}

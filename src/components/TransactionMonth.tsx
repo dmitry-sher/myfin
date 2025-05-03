@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef } from "react";
 
 import { Transaction } from "../types/entities";
 
@@ -11,6 +11,7 @@ interface TransactionMonthProps {
   onUpdateTransaction: (updatedTransaction: Transaction) => void;
   onDeleteTransaction: (id: string) => void;
   startingRunningBalance: number;
+  isCurrentMonth?: boolean;
 }
 
 export const TransactionMonth: FC<TransactionMonthProps> = ({
@@ -19,6 +20,7 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   onUpdateTransaction,
   onDeleteTransaction,
   startingRunningBalance,
+  isCurrentMonth = false
 }) => {
   let monthlyInTotalPlan = 0;
   let monthlyOutTotalPlan = 0;
@@ -37,8 +39,18 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   );
   const showPlanFact = !(isAllDone || isNoneDone);
 
+  const monthRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isCurrentMonth && monthRef.current) {
+      monthRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [isCurrentMonth]);
+
+  const divRef = isCurrentMonth ? monthRef : null;
+
   return (
-    <div key={monthKey}>
+    <div key={monthKey} id={`month-${monthKey}`} ref={divRef}>
       <div className="text-center font-semibold p-2 border-b">{monthKey}</div>
       {monthTransactions.map((transaction) => {
         runningBalance += transaction.amount;
