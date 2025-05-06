@@ -38,7 +38,7 @@ export const TransactionList: FC<TransactionListProps> = ({
         <div className="sm:w-3/5 w-full flex">
           <span className="w-1/3 sm:text-right">Amount</span>
           <span className="w-1/3 sm:text-right">Balance</span>
-          <span className="w-1/3 text-right">Actions</span>
+          <span className="print:hidden w-1/3 text-right">Actions</span>
         </div>
       </div>
       <ul className="space-y-2">

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { faClose, faEdit, faRepeat } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import { faClose, faEdit, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { openModal, setTransactionForRepeat } from "../slices/modalSlice";
@@ -40,7 +40,9 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   };
 
   const { isDone } = transaction;
-  const cbxProps: Record<string, unknown> = {};
+  const cbxProps: Record<string, unknown> = {
+    className: "print:hidden",
+  };
   cbxProps.checked = isDone;
 
   const handleEdit = (): void => setIsEditing(true);
@@ -76,6 +78,13 @@ export const TransactionItem: FC<TransactionItemProps> = ({
                 {...cbxProps}
               ></input>
             </span>
+            <span
+              className={`hidden print:inline-block h-5 ${
+                isDone ? "mr-1" : "mr-6"
+              }`}
+            >
+              {isDone ? "✔️" : ""}
+            </span>
             <span className="w-1/5">{printDate(transaction)}</span>
             <span className="w-48">{transaction.description}</span>
           </div>
@@ -95,7 +104,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
             >
               {balance}
             </span>
-            <div className="flex items-center space-x-2 text-right">
+            <div className="flex items-center space-x-2 text-right print:hidden">
               <button
                 onClick={handleEdit}
                 className="p-1 bg-blue-500 text-white rounded"

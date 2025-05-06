@@ -83,27 +83,27 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
         );
       })}
       <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 mb-6">
-        <div className="sm:w-2/5 w-full flex">
+        <div className="sm:w-1/5 w-full flex">
           <span className="hidden sm:block sm:w-1/2 w-1/5"></span>
-          <span className="sm:w-1/2 w-full text-center">{monthKey} Totals</span>
+          <span className="sm:w-1/2 w-full text-center"><span className="print:hidden">{monthKey}</span> Totals</span>
         </div>
-        <div className="sm:w-3/5 w-full flex">
+        <div className="sm:w-4/5 w-full flex">
           <ViewAmount
-            className="w-1/2 sm:text-right"
+            className="w-1/3 sm:text-right"
             balancePlan={monthlyInTotalPlan}
             balanceFact={monthlyInTotalFact}
             showPlanFact={showPlanFact}
             label="In"
           />
           <ViewAmount
-            className="w-1/2 text-right"
+            className="w-1/3 text-right"
             balancePlan={monthlyOutTotalPlan}
             balanceFact={monthlyOutTotalFact}
             showPlanFact={showPlanFact}
             label="Out"
           />
           <ViewAmount
-            className="w-1/2 text-right"
+            className="w-1/3 text-right"
             balancePlan={monthBalance}
             balanceFact={monthBalanceFact}
             showPlanFact={showPlanFact}

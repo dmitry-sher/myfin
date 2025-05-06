@@ -1,5 +1,5 @@
 import React, { FC, useRef } from "react";
-import { faFileImport } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import { faFileImport } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { importPlanTransactions } from "../../slices/plansSlice";

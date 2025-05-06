@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
-import { faAdd } from "@fortawesome/free-solid-svg-icons"; // Import icons
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { parseDateEx } from "../utils/parseDateEx";

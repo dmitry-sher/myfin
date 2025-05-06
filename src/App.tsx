@@ -85,7 +85,7 @@ export const App: FC = () => {
   };
 
   const wrapperClass = isHeaderSticky
-    ? "overflow-y-auto h-[calc(100vh-100px)]"
+    ? "overflow-y-auto h-[calc(100vh-25px)] print:overflow-hidden print:h-auto"
     : "";
 
   const headerClass = isHeaderSticky
@@ -93,10 +93,10 @@ export const App: FC = () => {
     : "";
 
   return (
-    <div className="min-h-screen bg-gray-100 sm:p-4">
-      <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6">
+    <div className="min-h-screen bg-gray-100 p-0 print:p-2">
+      <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6 print:p-0 print:shadow-none print:m-0">
         <div className={wrapperClass}>
-          <div className={headerClass}>
+          <div className={`print:hidden ${headerClass}`}>
             <Header />
             <PlanSelector
               plans={plans}

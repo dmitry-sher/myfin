@@ -9,6 +9,7 @@ import { DuplicatePlanButton } from "./PlanButtons/DuplicatePlanButton";
 import { ExportPlanButton } from "./PlanButtons/ExportPlanButton";
 import { ImportPlanButton } from "./PlanButtons/ImportPlanButton";
 import { PlanSelectorContext } from "./PlanButtons/PlanSelectorContext";
+import { PrintPlanButton } from "./PlanButtons/PrintPlanButton";
 import { RemovePlanButton } from "./PlanButtons/RemovePlanButton";
 import { RenamePlanButton } from "./PlanButtons/RenamePlanButton";
 import { SetDefaultPlanButton } from "./PlanButtons/SetDefaultPlanButton";
@@ -97,6 +98,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
             <RemovePlanButton />
             <ExportPlanButton />
             <ImportPlanButton />
+            <PrintPlanButton />
             <SetDefaultPlanButton />
           </div>
         </div>
