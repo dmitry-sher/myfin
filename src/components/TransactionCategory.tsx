@@ -1,0 +1,85 @@
+import React, { FC, useState } from "react";
+import CreatableSelect from "react-select/creatable";
+
+import { useCategoryLabelMap } from "../context/CategoryLabelMapContext";
+import { addCategory } from "../slices/categoriesSlice";
+import { useAppDispatch } from "../store";
+import { Category } from "../types/entities";
+import { noCategoryName } from "../utils/const";
+import { prepareOptions } from "../utils/prepareOptions";
+
+type OptionType = {
+  value: string;
+  label: string;
+};
+
+interface TransactionCategoryProps {
+  categoryId?: string;
+  categories: Category[];
+  onChange: (category: OptionType) => void;
+}
+
+export const TransactionCategory: FC<TransactionCategoryProps> = ({
+  categoryId,
+  categories,
+  onChange,
+}) => {
+  const dispatch = useAppDispatch();
+  const [isEditing, setIsEditing] = useState(false);
+  const categoryMap = useCategoryLabelMap();
+  const defaultCategoriesOptions = categories.map(prepareOptions);
+  const [categoriesOptions, setCategoriesOptions] = useState(
+    defaultCategoriesOptions
+  );
+
+  const currentLabel = categoryMap[categoryId ?? ""] ?? noCategoryName;
+
+  const handleChange = (newValue: OptionType | null): void => {
+    if (newValue) {
+      onChange(newValue);
+    }
+    setIsEditing(false);
+  };
+
+  const handleCreate = (inputValue: string): void => {
+    const newId = crypto.randomUUID();
+    const newCategoryOption = { value: newId, label: inputValue };
+    onChange(newCategoryOption);
+
+    const newCategoriesOptions = [
+      ...categoriesOptions,
+      newCategoryOption,
+    ];
+    setCategoriesOptions(newCategoriesOptions);
+    dispatch(addCategory({id: newId, name: inputValue}));
+    setIsEditing(false);
+  };
+
+  if (isEditing) {
+    return (
+      <div className="w-full sm:w-1/4">
+        <CreatableSelect
+          autoFocus
+          isClearable
+          defaultValue={
+            categoryId ? { value: categoryId, label: currentLabel } : null
+          }
+          onChange={handleChange}
+          onCreateOption={handleCreate}
+          options={categoriesOptions}
+          onBlur={(): void => setIsEditing(false)}
+          className="text-sm"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <span
+      className="w-1/4 sm:text-center cursor-pointer hover:underline"
+      onClick={(): void => setIsEditing(true)}
+    >
+      {currentLabel}
+    </span>
+  );
+};

@@ -7,6 +7,7 @@ import { PlanHeader } from "./components/PlanHeader";
 import { PlanSelector } from "./components/PlanSelector";
 import { PlanView } from "./components/PlanView";
 import { RepeatItemForm } from "./components/RepeatItemForm";
+import { CategoryLabelMapProvider } from "./context/CategoryLabelMapContext";
 import {
   addPlan,
   addTransaction,
@@ -16,11 +17,13 @@ import {
 import { Transaction } from "./types/entities";
 import { ModalCode, RepeatType } from "./utils/const";
 import { repeatTransaction } from "./utils/repeatTransaction";
-import { useAppDispatch, useAppSelector } from "./store";
+import { saveStore } from "./utils/saveStore";
+import { store, useAppDispatch, useAppSelector } from "./store";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
+  const categories = useAppSelector((state) => state.categories);
   const isHeaderSticky = useAppSelector(
     (state): boolean => state.appSettings.isHeaderSticky
   );
@@ -32,6 +35,10 @@ export const App: FC = () => {
   );
 
   const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
+
+  useEffect(() => {
+    saveStore(store.getState());
+  }, []);
 
   useEffect(() => {
     const hash = window.location.hash.replace(/^#/, "");
@@ -93,37 +100,39 @@ export const App: FC = () => {
     : "";
 
   return (
-    <div className="min-h-screen bg-gray-100 p-0 print:p-2">
-      <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6 print:p-0 print:shadow-none print:m-0">
-        <div className={wrapperClass}>
-          <div className={`print:hidden ${headerClass}`}>
-            <Header />
-            <PlanSelector
-              plans={plans}
-              selectedPlanId={selectedPlanId}
-              onSelectPlan={handleSelectPlan}
-            />
+    <CategoryLabelMapProvider categories={categories}>
+      <div className="min-h-screen bg-gray-100 p-0 print:p-2">
+        <div className="mx-auto bg-white shadow-md rounded-lg p-4 sm:p-6 print:p-0 print:shadow-none print:m-0">
+          <div className={wrapperClass}>
+            <div className={`print:hidden ${headerClass}`}>
+              <Header />
+              <PlanSelector
+                plans={plans}
+                selectedPlanId={selectedPlanId}
+                onSelectPlan={handleSelectPlan}
+              />
 
-            <PlanHeader
+              <PlanHeader
+                selectedPlan={selectedPlan}
+                addTransaction={handleAddTransaction}
+              />
+            </div>
+
+            <PlanView
               selectedPlan={selectedPlan}
-              addTransaction={handleAddTransaction}
+              updateTransaction={handleUpdateTransaction}
+              deleteTransaction={handleDeleteTransaction}
             />
           </div>
 
-          <PlanView
-            selectedPlan={selectedPlan}
-            updateTransaction={handleUpdateTransaction}
-            deleteTransaction={handleDeleteTransaction}
-          />
+          <ModalComponent code={ModalCode.repeatItem} title="Repeat item">
+            <RepeatItemForm
+              onSubmit={handleRepeat}
+              transaction={transactionToRepeat}
+            />
+          </ModalComponent>
         </div>
-
-        <ModalComponent code={ModalCode.repeatItem} title="Repeat item">
-          <RepeatItemForm
-            onSubmit={handleRepeat}
-            transaction={transactionToRepeat}
-          />
-        </ModalComponent>
       </div>
-    </div>
+    </CategoryLabelMapProvider>
   );
 };

@@ -5,6 +5,12 @@ export interface Transaction {
   date: string;
   isDone: boolean;
   trueDate: Date;
+  categoryId?: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
 }
 
 export interface SavedTransaction {

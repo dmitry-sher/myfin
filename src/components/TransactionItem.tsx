@@ -1,13 +1,16 @@
 import React, { FC, useState } from "react";
 import { faClose, faEdit, faRepeat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { v4 as uuidv4 } from "uuid";
 
+import { addCategory } from "../slices/categoriesSlice";
 import { openModal, setTransactionForRepeat } from "../slices/modalSlice";
-import { useAppDispatch } from "../store";
-import { Transaction } from "../types/entities";
-import { ModalCode } from "../utils/const";
+import { useAppDispatch, useAppSelector } from "../store";
+import { Category, Transaction } from "../types/entities";
+import { ModalCode, newCategoryKey } from "../utils/const";
 import { printDate } from "../utils/printDate";
 
+import { TransactionCategory } from "./TransactionCategory";
 import { TransactionEditForm } from "./TransactionEditForm";
 
 interface TransactionItemProps {
@@ -25,6 +28,8 @@ export const TransactionItem: FC<TransactionItemProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useAppDispatch();
+
+  const categories = useAppSelector((state) => state.categories);
 
   const handleSave = (updatedTransaction: Transaction): void => {
     onUpdateTransaction(updatedTransaction);
@@ -60,6 +65,25 @@ export const TransactionItem: FC<TransactionItemProps> = ({
   };
   const handleCancel = (): void => setIsEditing(false);
 
+  const handleCategoryChange = (newCategory: {
+    value: string;
+    label: string;
+  }): void => {
+    if (newCategory.value === newCategoryKey) {
+      const newCategoryObj: Category = {
+        id: uuidv4(),
+        name: newCategory.label,
+      };
+      dispatch(addCategory(newCategoryObj));
+      newCategory.value = newCategoryObj.id;
+    }
+
+    onUpdateTransaction({
+      ...transaction,
+      categoryId: newCategory.value,
+    });
+  };
+
   return (
     <li className="flex justify-between items-center p-2 border-b flex-col sm:flex-row">
       {isEditing ? (
@@ -90,7 +114,7 @@ export const TransactionItem: FC<TransactionItemProps> = ({
           </div>
           <div className="flex sm:w-2/5 w-full justify-between">
             <span
-              className={`w-1/3 sm:text-right ${
+              className={`w-1/4 sm:text-right ${
                 transaction.amount > 0 ? "text-green-600" : "text-red-600"
               }`}
             >
@@ -98,13 +122,18 @@ export const TransactionItem: FC<TransactionItemProps> = ({
               {transaction.amount}
             </span>
             <span
-              className={`w-1/3 sm:text-right ${
+              className={`w-1/4 sm:text-right ${
                 balance >= 0 ? "text-green-600" : "text-red-600"
               }`}
             >
               {balance}
             </span>
-            <div className="flex items-center space-x-2 text-right print:hidden">
+            <TransactionCategory
+              categoryId={transaction.categoryId}
+              categories={categories}
+              onChange={handleCategoryChange}
+            />
+            <div className="flex items-center space-x-2 print:hidden">
               <button
                 onClick={handleEdit}
                 className="p-1 bg-blue-500 text-white rounded"
