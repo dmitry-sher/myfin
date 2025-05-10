@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { CategoryList } from "./components/CategoryList";
 import { Header } from "./components/Header";
 import { ModalComponent } from "./components/ModalComponent";
 import { PlanHeader } from "./components/PlanHeader";
@@ -130,6 +131,10 @@ export const App: FC = () => {
               onSubmit={handleRepeat}
               transaction={transactionToRepeat}
             />
+          </ModalComponent>
+
+          <ModalComponent code={ModalCode.categoryList} title="Categories">
+            <CategoryList categories={categories} />
           </ModalComponent>
         </div>
       </div>

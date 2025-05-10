@@ -11,6 +11,7 @@ export interface Transaction {
 export interface Category {
   id: string;
   name: string;
+  color?: string;
 }
 
 export interface SavedTransaction {
@@ -34,3 +35,9 @@ export interface SavedPlan {
   name: string;
   transactions: SavedTransaction[];
 }
+
+export type OptionType = {
+  value: string;
+  label: string;
+  color?: string;
+};

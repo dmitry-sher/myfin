@@ -2,9 +2,10 @@ import React, { FC, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 
 import { useAppSelector } from "../store";
-import { Plan } from "../types/entities";
+import { OptionType, Plan } from "../types/entities";
 
 import { AddPlanButton } from "./PlanButtons/AddPlanButton";
+import { CategoriesEditorButton } from "./PlanButtons/CategoriesEditorButton";
 import { DuplicatePlanButton } from "./PlanButtons/DuplicatePlanButton";
 import { ExportPlanButton } from "./PlanButtons/ExportPlanButton";
 import { ImportPlanButton } from "./PlanButtons/ImportPlanButton";
@@ -19,11 +20,6 @@ interface PlanSelectorProps {
   selectedPlanId: string | null;
   onSelectPlan: (planId: string) => void;
 }
-
-type OptionType = {
-  value: string;
-  label: string;
-};
 
 export const PlanSelector: FC<PlanSelectorProps> = ({
   plans,
@@ -99,6 +95,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
             <ExportPlanButton />
             <ImportPlanButton />
             <PrintPlanButton />
+            <CategoriesEditorButton />
             <SetDefaultPlanButton />
           </div>
         </div>

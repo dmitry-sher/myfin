@@ -1,8 +1,9 @@
-import { Category } from "../types/entities";
+import { Category, OptionType } from "../types/entities";
 
 export const prepareOptions = (
   category: Category
-): { value: string; label: string } => ({
+): OptionType => ({
   value: category.id,
   label: category.name,
+  color: category.color,
 });

@@ -35,7 +35,7 @@ export const ModalComponent: FC<ModalComponentProps> = ({
       onRequestClose={handleCloseModal}
       shouldCloseOnOverlayClick
       className="bg-white p-6 rounded shadow-lg max-w-lg mx-auto mt-20"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
     >
       {title ? (
         <div className="border-b pb-3 mb-4">

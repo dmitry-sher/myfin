@@ -1,6 +1,7 @@
 export const ModalCode = {
   renamePlan: "renamePlan",
   repeatItem: "repeatItem",
+  categoryList: "categoryList",
 };
 
 // eslint-disable-next-line no-shadow
@@ -17,3 +18,6 @@ export const categoriesStorageKey = "categories";
 export const newCategoryKey = "newCategoryKey";
 export const noCategoryKey = "noCategoryKey";
 export const noCategoryName = "No category";
+
+export const PleasantSaturation = 60;
+export const PleasantLightness = 65;

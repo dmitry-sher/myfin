@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import { CSSObjectWithLabel, SingleValue } from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,8 +7,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import { addCategory } from "../slices/categoriesSlice";
 import { store, useAppDispatch, useAppSelector } from "../store";
-import { Category, Transaction } from "../types/entities";
+import { Category, OptionType, Transaction } from "../types/entities";
 import { newCategoryKey } from "../utils/const";
+import { generatePleasantColor } from "../utils/generatePleasantColor";
 import { parseDateEx } from "../utils/parseDateEx";
 import { prepareOptions } from "../utils/prepareOptions";
 
@@ -21,6 +23,27 @@ interface FormState {
   date: string;
   categoryId: string;
 }
+
+const customStyles = {
+  option: (
+    base: CSSObjectWithLabel,
+    state: { data: OptionType; isFocused: boolean }
+  ): CSSObjectWithLabel => ({
+    ...base,
+    backgroundColor: state.data.color || (state.isFocused ? "#eee" : undefined),
+    color: state.data.color ? "white" : "black",
+  }),
+  singleValue: (
+    base: CSSObjectWithLabel,
+    state: { data: OptionType }
+  ): CSSObjectWithLabel => ({
+    ...base,
+    backgroundColor: state.data.color,
+    color: state.data.color ? "white" : base.color,
+    padding: "2px 6px",
+    borderRadius: "4px",
+  }),
+};
 
 export const TransactionForm: FC<TransactionFormProps> = ({
   onAddTransaction,
@@ -69,6 +92,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       const newCategory: Category = {
         id: uuidv4(),
         name: selectedOption.label,
+        color: selectedOption.color
       };
       categoryId = newCategory.id;
       dispatch(addCategory(newCategory));
@@ -88,6 +112,27 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     });
 
     setFormState({ amount: "", description: "", date: "", categoryId });
+  };
+
+  const handleCreateOption = (newValue: string): void => {
+    const newOption = {
+      value: newCategoryKey,
+      label: newValue,
+      color: generatePleasantColor(),
+    };
+    setCategoriesOptions([...defaultCategoriesOptions, newOption]);
+    setFormState((prev) => ({
+      ...prev,
+      categoryId: newCategoryKey,
+    }));
+  };
+
+  const handleCategoryChange = (newOption: SingleValue<OptionType>): void => {
+    const selectedValue = newOption?.value ?? "";
+    setFormState((prev) => ({
+      ...prev,
+      categoryId: selectedValue,
+    }));
   };
 
   return (
@@ -120,21 +165,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         options={categoriesOptions}
         className="w-1/5"
         placeholder="Select categories"
-        onCreateOption={(newValue): void => {
-          const newOption = { value: newCategoryKey, label: newValue };
-          setCategoriesOptions([...defaultCategoriesOptions, newOption]);
-          setFormState((prev) => ({
-            ...prev,
-            categoryId: newCategoryKey,
-          }));
-        }}
-        onChange={(newOption): void => {
-          const selectedValue = newOption?.value ?? "";
-          setFormState((prev) => ({
-            ...prev,
-            categoryId: selectedValue,
-          }));
-        }}
+        styles={customStyles}
+        onCreateOption={handleCreateOption}
+        onChange={handleCategoryChange}
         value={selectedOption}
       />
       <button type="submit" className="p-2 bg-blue-500 text-white rounded">

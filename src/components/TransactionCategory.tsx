@@ -4,14 +4,10 @@ import CreatableSelect from "react-select/creatable";
 import { useCategoryLabelMap } from "../context/CategoryLabelMapContext";
 import { addCategory } from "../slices/categoriesSlice";
 import { useAppDispatch } from "../store";
-import { Category } from "../types/entities";
+import { Category, OptionType } from "../types/entities";
 import { noCategoryName } from "../utils/const";
+import { generatePleasantColor } from "../utils/generatePleasantColor";
 import { prepareOptions } from "../utils/prepareOptions";
-
-type OptionType = {
-  value: string;
-  label: string;
-};
 
 interface TransactionCategoryProps {
   categoryId?: string;
@@ -26,13 +22,13 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [isEditing, setIsEditing] = useState(false);
-  const categoryMap = useCategoryLabelMap();
+  const { labelMap, colorMap } = useCategoryLabelMap();
   const defaultCategoriesOptions = categories.map(prepareOptions);
   const [categoriesOptions, setCategoriesOptions] = useState(
     defaultCategoriesOptions
   );
 
-  const currentLabel = categoryMap[categoryId ?? ""] ?? noCategoryName;
+  const currentLabel = labelMap[categoryId ?? ""] ?? noCategoryName;
 
   const handleChange = (newValue: OptionType | null): void => {
     if (newValue) {
@@ -43,15 +39,13 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
 
   const handleCreate = (inputValue: string): void => {
     const newId = crypto.randomUUID();
-    const newCategoryOption = { value: newId, label: inputValue };
+    const color = generatePleasantColor();
+    const newCategoryOption = { value: newId, label: inputValue, color };
     onChange(newCategoryOption);
 
-    const newCategoriesOptions = [
-      ...categoriesOptions,
-      newCategoryOption,
-    ];
+    const newCategoriesOptions = [...categoriesOptions, newCategoryOption];
     setCategoriesOptions(newCategoriesOptions);
-    dispatch(addCategory({id: newId, name: inputValue}));
+    dispatch(addCategory({ id: newId, name: inputValue, color }));
     setIsEditing(false);
   };
 
@@ -78,6 +72,7 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
     <span
       className="w-1/4 sm:text-center cursor-pointer hover:underline"
       onClick={(): void => setIsEditing(true)}
+      style={{ backgroundColor: colorMap[categoryId ?? ""] } as React.CSSProperties}
     >
       {currentLabel}
     </span>

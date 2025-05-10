@@ -29,12 +29,20 @@ const categoriesSlice = createSlice({
         state.splice(categoryIndex, 1);
       }
     },
+    updateColor: (state, action: PayloadAction<{ id: string; color: string }>) => {
+      const { id, color } = action.payload;
+      const existingCategory = state.find((category) => category.id === id);
+      if (existingCategory) {
+        existingCategory.color = color;
+      }
+    }
   }
 });
 
 export const {
   addCategory,
-  removeCategory
+  removeCategory,
+  updateColor
 } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
