@@ -3,6 +3,8 @@ export const ModalCode = {
   repeatItem: "repeatItem",
   categoryList: "categoryList",
   monthTotals: "monthTotals",
+  pieChart: "pieChart",
+  monthGraphs: "monthGraphs",
 };
 
 // eslint-disable-next-line no-shadow

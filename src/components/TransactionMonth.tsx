@@ -2,6 +2,8 @@ import React, { FC, useEffect, useRef } from "react";
 
 import { Transaction } from "../types/entities";
 
+import { ViewMonthGraphsButton } from "./TransactionMonthButtons/ViewMonthGraphsButton";
+import { ViewPieChartButton } from "./TransactionMonthButtons/ViewPieChartButton";
 import { ViewTotalsButton } from "./TransactionMonthButtons/ViewTotalsButton";
 import { TransactionItem } from "./TransactionItem";
 import { ViewAmount } from "./ViewAmount";
@@ -85,10 +87,12 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
       })}
       <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 mb-6">
         <div className="sm:w-1/5 w-full flex">
-          <span className="hidden sm:block sm:w-1/2 w-1/5">
+          <span className="hidden sm:flex sm:w-1/2 w-1/5">
             <ViewTotalsButton
               monthTransactions={monthTransactions}
             />
+            <ViewPieChartButton monthTransactions={monthTransactions} />
+            <ViewMonthGraphsButton monthTransactions={monthTransactions} />
           </span>
           <span className="sm:w-1/2 w-full text-center">
             <span className="print:hidden">{monthKey}</span> Totals

@@ -21,7 +21,7 @@ export const ViewTotalsButton: FC<ViewTotalsButtonProps> = ({
   };
 
   return (
-    <span className="hidden sm:block sm:w-1/2 w-1/5">
+    <span className="hidden sm:block">
       <button
         className={"text-black py-2 rounded mr-2 mb-2 sm:mb-0"}
         onClick={handleShowTotals}
