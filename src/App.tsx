@@ -1,9 +1,10 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { CategoryList } from "./components/CategoryList";
 import { Header } from "./components/Header";
 import { ModalComponent } from "./components/ModalComponent";
+import MonthTotals from "./components/MonthTotals";
 import { PlanHeader } from "./components/PlanHeader";
 import { PlanSelector } from "./components/PlanSelector";
 import { PlanView } from "./components/PlanView";
@@ -31,7 +32,7 @@ export const App: FC = () => {
   const transactionToRepeat = useAppSelector(
     (state) => state.modal.repeatTransaction
   );
-  const [selectedPlanId, setSelectedPlanId] = React.useState<string | null>(
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(
     null
   );
 
@@ -135,6 +136,10 @@ export const App: FC = () => {
 
           <ModalComponent code={ModalCode.categoryList} title="Categories">
             <CategoryList categories={categories} />
+          </ModalComponent>
+
+          <ModalComponent code={ModalCode.monthTotals} title="Month totals">
+            <MonthTotals />
           </ModalComponent>
         </div>
       </div>

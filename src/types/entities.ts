@@ -41,3 +41,10 @@ export type OptionType = {
   label: string;
   color?: string;
 };
+
+export type GroupedCategory = {
+  id: string;
+  transactions: Transaction[];
+  name: string;
+  total: number;
+};

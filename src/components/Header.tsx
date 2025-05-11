@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { toggleIsHeaderSticky } from "../slices/appSettingsSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 
-export const Header: React.FC = () => {
+export const Header: FC = () => {
   const dispatch = useAppDispatch();
   const isSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
 

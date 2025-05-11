@@ -2,6 +2,7 @@ export const ModalCode = {
   renamePlan: "renamePlan",
   repeatItem: "repeatItem",
   categoryList: "categoryList",
+  monthTotals: "monthTotals",
 };
 
 // eslint-disable-next-line no-shadow

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, FC, ReactNode, useContext, useMemo } from "react";
 
 import { Category } from "../types/entities";
 
@@ -10,7 +10,7 @@ type CategoryContext = {
 
 interface CategoryLabelMapProviderProps {
   categories: Category[];
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 const CategoryLabelMapContext = createContext<CategoryContext>({
@@ -18,7 +18,7 @@ const CategoryLabelMapContext = createContext<CategoryContext>({
   colorMap: {},
 });
 
-export const CategoryLabelMapProvider: React.FC<
+export const CategoryLabelMapProvider: FC<
   CategoryLabelMapProviderProps
 > = ({ categories, children }) => {
   const labelMap = useMemo((): LabelMap => {

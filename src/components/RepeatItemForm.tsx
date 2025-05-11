@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import { closeModal } from "../slices/modalSlice";
 import { useAppDispatch } from "../store";
@@ -27,7 +27,7 @@ export const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit 
 
   if (!transaction) return null;
 
-  const handleSubmit = (e: React.FormEvent): void => {
+  const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
 
     onSubmit(transaction, repeatPeriod, repeats);
@@ -50,7 +50,7 @@ export const RepeatItemForm: FC<RepeatItemFormProps> = ({ transaction, onSubmit 
     }
   };
 
-  const handleRepeatsChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleRepeatsChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setRepeats(Number(e.target.value));
   };
 

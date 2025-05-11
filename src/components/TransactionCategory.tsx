@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { CSSProperties, FC, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
 import { useCategoryLabelMap } from "../context/CategoryLabelMapContext";
@@ -29,6 +29,12 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
   );
 
   const currentLabel = labelMap[categoryId ?? ""] ?? noCategoryName;
+
+  // reload categories options when global categories change
+  useEffect(() => {
+    const newCategoriesOptions = categories.map(prepareOptions);
+    setCategoriesOptions(newCategoriesOptions);
+  }, [categories]);
 
   const handleChange = (newValue: OptionType | null): void => {
     if (newValue) {
@@ -72,7 +78,7 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
     <span
       className="w-1/4 sm:text-center cursor-pointer hover:underline"
       onClick={(): void => setIsEditing(true)}
-      style={{ backgroundColor: colorMap[categoryId ?? ""] } as React.CSSProperties}
+      style={{ backgroundColor: colorMap[categoryId ?? ""] } as CSSProperties}
     >
       {currentLabel}
     </span>

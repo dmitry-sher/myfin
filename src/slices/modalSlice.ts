@@ -5,6 +5,7 @@ import { Transaction } from "../types/entities";
 interface ModalState {
   modalState: Record<string, boolean>;
   repeatTransaction?: Transaction;
+  totalsTransactions?: Transaction[];
 }
 
 const initialState: ModalState = {
@@ -24,9 +25,16 @@ const modalSlice = createSlice({
     setTransactionForRepeat: (state, { payload }: { payload: Transaction }) => {
       state.repeatTransaction = payload;
     },
+    setTotalsTransactions: (state, { payload }: { payload: Transaction[] }) => {
+      state.totalsTransactions = payload;
+    },
   },
 });
 
-export const { openModal, closeModal, setTransactionForRepeat } =
-  modalSlice.actions;
+export const {
+  closeModal,
+  openModal,
+  setTotalsTransactions,
+  setTransactionForRepeat,
+} = modalSlice.actions;
 export default modalSlice.reducer;

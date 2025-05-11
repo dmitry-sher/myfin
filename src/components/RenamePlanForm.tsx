@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, FormEvent, useState } from "react";
 
 interface RenamePlanFormProps {
   currentName: string;
@@ -8,7 +8,7 @@ interface RenamePlanFormProps {
 export const RenamePlanForm: FC<RenamePlanFormProps> = ({ currentName, onSubmit }) => {
   const [newName, setNewName] = useState(currentName);
 
-  const handleSubmit = (e: React.FormEvent): void => {
+  const handleSubmit = (e: FormEvent): void => {
     e.preventDefault();
     if (newName.trim()) {
       onSubmit(newName);

@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef } from "react";
 
 import { Transaction } from "../types/entities";
 
+import { ViewTotalsButton } from "./TransactionMonthButtons/ViewTotalsButton";
 import { TransactionItem } from "./TransactionItem";
 import { ViewAmount } from "./ViewAmount";
 
@@ -20,7 +21,7 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   onUpdateTransaction,
   onDeleteTransaction,
   startingRunningBalance,
-  isCurrentMonth = false
+  isCurrentMonth = false,
 }) => {
   let monthlyInTotalPlan = 0;
   let monthlyOutTotalPlan = 0;
@@ -84,8 +85,14 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
       })}
       <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 mb-6">
         <div className="sm:w-1/5 w-full flex">
-          <span className="hidden sm:block sm:w-1/2 w-1/5"></span>
-          <span className="sm:w-1/2 w-full text-center"><span className="print:hidden">{monthKey}</span> Totals</span>
+          <span className="hidden sm:block sm:w-1/2 w-1/5">
+            <ViewTotalsButton
+              monthTransactions={monthTransactions}
+            />
+          </span>
+          <span className="sm:w-1/2 w-full text-center">
+            <span className="print:hidden">{monthKey}</span> Totals
+          </span>
         </div>
         <div className="sm:w-4/5 w-full flex">
           <ViewAmount

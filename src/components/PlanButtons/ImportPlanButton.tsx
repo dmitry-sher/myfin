@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { ChangeEvent, FC, useRef } from "react";
 import { faFileImport } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -18,7 +18,7 @@ export const ImportPlanButton: FC = () => {
   };
 
   const handleImportPlan = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: ChangeEvent<HTMLInputElement>
   ): void => {
     const file = event.target.files?.[0];
     if (file && selectedPlanId) {
