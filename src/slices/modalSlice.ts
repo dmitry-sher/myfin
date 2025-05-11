@@ -2,14 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { Transaction } from "../types/entities";
 
+type TotalsData = {
+  monthKey?: string;
+  totalsTransactions?: Transaction[];
+  totalsStartingBalance?: number;
+};
+
 interface ModalState {
   modalState: Record<string, boolean>;
   repeatTransaction?: Transaction;
-  totalsTransactions?: Transaction[];
+  totalsData: TotalsData;
 }
 
 const initialState: ModalState = {
   modalState: {},
+  totalsData: {},
 };
 
 const modalSlice = createSlice({
@@ -25,8 +32,8 @@ const modalSlice = createSlice({
     setTransactionForRepeat: (state, { payload }: { payload: Transaction }) => {
       state.repeatTransaction = payload;
     },
-    setTotalsTransactions: (state, { payload }: { payload: Transaction[] }) => {
-      state.totalsTransactions = payload;
+    setTotalsData: (state, { payload }: { payload: TotalsData }) => {
+      state.totalsData = payload;
     },
   },
 });
@@ -34,7 +41,7 @@ const modalSlice = createSlice({
 export const {
   closeModal,
   openModal,
-  setTotalsTransactions,
+  setTotalsData,
   setTransactionForRepeat,
 } = modalSlice.actions;
 export default modalSlice.reducer;

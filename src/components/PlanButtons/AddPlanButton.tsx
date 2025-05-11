@@ -3,10 +3,9 @@ import { faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
+import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
 import { addPlan } from "../../slices/plansSlice";
 import { useAppDispatch } from "../../store";
-
-import { usePlanSelectorContext } from "./PlanSelectorContext";
 
 export const AddPlanButton: FC = () => {
   const dispatch = useAppDispatch();

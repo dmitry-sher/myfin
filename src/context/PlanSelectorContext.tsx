@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { Plan } from "../../types/entities";
+import { Plan } from "../types/entities";
 
 export interface PlanSelectorContextType {
   plans: Plan[];

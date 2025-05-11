@@ -18,10 +18,10 @@ const isNoData = (
   !transactions ||
   transactions.length === 0;
 
-const MonthTotals: FC = () => {
+export const MonthTotals: FC = () => {
   const categories = useAppSelector((state): Category[] => state.categories);
   const transactions = useAppSelector(
-    (state): Transaction[] | undefined => state.modal.totalsTransactions
+    (state): Transaction[] | undefined => state.modal.totalsData.totalsTransactions
   );
   const { positive, negative, positiveTotal, negativeTotal } = useMemo(() => {
     if (isNoData(transactions, categories)) {
@@ -82,5 +82,3 @@ const MonthTotals: FC = () => {
     </div>
   );
 };
-
-export default MonthTotals;

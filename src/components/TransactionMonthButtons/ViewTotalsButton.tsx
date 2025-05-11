@@ -2,21 +2,23 @@ import React, { FC } from "react";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { openModal, setTotalsTransactions } from "../../slices/modalSlice";
+import { useMonthTotalsContext } from "../../context/MonthTotalsContext";
+import { openModal, setTotalsData } from "../../slices/modalSlice";
 import { useAppDispatch } from "../../store";
-import { Transaction } from "../../types/entities";
 import { ModalCode } from "../../utils/const";
 
-interface ViewTotalsButtonProps {
-  monthTransactions: Transaction[];
-}
-
-export const ViewTotalsButton: FC<ViewTotalsButtonProps> = ({
-  monthTransactions,
-}) => {
+export const ViewTotalsButton: FC = () => {
+  const { monthTransactions, monthKey, startingBalance } =
+    useMonthTotalsContext();
   const dispatch = useAppDispatch();
   const handleShowTotals = (): void => {
-    dispatch(setTotalsTransactions(monthTransactions));
+    dispatch(
+      setTotalsData({
+        monthKey,
+        totalsTransactions: monthTransactions,
+        totalsStartingBalance: startingBalance ?? 0,
+      })
+    );
     dispatch(openModal(ModalCode.monthTotals));
   };
 

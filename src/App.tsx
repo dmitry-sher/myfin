@@ -4,7 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 import { CategoryList } from "./components/CategoryList";
 import { Header } from "./components/Header";
 import { ModalComponent } from "./components/ModalComponent";
-import MonthTotals from "./components/MonthTotals";
+import { MonthlyBarChart } from "./components/MonthlyBarChart";
+import { MonthPieCharts } from "./components/MonthPieCharts";
+import { MonthTotals } from "./components/MonthTotals";
 import { PlanHeader } from "./components/PlanHeader";
 import { PlanSelector } from "./components/PlanSelector";
 import { PlanView } from "./components/PlanView";
@@ -20,21 +22,22 @@ import { Transaction } from "./types/entities";
 import { ModalCode, RepeatType } from "./utils/const";
 import { repeatTransaction } from "./utils/repeatTransaction";
 import { saveStore } from "./utils/saveStore";
-import { store, useAppDispatch, useAppSelector } from "./store";
+import { RootState, store, useAppDispatch, useAppSelector } from "./store";
 
 export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
   const categories = useAppSelector((state) => state.categories);
+  const monthKey = useAppSelector(
+    (state: RootState) => state.modal.totalsData.monthKey
+  );
   const isHeaderSticky = useAppSelector(
     (state): boolean => state.appSettings.isHeaderSticky
   );
   const transactionToRepeat = useAppSelector(
     (state) => state.modal.repeatTransaction
   );
-  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(
-    null
-  );
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
 
   const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
 
@@ -138,8 +141,25 @@ export const App: FC = () => {
             <CategoryList categories={categories} />
           </ModalComponent>
 
-          <ModalComponent code={ModalCode.monthTotals} title="Month totals">
+          <ModalComponent
+            code={ModalCode.monthTotals}
+            title={`${monthKey} totals`}
+          >
             <MonthTotals />
+          </ModalComponent>
+
+          <ModalComponent
+            code={ModalCode.pieChart}
+            title={`${monthKey} pie charts`}
+          >
+            <MonthPieCharts />
+          </ModalComponent>
+
+          <ModalComponent
+            code={ModalCode.monthGraphs}
+            title={`${monthKey} graph`}
+          >
+            <MonthlyBarChart />
           </ModalComponent>
         </div>
       </div>

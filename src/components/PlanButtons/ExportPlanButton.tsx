@@ -2,10 +2,9 @@ import React, { FC } from "react";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
 import { exportPlan } from "../../slices/plansSlice";
 import { useAppDispatch } from "../../store";
-
-import { usePlanSelectorContext } from "./PlanSelectorContext";
 
 export const ExportPlanButton: FC = () => {
   const dispatch = useAppDispatch();

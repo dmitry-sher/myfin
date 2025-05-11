@@ -28,10 +28,10 @@ export const CategoryList: FC<CategoryListProps> = ({ categories }) => {
 
   return (
     <div className="w-full">
-      <div className="grid grid-cols-3 font-bold border-b py-2 text-left">
-        <span>Name</span>
-        <span>Color</span>
-        <span>Actions</span>
+      <div className="flex font-bold border-b py-2 text-left w-96">
+        <span className="w-3/5">Name</span>
+        <span className="w-1/5">Color</span>
+        <span className="w-1/5 text-right">Actions</span>
       </div>
 
       {categories.map((category) => {
@@ -39,18 +39,15 @@ export const CategoryList: FC<CategoryListProps> = ({ categories }) => {
         const handleColorChange = (color: string): void =>
           onChangeColor(category.id, color);
         return (
-          <div
-            key={category.id}
-            className="grid grid-cols-3 items-center py-2 border-b"
-          >
-            <span className="w-1/3">{category.name}</span>
-            <div className="w-1/3">
+          <div key={category.id} className="flex items-center py-2 border-b">
+            <span className="w-3/5">{category.name}</span>
+            <div className="w-1/5">
               <ColorPicker
                 color={category.color ?? ""}
                 onAccept={handleColorChange}
               />
             </div>
-            <div className="space-x-2 p-4 w-1/3">
+            <div className="w-1/5 text-right">
               <button
                 className={"bg-red-500 p-1"}
                 onClick={handleRemoveCategory}

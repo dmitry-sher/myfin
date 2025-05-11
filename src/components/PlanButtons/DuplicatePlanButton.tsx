@@ -3,10 +3,9 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
+import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
 import { copyPlan } from "../../slices/plansSlice";
 import { useAppDispatch } from "../../store";
-
-import { usePlanSelectorContext } from "./PlanSelectorContext";
 
 export const DuplicatePlanButton: FC = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 
+import { PlanSelectorContext } from "../context/PlanSelectorContext";
 import { useAppSelector } from "../store";
 import { OptionType, Plan } from "../types/entities";
 
@@ -9,7 +10,6 @@ import { CategoriesEditorButton } from "./PlanButtons/CategoriesEditorButton";
 import { DuplicatePlanButton } from "./PlanButtons/DuplicatePlanButton";
 import { ExportPlanButton } from "./PlanButtons/ExportPlanButton";
 import { ImportPlanButton } from "./PlanButtons/ImportPlanButton";
-import { PlanSelectorContext } from "./PlanButtons/PlanSelectorContext";
 import { PrintPlanButton } from "./PlanButtons/PrintPlanButton";
 import { RemovePlanButton } from "./PlanButtons/RemovePlanButton";
 import { RenamePlanButton } from "./PlanButtons/RenamePlanButton";
