@@ -1,6 +1,7 @@
 import React, { createContext, FC, ReactNode, useContext, useMemo } from "react";
 
 import { Category } from "../types/entities";
+import { incomeCategoryColor, incomeCategoryKey } from "../utils/const";
 
 type LabelMap = Record<string, string>;
 type CategoryContext = {
@@ -26,6 +27,7 @@ export const CategoryLabelMapProvider: FC<
     for (const { id, name } of categories) {
       result[id] = name;
     }
+    result[incomeCategoryKey] = "Income";
     return result;
   }, [categories]);
 
@@ -34,6 +36,7 @@ export const CategoryLabelMapProvider: FC<
     for (const { id, color } of categories) {
       result[id] = color ?? "";
     }
+    result[incomeCategoryKey] = incomeCategoryColor;
     return result;
   }, [categories]);
 

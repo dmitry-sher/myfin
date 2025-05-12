@@ -47,6 +47,7 @@ export const CategoryPieChart: FC<CategoryPieChartProps> = ({
             outerRadius={100}
             dataKey="value"
             label={extractLabel}
+            isAnimationActive={false}
           >
             {chartData.map(
               (entry, index): ReactNode => (

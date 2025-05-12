@@ -18,6 +18,8 @@ export const monthKeyFormat = "MMM-yyyy";
 export const plansStorageKey = "plans";
 export const categoriesStorageKey = "categories";
 
+export const incomeCategoryKey = "incomeCategoryKey";
+export const incomeCategoryColor = "#4CAF50"; // green
 export const newCategoryKey = "newCategoryKey";
 export const noCategoryKey = "noCategoryKey";
 export const noCategoryName = "No category";

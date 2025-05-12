@@ -1,7 +1,8 @@
 import React, { FC, useMemo } from "react";
 
 import { useAppSelector } from "../store";
-import { Category, Transaction } from "../types/entities";
+import { Category, GroupedCategory, Transaction } from "../types/entities";
+import { incomeCategoryKey } from "../utils/const";
 import {
   defaultGroupTransactionsByCategories,
   groupTransactionsByCategories,
@@ -27,7 +28,18 @@ export const MonthPieCharts: FC = () => {
     if (isNoData(transactions, categories)) {
       return defaultGroupTransactionsByCategories;
     }
-    return groupTransactionsByCategories(transactions ?? [], categories);
+    const ret = groupTransactionsByCategories(transactions ?? [], categories);
+    const { positiveTotal, negativeTotal } = ret;
+    if (positiveTotal > negativeTotal) {
+      const newCategory: GroupedCategory = {
+        id: incomeCategoryKey,
+        name: "income",
+        total: positiveTotal + negativeTotal,
+        transactions: [],
+      };
+      ret.negative.push(newCategory);
+    }
+    return ret;
   }, [transactions, categories]);
 
   if (isNoData(transactions, categories)) {
