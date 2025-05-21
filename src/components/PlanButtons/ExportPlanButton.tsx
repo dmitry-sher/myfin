@@ -19,7 +19,7 @@ export const ExportPlanButton: FC = () => {
 
   return (
     <button
-      className={`bg-gray-500 ${disableableButtonClass}`}
+      className={`bg-gray-500 hidden sm:inline-block ${disableableButtonClass}`}
       onClick={handleExport}
       disabled={!selectedPlanId}
       title="Export"

@@ -12,7 +12,7 @@ export const PrintPlanButton: FC = () => {
 
   return (
     <button
-      className={`bg-gray-500 ${disableableButtonClass}`}
+      className={`bg-gray-500 hidden sm:inline-block ${disableableButtonClass}`}
       onClick={triggerPrintDialog}
       disabled={!selectedPlanId}
       title="Print"

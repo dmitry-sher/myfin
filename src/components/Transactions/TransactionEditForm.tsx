@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useState } from "react";
 
-import { Transaction } from "../types/entities";
-import { printDate } from "../utils/printDate";
+import { Transaction } from "../../types/entities";
+import { printDate } from "../../utils/printDate";
 
 interface TransactionEditFormProps {
   transaction: Transaction;

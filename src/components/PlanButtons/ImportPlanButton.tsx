@@ -46,7 +46,7 @@ export const ImportPlanButton: FC = () => {
   return (
     <>
       <button
-        className={`bg-gray-500 ${disableableButtonClass}`}
+        className={`bg-gray-500 hidden sm:inline-block ${disableableButtonClass}`}
         onClick={triggerFileDialog}
         disabled={!selectedPlanId}
         title="Import"

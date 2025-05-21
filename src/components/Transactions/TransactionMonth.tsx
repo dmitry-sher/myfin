@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useRef } from "react";
 
-import { MonthTotalsContext } from "../context/MonthTotalsContext";
-import { Transaction } from "../types/entities";
+import { MonthTotalsContext } from "../../context/MonthTotalsContext";
+import { Transaction } from "../../types/entities";
+import { ViewMonthGraphsButton } from "../TransactionMonthButtons/ViewMonthGraphsButton";
+import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
+import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
+import { ViewAmount } from "../ViewAmount";
 
-import { ViewMonthGraphsButton } from "./TransactionMonthButtons/ViewMonthGraphsButton";
-import { ViewPieChartButton } from "./TransactionMonthButtons/ViewPieChartButton";
-import { ViewTotalsButton } from "./TransactionMonthButtons/ViewTotalsButton";
-import { TransactionItem } from "./TransactionItem";
-import { ViewAmount } from "./ViewAmount";
+import { ViewTransaction } from "./ViewTransaction";
 
 interface TransactionMonthProps {
   monthKey: string;
@@ -84,12 +84,12 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
           }
 
           return (
-            <TransactionItem
+            <ViewTransaction
               key={transaction.id}
               transaction={transaction}
-              balance={runningBalance}
               onUpdateTransaction={onUpdateTransaction}
               onDeleteTransaction={onDeleteTransaction}
+              balance={runningBalance}
             />
           );
         })}

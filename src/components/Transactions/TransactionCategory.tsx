@@ -1,13 +1,13 @@
 import React, { CSSProperties, FC, useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 
-import { useCategoryLabelMap } from "../context/CategoryLabelMapContext";
-import { addCategory } from "../slices/categoriesSlice";
-import { useAppDispatch } from "../store";
-import { Category, OptionType } from "../types/entities";
-import { noCategoryName } from "../utils/const";
-import { generatePleasantColor } from "../utils/generatePleasantColor";
-import { prepareOptions } from "../utils/prepareOptions";
+import { useCategoryLabelMap } from "../../context/CategoryLabelMapContext";
+import { addCategory } from "../../slices/categoriesSlice";
+import { useAppDispatch } from "../../store";
+import { Category, OptionType } from "../../types/entities";
+import { noCategoryName } from "../../utils/const";
+import { generatePleasantColor } from "../../utils/generatePleasantColor";
+import { prepareOptions } from "../../utils/prepareOptions";
 
 interface TransactionCategoryProps {
   categoryId?: string;
@@ -76,7 +76,7 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
 
   return (
     <span
-      className="w-1/4 sm:text-center cursor-pointer hover:underline"
+      className="w-1/4 text-center cursor-pointer hover:underline"
       onClick={(): void => setIsEditing(true)}
       style={{ backgroundColor: colorMap[categoryId ?? ""] } as CSSProperties}
     >

@@ -18,10 +18,10 @@ export const SetDefaultPlanButton: FC = () => {
       dispatch(setDefaultPlan({ planId: selectedPlanId }));
     }
 
-    // eslint-disable-next-line no-restricted-globals
     if (
       selectedPlanId &&
       isDefault &&
+      // eslint-disable-next-line no-restricted-globals
       confirm("Are you sure to remove default plan?")
     ) {
       dispatch(setDefaultPlan({ planId: "" }));

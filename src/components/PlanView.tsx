@@ -6,7 +6,7 @@ import { monthKeyFormat } from "../utils/const";
 import { groupTransactions } from "../utils/groupTransactions";
 import { sortTransactions } from "../utils/sortTransactions";
 
-import { TransactionMonth } from "./TransactionMonth";
+import { TransactionMonth } from "./Transactions/TransactionMonth";
 
 type PlanViewProps = {
   selectedPlan?: Plan;
