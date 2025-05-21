@@ -8,8 +8,8 @@ import {
   Tooltip,
 } from "recharts";
 
-import { useCategoryLabelMap } from "../context/CategoryLabelMapContext";
-import { GroupedCategory } from "../types/entities";
+import { useCategoryLabelMap } from "../../context/CategoryLabelMapContext";
+import { GroupedCategory } from "../../types/entities";
 
 interface CategoryPieChartProps {
   data: GroupedCategory[];

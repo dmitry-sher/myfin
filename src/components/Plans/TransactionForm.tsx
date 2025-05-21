@@ -5,13 +5,13 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
-import { addCategory } from "../slices/categoriesSlice";
-import { store, useAppDispatch, useAppSelector } from "../store";
-import { Category, OptionType, Transaction } from "../types/entities";
-import { newCategoryKey } from "../utils/const";
-import { generatePleasantColor } from "../utils/generatePleasantColor";
-import { parseDateEx } from "../utils/parseDateEx";
-import { prepareOptions } from "../utils/prepareOptions";
+import { addCategory } from "../../slices/categoriesSlice";
+import { store, useAppDispatch, useAppSelector } from "../../store";
+import { Category, OptionType, Transaction } from "../../types/entities";
+import { newCategoryKey } from "../../utils/const";
+import { generatePleasantColor } from "../../utils/generatePleasantColor";
+import { parseDateEx } from "../../utils/parseDateEx";
+import { prepareOptions } from "../../utils/prepareOptions";
 
 interface TransactionFormProps {
   onAddTransaction: (transaction: Omit<Transaction, "id">) => void;

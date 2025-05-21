@@ -1,13 +1,12 @@
 import React, { FC, ReactNode, useMemo } from "react";
 
-import { useAppSelector } from "../store";
-import { Category, GroupedCategory, Transaction } from "../types/entities";
+import { useAppSelector } from "../../store";
+import { Category, GroupedCategory, Transaction } from "../../types/entities";
 import {
   defaultGroupTransactionsByCategories,
   groupTransactionsByCategories,
-} from "../utils/groupTransactionsByCategories";
-
-import { ViewAmount } from "./ViewAmount";
+} from "../../utils/groupTransactionsByCategories";
+import { ViewAmount } from "../ViewAmount";
 
 const isNoData = (
   transactions: Transaction[] | undefined,

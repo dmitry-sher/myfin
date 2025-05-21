@@ -1,10 +1,12 @@
+import { RefObject } from "react";
+
 import { Transaction } from "../../types/entities";
 
 export interface TransactionFieldViewerProps {
   transaction: Transaction;
   onClick: () => void;
   isEditing: boolean;
-  viewRef: React.RefObject<HTMLSpanElement>;
+  viewRef: RefObject<HTMLSpanElement>;
 }
 
 export interface TransactionFieldEditorProps {

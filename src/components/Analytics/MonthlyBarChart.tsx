@@ -12,10 +12,10 @@ import {
   YAxis,
 } from "recharts";
 
-import { useCategoryLabelMap } from "../context/CategoryLabelMapContext";
-import { useAppSelector } from "../store";
-import { Transaction } from "../types/entities";
-import { monthKeyFormat } from "../utils/const";
+import { useCategoryLabelMap } from "../../context/CategoryLabelMapContext";
+import { useAppSelector } from "../../store";
+import { Transaction } from "../../types/entities";
+import { monthKeyFormat } from "../../utils/const";
 
 type ChartItem = {
   day: string;

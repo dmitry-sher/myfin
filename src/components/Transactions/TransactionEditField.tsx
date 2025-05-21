@@ -1,4 +1,11 @@
-import React, { FC, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { TransactionFieldEditorProps } from "./types";
 
@@ -13,15 +20,15 @@ export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
   className,
   onTab,
 }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState(
     initialTransform(transaction[fieldName] as string)
   );
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setValue(transformer(event.target.value));
   };
 
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.keyCode === 13) {
       // Enter key pressed
       setIsEditing(false);
@@ -40,9 +47,7 @@ export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
     }
   };
 
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.keyCode === 9) {
       // Tab key pressed
       setIsEditing(false);

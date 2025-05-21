@@ -1,12 +1,11 @@
 import React, { FC, useMemo } from "react";
 import { format } from "date-fns";
 
-import { Plan, Transaction } from "../types/entities";
-import { monthKeyFormat } from "../utils/const";
-import { groupTransactions } from "../utils/groupTransactions";
-import { sortTransactions } from "../utils/sortTransactions";
-
-import { TransactionMonth } from "./Transactions/TransactionMonth";
+import { Plan, Transaction } from "../../types/entities";
+import { monthKeyFormat } from "../../utils/const";
+import { groupTransactions } from "../../utils/groupTransactions";
+import { sortTransactions } from "../../utils/sortTransactions";
+import { TransactionMonth } from "../Transactions/TransactionMonth";
 
 type PlanViewProps = {
   selectedPlan?: Plan;

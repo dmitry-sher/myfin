@@ -1,12 +1,12 @@
 import React, { FC, useMemo } from "react";
 
-import { useAppSelector } from "../store";
-import { Category, GroupedCategory, Transaction } from "../types/entities";
-import { incomeCategoryKey } from "../utils/const";
+import { useAppSelector } from "../../store";
+import { Category, GroupedCategory, Transaction } from "../../types/entities";
+import { incomeCategoryKey } from "../../utils/const";
 import {
   defaultGroupTransactionsByCategories,
   groupTransactionsByCategories,
-} from "../utils/groupTransactionsByCategories";
+} from "../../utils/groupTransactionsByCategories";
 
 import { CategoryPieChart } from "./SinglePieChart";
 

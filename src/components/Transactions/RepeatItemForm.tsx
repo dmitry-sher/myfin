@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 
-import { closeModal } from "../slices/modalSlice";
-import { useAppDispatch } from "../store";
-import { Transaction } from "../types/entities";
-import { ModalCode, RepeatType } from "../utils/const";
-import { printDate } from "../utils/printDate";
+import { closeModal } from "../../slices/modalSlice";
+import { useAppDispatch } from "../../store";
+import { Transaction } from "../../types/entities";
+import { ModalCode, RepeatType } from "../../utils/const";
+import { printDate } from "../../utils/printDate";
 
 interface RepeatItemFormProps {
   transaction?: Transaction;

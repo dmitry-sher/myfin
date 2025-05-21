@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 
-import { MonthTotalsContext } from "../context/MonthTotalsContext";
-import { Plan, Transaction } from "../types/entities";
+import { MonthTotalsContext } from "../../context/MonthTotalsContext";
+import { Plan, Transaction } from "../../types/entities";
+import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
+import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
 
-import { ViewPieChartButton } from "./TransactionMonthButtons/ViewPieChartButton";
-import { ViewTotalsButton } from "./TransactionMonthButtons/ViewTotalsButton";
 import { TransactionForm } from "./TransactionForm";
 
 type PlanHeaderProps = {

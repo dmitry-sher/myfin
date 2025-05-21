@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { addCategory } from "../../slices/categoriesSlice";
@@ -31,9 +31,9 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
   const dispatch = useAppDispatch();
 
   const categories = useAppSelector((state) => state.categories);
-  const dateFieldRef = React.useRef<HTMLSpanElement>(null);
-  const descriptionFieldRef = React.useRef<HTMLSpanElement>(null);
-  const amountFieldRef = React.useRef<HTMLSpanElement>(null);
+  const dateFieldRef = useRef<HTMLSpanElement>(null);
+  const descriptionFieldRef = useRef<HTMLSpanElement>(null);
+  const amountFieldRef = useRef<HTMLSpanElement>(null);
 
   const { isDone } = transaction;
   const cbxProps: Record<string, unknown> = {

@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { MonthlyBarChart } from "./components/Analytics/MonthlyBarChart";
+import { MonthPieCharts } from "./components/Analytics/MonthPieCharts";
+import { MonthTotals } from "./components/Analytics/MonthTotals";
 import { CategoryList } from "./components/CategoryList";
 import { Header } from "./components/Header";
 import { ModalComponent } from "./components/ModalComponent";
-import { MonthlyBarChart } from "./components/MonthlyBarChart";
-import { MonthPieCharts } from "./components/MonthPieCharts";
-import { MonthTotals } from "./components/MonthTotals";
-import { PlanHeader } from "./components/PlanHeader";
-import { PlanSelector } from "./components/PlanSelector";
-import { PlanView } from "./components/PlanView";
-import { RepeatItemForm } from "./components/RepeatItemForm";
+import { PlanHeader } from "./components/Plans/PlanHeader";
+import { PlanSelector } from "./components/Plans/PlanSelector";
+import { PlanView } from "./components/Plans/PlanView";
+import { RepeatItemForm } from "./components/Transactions/RepeatItemForm";
 import { CategoryLabelMapProvider } from "./context/CategoryLabelMapContext";
 import {
   addPlan,

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, RefObject, useState } from "react";
 
 import { Transaction } from "../../types/entities";
 
@@ -6,14 +6,14 @@ import { TransactionEditField } from "./TransactionEditField";
 import { TransactionFieldViewerProps } from "./types";
 
 interface TransactionFieldProps {
-  viewer: React.FC<TransactionFieldViewerProps>;
+  viewer: FC<TransactionFieldViewerProps>;
   transaction: Transaction;
   onChange: (transaction: Transaction) => void;
   fieldName: keyof Transaction;
   className?: string;
   transformer?: (value: string) => string | number;
   initialTransform?: (value: string) => string | number;
-  viewRef: React.RefObject<HTMLSpanElement>;
+  viewRef: RefObject<HTMLSpanElement>;
   onTab?: () => void;
 }
 

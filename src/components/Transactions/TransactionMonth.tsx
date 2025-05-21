@@ -1,12 +1,17 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
+import {
+  faChevronDown,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addMonths, isBefore, parse } from "date-fns";
 
 import { MonthTotalsContext } from "../../context/MonthTotalsContext";
+import { useMonthTotals } from "../../hooks/useMonthTotals";
 import { Transaction } from "../../types/entities";
-import { ViewMonthGraphsButton } from "../TransactionMonthButtons/ViewMonthGraphsButton";
-import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
-import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
-import { ViewAmount } from "../ViewAmount";
+import { monthKeyFormat } from "../../utils/const";
 
+import { TransactionMonthFooter } from "./TransactionMonthFooter";
 import { ViewTransaction } from "./ViewTransaction";
 
 interface TransactionMonthProps {
@@ -26,13 +31,16 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   startingRunningBalance,
   isCurrentMonth = false,
 }) => {
-  let monthlyInTotalPlan = 0;
-  let monthlyOutTotalPlan = 0;
-  let monthlyInTotalFact = 0;
-  let monthlyOutTotalFact = 0;
-  let runningBalance = startingRunningBalance;
-  let monthBalance = 0;
-  let monthBalanceFact = 0;
+  const {
+    monthlyInTotalPlan,
+    monthlyOutTotalPlan,
+    monthlyInTotalFact,
+    monthlyOutTotalFact,
+    monthBalance,
+    monthBalanceFact,
+    transactionsBalances,
+  } = useMonthTotals({ monthTransactions, startingRunningBalance });
+
   const isAllDone = monthTransactions.reduce(
     (acc, next) => acc && next.isDone,
     true
@@ -42,6 +50,10 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
     false
   );
   const showPlanFact = !(isAllDone || isNoneDone);
+  const endOfMonth = addMonths(parse(monthKey, monthKeyFormat, new Date()), 1);
+  const now = new Date();
+  const isOldMonth = isBefore(endOfMonth, now);
+  const [opened, setOpened] = useState(!isOldMonth);
 
   const monthRef = useRef<HTMLDivElement | null>(null);
 
@@ -52,6 +64,8 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   }, [isCurrentMonth]);
 
   const divRef = isCurrentMonth ? monthRef : null;
+  const icon = opened ? faChevronDown : faChevronRight;
+  const bodyWrapperClass = opened ? "block" : "hidden";
 
   return (
     <MonthTotalsContext.Provider
@@ -62,71 +76,36 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
       }}
     >
       <div key={monthKey} id={`month-${monthKey}`} ref={divRef}>
-        <div className="text-center font-semibold p-2 border-b">{monthKey}</div>
-        {monthTransactions.map((transaction) => {
-          runningBalance += transaction.amount;
-          monthBalance += transaction.amount;
-          if (transaction.isDone) {
-            monthBalanceFact += transaction.amount;
-          }
-
-          if (transaction.amount > 0) {
-            if (transaction.isDone) {
-              monthlyInTotalFact += transaction.amount;
-            }
-            monthlyInTotalPlan += transaction.amount;
-          }
-          if (transaction.amount <= 0) {
-            if (transaction.isDone) {
-              monthlyOutTotalFact += transaction.amount;
-            }
-            monthlyOutTotalPlan += transaction.amount;
-          }
-
-          return (
+        <div
+          className="p-2 border-b relative cursor-pointer"
+          onClick={() => setOpened(!opened)}
+        >
+          <FontAwesomeIcon
+            icon={icon}
+            className="sm:block absolute top-3 left-2"
+          />
+          <div className="text-center font-semibold">{monthKey}</div>
+        </div>
+        <div className={bodyWrapperClass}>
+          {monthTransactions.map((transaction) => (
             <ViewTransaction
               key={transaction.id}
               transaction={transaction}
               onUpdateTransaction={onUpdateTransaction}
               onDeleteTransaction={onDeleteTransaction}
-              balance={runningBalance}
+              balance={transactionsBalances[transaction.id]}
             />
-          );
-        })}
-        <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 mb-6">
-          <div className="sm:w-1/5 w-full flex">
-            <span className="hidden sm:flex sm:w-1/2 w-1/5">
-              <ViewTotalsButton />
-              <ViewPieChartButton />
-              <ViewMonthGraphsButton />
-            </span>
-            <span className="sm:w-1/2 w-full text-center">
-              <span className="print:hidden">{monthKey}</span> Totals
-            </span>
-          </div>
-          <div className="sm:w-4/5 w-full flex">
-            <ViewAmount
-              className="w-1/3 sm:text-right"
-              balancePlan={monthlyInTotalPlan}
-              balanceFact={monthlyInTotalFact}
-              showPlanFact={showPlanFact}
-              label="In"
-            />
-            <ViewAmount
-              className="w-1/3 text-right"
-              balancePlan={monthlyOutTotalPlan}
-              balanceFact={monthlyOutTotalFact}
-              showPlanFact={showPlanFact}
-              label="Out"
-            />
-            <ViewAmount
-              className="w-1/3 text-right"
-              balancePlan={monthBalance}
-              balanceFact={monthBalanceFact}
-              showPlanFact={showPlanFact}
-              label="Balance"
-            />
-          </div>
+          ))}
+          <TransactionMonthFooter
+            monthKey={monthKey}
+            monthlyInTotalPlan={monthlyInTotalPlan}
+            monthlyOutTotalPlan={monthlyOutTotalPlan}
+            monthlyInTotalFact={monthlyInTotalFact}
+            monthlyOutTotalFact={monthlyOutTotalFact}
+            monthBalance={monthBalance}
+            monthBalanceFact={monthBalanceFact}
+            showPlanFact={showPlanFact}
+          />
         </div>
       </div>
     </MonthTotalsContext.Provider>

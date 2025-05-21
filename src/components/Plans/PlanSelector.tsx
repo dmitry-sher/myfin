@@ -1,19 +1,18 @@
 import React, { FC, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 
-import { PlanSelectorContext } from "../context/PlanSelectorContext";
-import { useAppSelector } from "../store";
-import { OptionType, Plan } from "../types/entities";
-
-import { AddPlanButton } from "./PlanButtons/AddPlanButton";
-import { CategoriesEditorButton } from "./PlanButtons/CategoriesEditorButton";
-import { DuplicatePlanButton } from "./PlanButtons/DuplicatePlanButton";
-import { ExportPlanButton } from "./PlanButtons/ExportPlanButton";
-import { ImportPlanButton } from "./PlanButtons/ImportPlanButton";
-import { PrintPlanButton } from "./PlanButtons/PrintPlanButton";
-import { RemovePlanButton } from "./PlanButtons/RemovePlanButton";
-import { RenamePlanButton } from "./PlanButtons/RenamePlanButton";
-import { SetDefaultPlanButton } from "./PlanButtons/SetDefaultPlanButton";
+import { PlanSelectorContext } from "../../context/PlanSelectorContext";
+import { useAppSelector } from "../../store";
+import { OptionType, Plan } from "../../types/entities";
+import { AddPlanButton } from "../PlanButtons/AddPlanButton";
+import { CategoriesEditorButton } from "../PlanButtons/CategoriesEditorButton";
+import { DuplicatePlanButton } from "../PlanButtons/DuplicatePlanButton";
+import { ExportPlanButton } from "../PlanButtons/ExportPlanButton";
+import { ImportPlanButton } from "../PlanButtons/ImportPlanButton";
+import { PrintPlanButton } from "../PlanButtons/PrintPlanButton";
+import { RemovePlanButton } from "../PlanButtons/RemovePlanButton";
+import { RenamePlanButton } from "../PlanButtons/RenamePlanButton";
+import { SetDefaultPlanButton } from "../PlanButtons/SetDefaultPlanButton";
 
 interface PlanSelectorProps {
   plans: Plan[];
