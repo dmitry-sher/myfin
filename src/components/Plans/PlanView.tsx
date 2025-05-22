@@ -17,12 +17,16 @@ export const PlanView: FC<PlanViewProps> = ({
   updateTransaction,
   deleteTransaction,
 }) => {
-  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
+  const selectedPlanId =
+    useAppSelector((state) => state.appState.selectedPlan)?.id ?? "";
+  const selectedPlan = useAppSelector((state) =>
+    state.plans.find((p) => p.id === selectedPlanId)
+  );
   const handleUpdateTransaction = (transaction: Transaction): void =>
-    updateTransaction(selectedPlan?.id ?? "", transaction);
+    updateTransaction(selectedPlanId, transaction);
 
   const handleDeleteTransaction = (id: string): void =>
-    deleteTransaction(selectedPlan?.id ?? "", id);
+    deleteTransaction(selectedPlanId, id);
 
   const transactionsByMonth = useMemo(
     () => groupTransactions(sortTransactions(selectedPlan?.transactions ?? [])),

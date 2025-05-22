@@ -28,7 +28,11 @@ export const TransactionViewDate: FC<TransactionFieldViewerProps> = ({
       ...transaction,
     };
     updatedTransaction.trueDate.setHours(12, 0, 0, 0);
-    updatedTransaction.trueDate = processMouseClickForDate(e, updatedTransaction.trueDate, 1);
+    updatedTransaction.trueDate = processMouseClickForDate(
+      e,
+      updatedTransaction.trueDate,
+      1
+    );
     updatedTransaction.date = printDate(updatedTransaction);
     dispatch(
       updateTransaction({
@@ -43,7 +47,11 @@ export const TransactionViewDate: FC<TransactionFieldViewerProps> = ({
       ...transaction,
     };
     updatedTransaction.trueDate.setHours(12, 0, 0, 0);
-    updatedTransaction.trueDate = processMouseClickForDate(e, updatedTransaction.trueDate, -1);
+    updatedTransaction.trueDate = processMouseClickForDate(
+      e,
+      updatedTransaction.trueDate,
+      -1
+    );
     updatedTransaction.date = printDate(updatedTransaction);
 
     dispatch(
@@ -63,7 +71,11 @@ export const TransactionViewDate: FC<TransactionFieldViewerProps> = ({
       >
         <FontAwesomeIcon icon={faBackwardStep} className="mr-2 primary" />
       </span>
-      <span className="w-1/12 print:w-1/5 cursor-text" onClick={onClick} ref={viewRef}>
+      <span
+        className="w-1/12 print:w-1/5 cursor-text"
+        onClick={onClick}
+        ref={viewRef}
+      >
         {printDate(transaction)}
       </span>
       <span
