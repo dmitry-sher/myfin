@@ -8,13 +8,13 @@ import { useAppDispatch } from "../../store";
 
 export const RemovePlanButton: FC = () => {
   const dispatch = useAppDispatch();
-  const { onSelectPlan, selectedPlanId, disableableButtonClass } =
+  const { onSelectPlan, selectedPlan, disableableButtonClass } =
     usePlanSelectorContext();
 
   const handleRemovePlan = (): void => {
     // eslint-disable-next-line no-restricted-globals
-    if (selectedPlanId && confirm("Are you sure to delete plan?")) {
-      dispatch(removePlan(selectedPlanId));
+    if (selectedPlan && confirm("Are you sure to delete plan?")) {
+      dispatch(removePlan(selectedPlan?.id));
       onSelectPlan("");
     }
   };
@@ -23,7 +23,7 @@ export const RemovePlanButton: FC = () => {
     <button
       className={`bg-red-500 ${disableableButtonClass}`}
       onClick={handleRemovePlan}
-      disabled={!selectedPlanId}
+      disabled={!selectedPlan?.id}
       title="Remove"
     >
       <div className="sm:hidden">Remove</div>

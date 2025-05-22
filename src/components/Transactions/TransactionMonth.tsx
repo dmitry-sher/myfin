@@ -77,12 +77,14 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
     >
       <div key={monthKey} id={`month-${monthKey}`} ref={divRef}>
         <div
-          className="p-2 border-b relative cursor-pointer"
-          onClick={() => setOpened(!opened)}
+          className={`p-2 border-b relative cursor-pointer ${
+            opened ? "" : "print:hidden"
+          }`}
+          onClick={(): void => setOpened(!opened)}
         >
           <FontAwesomeIcon
             icon={icon}
-            className="sm:block absolute top-3 left-2"
+            className="sm:block absolute top-3 left-2 print:hidden"
           />
           <div className="text-center font-semibold">{monthKey}</div>
         </div>

@@ -28,7 +28,7 @@ export const TransactionMonthFooter: FC<TransactionMonthFooterProps> = ({
 }) => (
   <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 mb-6">
     <div className="sm:w-1/5 w-full flex">
-      <span className="hidden sm:flex sm:w-1/2 w-1/5">
+      <span className="hidden sm:flex sm:w-1/2 w-1/5 print:hidden">
         <ViewTotalsButton />
         <ViewPieChartButton />
         <ViewMonthGraphsButton />

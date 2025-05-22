@@ -9,7 +9,7 @@ import { savedPlan2Plan } from "../../utils/savedPlanToPlan";
 
 export const ImportPlanButton: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectedPlanId, disableableButtonClass } = usePlanSelectorContext();
+  const { selectedPlan, disableableButtonClass } = usePlanSelectorContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const triggerFileDialog = (): void => {
@@ -20,7 +20,7 @@ export const ImportPlanButton: FC = () => {
     event: ChangeEvent<HTMLInputElement>
   ): void => {
     const file = event.target.files?.[0];
-    if (file && selectedPlanId) {
+    if (file && selectedPlan?.id) {
       const reader = new FileReader();
       reader.onload = (e): void => {
         try {
@@ -30,7 +30,7 @@ export const ImportPlanButton: FC = () => {
           ).transactions;
           dispatch(
             importPlanTransactions({
-              planId: selectedPlanId,
+              planId: selectedPlan.id,
               transactions: parsedTransactions,
             })
           );
@@ -48,7 +48,7 @@ export const ImportPlanButton: FC = () => {
       <button
         className={`bg-gray-500 hidden sm:inline-block ${disableableButtonClass}`}
         onClick={triggerFileDialog}
-        disabled={!selectedPlanId}
+        disabled={!selectedPlan?.id}
         title="Import"
       >
         <div className="sm:hidden">Import</div>

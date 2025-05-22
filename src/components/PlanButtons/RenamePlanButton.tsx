@@ -3,6 +3,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons"; // Import icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
+import { setSelectedPlan } from "../../slices/appStateSlice";
 import { closeModal, openModal } from "../../slices/modalSlice";
 import { renamePlan } from "../../slices/plansSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -12,8 +13,7 @@ import { RenamePlanForm } from "../Plans/RenamePlanForm";
 
 export const RenamePlanButton: FC = () => {
   const dispatch = useAppDispatch();
-  const { plans, selectedPlanId, disableableButtonClass } =
-    usePlanSelectorContext();
+  const { selectedPlan, disableableButtonClass } = usePlanSelectorContext();
   const modalIsOpen = useAppSelector(
     (state) => state.modal.modalState[ModalCode.renamePlan]
   );
@@ -23,9 +23,13 @@ export const RenamePlanButton: FC = () => {
   };
 
   const handleRenamePlan = (newName: string): void => {
-    if (selectedPlanId) {
-      dispatch(renamePlan({ planId: selectedPlanId, newName }));
+    if (selectedPlan) {
+      dispatch(renamePlan({ planId: selectedPlan.id, newName }));
       dispatch(closeModal(ModalCode.renamePlan));
+      dispatch(setSelectedPlan({
+        ...selectedPlan,
+        name: newName,
+      }));
     }
   };
 
@@ -34,18 +38,16 @@ export const RenamePlanButton: FC = () => {
       <button
         className={`bg-green-500 ${disableableButtonClass}`}
         onClick={handleOpenRenameModal}
-        disabled={!selectedPlanId}
+        disabled={!selectedPlan?.id}
         title="Rename"
       >
         <div className="sm:hidden">Rename</div>
         <FontAwesomeIcon icon={faEdit} className="hidden sm:block" />
       </button>
-      {modalIsOpen && selectedPlanId ? (
+      {modalIsOpen && selectedPlan ? (
         <ModalComponent title="Rename Plan" code={ModalCode.renamePlan}>
           <RenamePlanForm
-            currentName={
-              plans.find((plan) => plan.id === selectedPlanId)?.name || ""
-            }
+            currentName={selectedPlan.name}
             onSubmit={handleRenamePlan}
           />
         </ModalComponent>

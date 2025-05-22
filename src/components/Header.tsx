@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 
-import { toggleIsHeaderSticky } from "../slices/appSettingsSlice";
+import { toggleIsHeaderSticky } from "../slices/appStateSlice";
 import { useAppDispatch, useAppSelector } from "../store";
 
 export const Header: FC = () => {
   const dispatch = useAppDispatch();
-  const isSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
+  const isSticky = useAppSelector((state): boolean => state.appState.isHeaderSticky);
 
   const handleToggle = (): void => {
     dispatch(toggleIsHeaderSticky());

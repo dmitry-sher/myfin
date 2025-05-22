@@ -16,16 +16,16 @@ import { SetDefaultPlanButton } from "../PlanButtons/SetDefaultPlanButton";
 
 interface PlanSelectorProps {
   plans: Plan[];
-  selectedPlanId: string | null;
   onSelectPlan: (planId: string) => void;
 }
 
 export const PlanSelector: FC<PlanSelectorProps> = ({
   plans,
-  selectedPlanId,
   onSelectPlan,
 }) => {
-  const isHeaderSticky = useAppSelector((state): boolean => state.appSettings.isHeaderSticky);
+  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
+  const selectedPlanId = selectedPlan?.id ?? "";
+  const isHeaderSticky = useAppSelector((state): boolean => state.appState.isHeaderSticky);
   const options: OptionType[] = plans.map((plan) => ({
     value: plan.id,
     label: plan.name,
@@ -59,8 +59,6 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   const disableableButtonClass = `text-white py-2 px-4 rounded mr-2 mb-2 sm:mb-0 ${
     selectedPlanId ? "" : "opacity-50"
   }`;
-
-  const selectedPlan = plans.find((p) => p.id === selectedPlanId) || null;
 
   const headerClass = isHeaderSticky ? "sticky top-0 z-10 bg-white border-b shadow-sm" : "";
 

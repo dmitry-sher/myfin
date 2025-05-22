@@ -9,7 +9,7 @@ export const TransactionViewAmount: FC<TransactionFieldViewerProps> = ({
 }) => {
   return (
     <span
-      className={`w-1/4 cursor-pointer sm:text-right ${
+      className={`w-1/4 cursor-text sm:text-right ${
         transaction.amount > 0 ? "text-green-600" : "text-red-600"
       }`}
       onClick={onClick}

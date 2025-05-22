@@ -9,21 +9,23 @@ import { useAppDispatch } from "../../store";
 
 export const DuplicatePlanButton: FC = () => {
   const dispatch = useAppDispatch();
-  const { onSelectPlan, plans, selectedPlanId, disableableButtonClass } =
+  const { onSelectPlan, selectedPlan, disableableButtonClass } =
     usePlanSelectorContext();
 
   const handleDuplicatePlan = (): void => {
-    const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
+    const newPlanId = uuidv4();
     if (selectedPlan) {
       const newPlanName = `${selectedPlan.name} copy`;
       const action = {
-        planId: selectedPlanId || "",
+        planId: selectedPlan.id,
+        newPlanId,
         newPlanName,
-        newPlanId: uuidv4(),
       };
       dispatch(copyPlan(action));
 
-      onSelectPlan(action.newPlanId);
+      setTimeout(() => {
+        onSelectPlan(newPlanId);
+      }, 250);
     }
   };
 
@@ -31,7 +33,7 @@ export const DuplicatePlanButton: FC = () => {
     <button
       className={`bg-blue-500 ${disableableButtonClass}`}
       onClick={handleDuplicatePlan}
-      disabled={!selectedPlanId}
+      disabled={!selectedPlan?.id}
       title="Duplicate"
     >
       <div className="sm:hidden">Copy</div>

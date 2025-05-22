@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
 
 export const PrintPlanButton: FC = () => {
-  const { selectedPlanId, disableableButtonClass } = usePlanSelectorContext();
+  const { selectedPlan, disableableButtonClass } = usePlanSelectorContext();
   const triggerPrintDialog = (): void => {
     window.print();
   };
@@ -14,7 +14,7 @@ export const PrintPlanButton: FC = () => {
     <button
       className={`bg-gray-500 hidden sm:inline-block ${disableableButtonClass}`}
       onClick={triggerPrintDialog}
-      disabled={!selectedPlanId}
+      disabled={!selectedPlan?.id}
       title="Print"
     >
       <div className="sm:hidden">Print</div>

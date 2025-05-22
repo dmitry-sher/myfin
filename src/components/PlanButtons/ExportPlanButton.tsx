@@ -8,20 +8,20 @@ import { useAppDispatch } from "../../store";
 
 export const ExportPlanButton: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectedPlanId, disableableButtonClass } =
+  const { selectedPlan, disableableButtonClass } =
     usePlanSelectorContext();
 
   const handleExport = (): void => {
-    if (!selectedPlanId) return;
+    if (!selectedPlan) return;
 
-    dispatch(exportPlan(selectedPlanId));
+    dispatch(exportPlan(selectedPlan.id));
   };
 
   return (
     <button
       className={`bg-gray-500 hidden sm:inline-block ${disableableButtonClass}`}
       onClick={handleExport}
-      disabled={!selectedPlanId}
+      disabled={!selectedPlan?.id}
       title="Export"
     >
       <div className="sm:hidden">Export</div>

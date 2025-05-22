@@ -11,7 +11,6 @@ export interface TransactionFieldViewerProps {
 
 export interface TransactionFieldEditorProps {
   transaction: Transaction;
-  // onClick: () => void;
   onChange: (transaction: Transaction) => void;
   setIsEditing: (isEditing: boolean) => void;
   isEditing: boolean;

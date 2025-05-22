@@ -1,23 +1,23 @@
 import React, { FC, useMemo } from "react";
 import { format } from "date-fns";
 
-import { Plan, Transaction } from "../../types/entities";
+import { useAppSelector } from "../../store";
+import { Transaction } from "../../types/entities";
 import { monthKeyFormat } from "../../utils/const";
 import { groupTransactions } from "../../utils/groupTransactions";
 import { sortTransactions } from "../../utils/sortTransactions";
 import { TransactionMonth } from "../Transactions/TransactionMonth";
 
 type PlanViewProps = {
-  selectedPlan?: Plan;
   updateTransaction: (planId: string, updatedTransaction: Transaction) => void;
   deleteTransaction: (planId: string, id: string) => void;
 };
 
 export const PlanView: FC<PlanViewProps> = ({
-  selectedPlan,
   updateTransaction,
   deleteTransaction,
 }) => {
+  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
   const handleUpdateTransaction = (transaction: Transaction): void =>
     updateTransaction(selectedPlan?.id ?? "", transaction);
 

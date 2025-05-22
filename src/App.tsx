@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { MonthlyBarChart } from "./components/Analytics/MonthlyBarChart";
@@ -20,6 +20,7 @@ import {
 } from "./slices/plansSlice";
 import { Transaction } from "./types/entities";
 import { ModalCode, RepeatType } from "./utils/const";
+import { findAndSelectPlan } from "./utils/findAndSelectPlan";
 import { repeatTransaction } from "./utils/repeatTransaction";
 import { saveStore } from "./utils/saveStore";
 import { RootState, store, useAppDispatch, useAppSelector } from "./store";
@@ -32,14 +33,12 @@ export const App: FC = () => {
     (state: RootState) => state.modal.totalsData.monthKey
   );
   const isHeaderSticky = useAppSelector(
-    (state): boolean => state.appSettings.isHeaderSticky
+    (state): boolean => state.appState.isHeaderSticky
   );
   const transactionToRepeat = useAppSelector(
     (state) => state.modal.repeatTransaction
   );
-  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-
-  const selectedPlan = plans.find((plan) => plan.id === selectedPlanId);
+  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
 
   useEffect(() => {
     saveStore(store.getState());
@@ -47,17 +46,19 @@ export const App: FC = () => {
 
   useEffect(() => {
     const hash = window.location.hash.replace(/^#/, "");
-    if (hash && hash !== selectedPlanId) {
-      setSelectedPlanId(hash);
+    if (hash && hash !== selectedPlan?.id) {
+      findAndSelectPlan(dispatch, hash);
     }
 
     if (!plans || plans.length === 0) {
       const newPlanId = uuidv4();
-      dispatch(addPlan({ newPlanName: "My First plan", newPlanId }));
-      setSelectedPlanId(newPlanId);
-      window.location.hash = newPlanId;
+      const newPlan = { newPlanName: "My First plan", newPlanId };
+      dispatch(addPlan(newPlan));
+      setTimeout(() => {
+        findAndSelectPlan(dispatch, newPlanId);
+      }, 250);
     }
-  }, [plans, dispatch, selectedPlanId]);
+  }, [plans, dispatch, selectedPlan]);
 
   const handleRepeat = (
     transaction: Transaction,
@@ -67,7 +68,7 @@ export const App: FC = () => {
     repeatTransaction({
       dispatch,
       transaction,
-      planId: selectedPlanId ?? "",
+      planId: selectedPlan?.id ?? "",
       period,
       repeats,
     });
@@ -92,8 +93,7 @@ export const App: FC = () => {
   };
 
   const handleSelectPlan = (planId: string): void => {
-    setSelectedPlanId(planId);
-    window.location.hash = planId;
+    findAndSelectPlan(dispatch, planId);
   };
 
   const wrapperClass = isHeaderSticky
@@ -111,20 +111,12 @@ export const App: FC = () => {
           <div className={wrapperClass}>
             <div className={`print:hidden ${headerClass}`}>
               <Header />
-              <PlanSelector
-                plans={plans}
-                selectedPlanId={selectedPlanId}
-                onSelectPlan={handleSelectPlan}
-              />
+              <PlanSelector plans={plans} onSelectPlan={handleSelectPlan} />
 
-              <PlanHeader
-                selectedPlan={selectedPlan}
-                addTransaction={handleAddTransaction}
-              />
+              <PlanHeader addTransaction={handleAddTransaction} />
             </div>
 
             <PlanView
-              selectedPlan={selectedPlan}
               updateTransaction={handleUpdateTransaction}
               deleteTransaction={handleDeleteTransaction}
             />

@@ -8,7 +8,7 @@ export const TransactionViewDescription: FC<TransactionFieldViewerProps> = ({
   viewRef,
 }) => {
   return (
-    <span className="w-4/5 cursor-pointer" onClick={onClick} ref={viewRef}>
+    <span className="w-4/5 cursor-text" onClick={onClick} ref={viewRef}>
       {transaction.description}
     </span>
   );

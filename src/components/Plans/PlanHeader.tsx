@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 
 import { MonthTotalsContext } from "../../context/MonthTotalsContext";
-import { Plan, Transaction } from "../../types/entities";
+import { useAppSelector } from "../../store";
+import { Transaction } from "../../types/entities";
 import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
 import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
 
 import { TransactionForm } from "./TransactionForm";
 
 type PlanHeaderProps = {
-  selectedPlan?: Plan;
   addTransaction: (
     planId: string,
     transaction: Omit<Transaction, "id">
@@ -16,9 +16,9 @@ type PlanHeaderProps = {
 };
 
 export const PlanHeader: FC<PlanHeaderProps> = ({
-  selectedPlan,
   addTransaction,
 }) => {
+  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
   if (!selectedPlan) {
     return null;
   }

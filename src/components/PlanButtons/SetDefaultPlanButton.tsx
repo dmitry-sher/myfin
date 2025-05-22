@@ -7,19 +7,18 @@ import { setDefaultPlan } from "../../slices/plansSlice";
 import { useAppDispatch } from "../../store";
 
 export const SetDefaultPlanButton: FC = () => {
-  const { selectedPlanId, selectedPlan, disableableButtonClass } =
-    usePlanSelectorContext();
+  const { selectedPlan, disableableButtonClass } = usePlanSelectorContext();
   const dispatch = useAppDispatch();
 
   const isDefault = selectedPlan?.isDefault ?? false;
 
   const handleClick = (): void => {
-    if (selectedPlanId && !isDefault) {
-      dispatch(setDefaultPlan({ planId: selectedPlanId }));
+    if (selectedPlan?.id && !isDefault) {
+      dispatch(setDefaultPlan({ planId: selectedPlan?.id ?? "" }));
     }
 
     if (
-      selectedPlanId &&
+      selectedPlan?.id &&
       isDefault &&
       // eslint-disable-next-line no-restricted-globals
       confirm("Are you sure to remove default plan?")
@@ -36,7 +35,7 @@ export const SetDefaultPlanButton: FC = () => {
     <button
       className={`${buttonClass} ${disableableButtonClass}`}
       onClick={handleClick}
-      disabled={!selectedPlanId}
+      disabled={!selectedPlan?.id}
       title={isDefault ? "Default plan" : "Set as default"}
     >
       <div className="sm:hidden">{isDefault ? "Default" : "Make Default"}</div>

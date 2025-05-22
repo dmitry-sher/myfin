@@ -110,7 +110,7 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
           onChange={handleUpdateTransaction}
           viewer={TransactionViewDate}
           fieldName="date"
-          className="w-1/5"
+          className="w-1/12 mr-2"
           initialTransform={(): string => printDate(transaction)}
           viewRef={dateFieldRef}
           onTab={handleDateFieldTab}
