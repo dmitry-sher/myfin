@@ -5,6 +5,8 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  Line,
+  LineChart,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -84,32 +86,57 @@ export const MonthlyBarChart: FC = () => {
   }, [transactions, colorMap]);
 
   return (
-    <div className="h-96" style={{ width: "750px" }}>
-      <ResponsiveContainer>
-        <BarChart data={data} barCategoryGap={4}>
-          <XAxis dataKey="day" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip
-            formatter={(value: number, key: string): string[] => {
-              const label = allBars.find((b) => b.key === key)?.label ?? key;
-              return [`${value}`, label];
-            }}
-          />
-          {allBars.map(({ key, color }) => (
-            <Bar
-              key={key}
-              dataKey={key}
-              stackId="stack"
-              fill={color}
+    <>
+      <div className="h-96" style={{ width: "750px" }}>
+        <ResponsiveContainer>
+          <BarChart data={data} barCategoryGap={4}>
+            <XAxis dataKey="day" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip
+              formatter={(value: number, key: string): string[] => {
+                const label = allBars.find((b) => b.key === key)?.label ?? key;
+                return [`${value}`, label];
+              }}
+            />
+            {allBars.map(({ key, color }) => (
+              <Bar
+                key={key}
+                dataKey={key}
+                stackId="stack"
+                fill={color}
+                isAnimationActive={false}
+              >
+                <Cell fill={color} />
+              </Bar>
+            ))}
+            <ReferenceLine y={0} stroke="#ccc" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="h-96" style={{ width: "750px" }}>
+        <ResponsiveContainer>
+          <LineChart data={data} barCategoryGap={4}>
+            <XAxis dataKey="day" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <ReferenceLine y={0} stroke="#ccc" />
+            <Line
+              data={data}
+              type="monotone"
+              dataKey="balance"
+              stroke="#8884d8"
               isAnimationActive={false}
-            >
-              <Cell fill={color} />
-            </Bar>
-          ))}
-          <ReferenceLine y={0} stroke="#ccc" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+            />
+            <Tooltip
+              formatter={(value: number, key: string): string[] => {
+                const label = allBars.find((b) => b.key === key)?.label ?? key;
+                return [`${value}`, label];
+              }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </>
   );
 };
