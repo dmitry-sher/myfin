@@ -30,8 +30,6 @@ export const TotalBarChart: FC = () => {
       labelMap,
       colorMap
     );
-    // eslint-disable-next-line no-console
-    console.log("[totalbarchart] data", ret);
     return ret;
   }, [transactions, labelMap, colorMap]);
 
