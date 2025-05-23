@@ -3,9 +3,9 @@ import React, { FC } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { MonthTotalsContext } from "../../context/MonthTotalsContext";
 import { Transaction } from "../../types/entities";
-import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
-import { ViewTotalChartButton } from "../TransactionMonthButtons/ViewTotalChartButton";
-import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
+import { ViewPieChartButton } from "../Analytics/ViewPieChartButton";
+import { ViewTotalChartButton } from "../Analytics/ViewTotalChartButton";
+import { ViewTotalsButton } from "../Analytics/ViewTotalsButton";
 
 import { TransactionForm } from "./TransactionForm";
 

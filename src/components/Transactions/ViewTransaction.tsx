@@ -7,9 +7,9 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { Category, Transaction } from "../../types/entities";
 import { newCategoryKey } from "../../utils/const";
 import { printDate } from "../../utils/printDate";
-import { DeleteTransactionButton } from "../TransactionButtons/DeleteTransactionButton";
-import { RepeatTransactionButton } from "../TransactionButtons/RepeatTransactionButton";
 
+import { DeleteTransactionButton } from "./DeleteTransactionButton";
+import { RepeatTransactionButton } from "./RepeatTransactionButton";
 import { TransactionCategory } from "./TransactionCategory";
 import { TransactionField } from "./TransactionField";
 import { TransactionViewAmount } from "./TransactionViewAmount";

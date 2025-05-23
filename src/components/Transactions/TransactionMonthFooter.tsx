@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 
-import { ViewMonthGraphsButton } from "../TransactionMonthButtons/ViewMonthGraphsButton";
-import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
-import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
+import { ViewMonthGraphsButton } from "../Analytics/ViewMonthGraphsButton";
+import { ViewPieChartButton } from "../Analytics/ViewPieChartButton";
+import { ViewTotalsButton } from "../Analytics/ViewTotalsButton";
 import { ViewAmount } from "../ViewAmount";
 
 interface TransactionMonthFooterProps {
