@@ -37,7 +37,7 @@ export const TotalBarChart: FC = () => {
     <>
       <div className="h-72" style={{ width: "750px" }}>
         <ResponsiveContainer>
-          <BarChart data={data} barCategoryGap={4}>
+          <BarChart data={data} barCategoryGap={4} stackOffset="sign">
             <XAxis dataKey="weekDates" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
