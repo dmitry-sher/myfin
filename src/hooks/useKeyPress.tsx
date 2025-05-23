@@ -2,12 +2,23 @@ import { useEffect, useState } from "react";
 
 export const useKeyPress = (targetKey: string): boolean => {
   const [keyPressed, setKeyPressed] = useState(false);
-  function downHandler({ key }: { key: string }): void {
+  function downHandler({ key, altKey, metaKey, ctrlKey }: KeyboardEvent): void {
+    if (altKey || metaKey || ctrlKey) {
+      return;
+    }
     if (key === targetKey) {
       setKeyPressed(true);
     }
   }
-  const upHandler = ({ key }: { key: string }): void => {
+  const upHandler = ({
+    key,
+    altKey,
+    metaKey,
+    ctrlKey,
+  }: KeyboardEvent): void => {
+    if (altKey || metaKey || ctrlKey) {
+      return;
+    }
     if (key === targetKey) {
       setKeyPressed(false);
     }

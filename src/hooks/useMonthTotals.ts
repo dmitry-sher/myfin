@@ -1,3 +1,5 @@
+/*  eslint-disable @typescript-eslint/no-shadow */
+/*  eslint-disable no-shadow */
 import { useMemo } from "react";
 
 import { Transaction } from "../types/entities";
@@ -30,21 +32,13 @@ export const useMonthTotals = ({
     monthBalanceFact,
     transactionsBalances,
   } = useMemo(() => {
-    // eslint-disable-next-line no-shadow
     let monthlyInTotalPlan = 0;
-    // eslint-disable-next-line no-shadow
     let monthlyOutTotalPlan = 0;
-    // eslint-disable-next-line no-shadow
     let monthlyInTotalFact = 0;
-    // eslint-disable-next-line no-shadow
     let monthlyOutTotalFact = 0;
-    // eslint-disable-next-line no-shadow
     let runningBalance = startingRunningBalance;
-    // eslint-disable-next-line no-shadow
     let monthBalance = 0;
-    // eslint-disable-next-line no-shadow
     let monthBalanceFact = 0;
-    // eslint-disable-next-line no-shadow
     const transactionsBalances: Record<string, number> = {};
 
     monthTransactions.forEach((transaction) => {
