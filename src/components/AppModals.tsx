@@ -9,6 +9,7 @@ import { repeatTransaction } from "../utils/repeatTransaction";
 import { MonthlyBarChart } from "./Analytics/MonthlyBarChart";
 import { MonthPieCharts } from "./Analytics/MonthPieCharts";
 import { MonthTotals } from "./Analytics/MonthTotals";
+import { TotalBarChart } from "./Analytics/TotalBarChart";
 import { RepeatItemForm } from "./Transactions/RepeatItemForm";
 import { CategoryList } from "./CategoryList";
 import { ModalComponent } from "./ModalComponent";
@@ -64,6 +65,10 @@ export const AppModals: FC = () => {
 
       <ModalComponent code={ModalCode.monthGraphs} title={`${monthKey} graph`}>
         <MonthlyBarChart />
+      </ModalComponent>
+
+      <ModalComponent code={ModalCode.totalGraphs} title={"Total graph"}>
+        <TotalBarChart />
       </ModalComponent>
     </>
   );

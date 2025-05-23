@@ -1,10 +1,11 @@
-import { addMonths, addWeeks, format } from "date-fns";
+import { addMonths, addWeeks } from "date-fns";
 
 import { addTransaction } from "../slices/plansSlice";
 import { useAppDispatch } from "../store";
 import { Transaction } from "../types/entities";
 
 import { RepeatType } from "./const";
+import { printDate } from "./printDate";
 
 export type RepeatTransactionFunctionProps = {
   planId: string;
@@ -29,7 +30,7 @@ export const addPeriodToTransaction = (
     newTransaction.trueDate = addWeeks(transaction.trueDate, 1);
   }
 
-  newTransaction.date = format(newTransaction.trueDate, "dd/MM");
+  newTransaction.date = printDate(newTransaction);
   return newTransaction;
 };
 

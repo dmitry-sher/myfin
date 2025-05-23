@@ -87,7 +87,7 @@ export const MonthlyBarChart: FC = () => {
 
   return (
     <>
-      <div className="h-96" style={{ width: "750px" }}>
+      <div className="h-72" style={{ width: "750px" }}>
         <ResponsiveContainer>
           <BarChart data={data} barCategoryGap={4}>
             <XAxis dataKey="day" />
@@ -114,7 +114,7 @@ export const MonthlyBarChart: FC = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="h-96" style={{ width: "750px" }}>
+      <div className="h-72" style={{ width: "750px" }}>
         <ResponsiveContainer>
           <LineChart data={data} barCategoryGap={4}>
             <XAxis dataKey="day" />

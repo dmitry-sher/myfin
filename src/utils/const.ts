@@ -5,6 +5,7 @@ export const ModalCode = {
   monthTotals: "monthTotals",
   pieChart: "pieChart",
   monthGraphs: "monthGraphs",
+  totalGraphs: "totalGraphs",
 };
 
 // eslint-disable-next-line no-shadow
@@ -14,6 +15,7 @@ export enum RepeatType {
 }
 
 export const monthKeyFormat = "MMM-yyyy";
+export const russianFormat = "dd/MM";
 
 export const plansStorageKey = "plans";
 export const categoriesStorageKey = "categories";

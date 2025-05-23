@@ -8,6 +8,15 @@ export interface Transaction {
   categoryId?: string;
 }
 
+export interface WeekTotals {
+  weekNumber: number;
+  weekDates: string;
+  balance: number;
+  totalsByCategory: Record<string, number>;
+  transactions: Transaction[];
+  [key: string]: number | string | Record<string, number> | Transaction[];
+}
+
 export interface Category {
   id: string;
   name: string;
