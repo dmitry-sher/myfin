@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import { faFolderTree } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { openModal } from "../../slices/modalSlice";
-import { useAppDispatch } from "../../store";
-import { ModalCode } from "../../utils/const";
+import { openModal } from "../../../slices/modalSlice";
+import { useAppDispatch } from "../../../store";
+import { ModalCode } from "../../../utils/const";
 
 export const CategoriesEditorButton: FC = () => {
   const dispatch = useAppDispatch();

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
+import { usePlanSelectorContext } from "../../../context/PlanSelectorContext";
 
 export const PrintPlanButton: FC = () => {
   const { selectedPlan, disableableButtonClass } = usePlanSelectorContext();

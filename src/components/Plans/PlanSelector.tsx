@@ -4,15 +4,16 @@ import Select, { SingleValue } from "react-select";
 import { useAppContext } from "../../context/AppContext";
 import { PlanSelectorContext } from "../../context/PlanSelectorContext";
 import { OptionType, Plan } from "../../types/entities";
-import { AddPlanButton } from "../PlanButtons/AddPlanButton";
-import { CategoriesEditorButton } from "../PlanButtons/CategoriesEditorButton";
-import { DuplicatePlanButton } from "../PlanButtons/DuplicatePlanButton";
-import { ExportPlanButton } from "../PlanButtons/ExportPlanButton";
-import { ImportPlanButton } from "../PlanButtons/ImportPlanButton";
-import { PrintPlanButton } from "../PlanButtons/PrintPlanButton";
-import { RemovePlanButton } from "../PlanButtons/RemovePlanButton";
-import { RenamePlanButton } from "../PlanButtons/RenamePlanButton";
-import { SetDefaultPlanButton } from "../PlanButtons/SetDefaultPlanButton";
+
+import { AddPlanButton } from "./Buttons/AddPlanButton";
+import { CategoriesEditorButton } from "./Buttons/CategoriesEditorButton";
+import { DuplicatePlanButton } from "./Buttons/DuplicatePlanButton";
+import { ExportPlanButton } from "./Buttons/ExportPlanButton";
+import { ImportPlanButton } from "./Buttons/ImportPlanButton";
+import { PrintPlanButton } from "./Buttons/PrintPlanButton";
+import { RemovePlanButton } from "./Buttons/RemovePlanButton";
+import { RenamePlanButton } from "./Buttons/RenamePlanButton";
+import { SetDefaultPlanButton } from "./Buttons/SetDefaultPlanButton";
 
 interface PlanSelectorProps {
   plans: Plan[];

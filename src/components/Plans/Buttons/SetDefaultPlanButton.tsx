@@ -2,9 +2,9 @@ import { FC } from "react";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
-import { setDefaultPlan } from "../../slices/plansSlice";
-import { useAppDispatch } from "../../store";
+import { usePlanSelectorContext } from "../../../context/PlanSelectorContext";
+import { setDefaultPlan } from "../../../slices/plansSlice";
+import { useAppDispatch } from "../../../store";
 
 export const SetDefaultPlanButton: FC = () => {
   const { selectedPlan, disableableButtonClass } = usePlanSelectorContext();

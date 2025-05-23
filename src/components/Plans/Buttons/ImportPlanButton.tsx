@@ -2,10 +2,10 @@ import React, { ChangeEvent, FC, useRef } from "react";
 import { faFileImport } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
-import { importPlanTransactions } from "../../slices/plansSlice";
-import { useAppDispatch } from "../../store";
-import { savedPlan2Plan } from "../../utils/savedPlanToPlan";
+import { usePlanSelectorContext } from "../../../context/PlanSelectorContext";
+import { importPlanTransactions } from "../../../slices/plansSlice";
+import { useAppDispatch } from "../../../store";
+import { savedPlan2Plan } from "../../../utils/savedPlanToPlan";
 
 export const ImportPlanButton: FC = () => {
   const dispatch = useAppDispatch();
