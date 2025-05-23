@@ -1,14 +1,12 @@
 import React, { FC } from "react";
 
-import { toggleIsHeaderSticky } from "../slices/appStateSlice";
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppContext } from "../context/AppContext";
 
 export const Header: FC = () => {
-  const dispatch = useAppDispatch();
-  const isSticky = useAppSelector((state): boolean => state.appState.isHeaderSticky);
+  const { isHeaderSticky, setIsHeaderSticky } = useAppContext();
 
   const handleToggle = (): void => {
-    dispatch(toggleIsHeaderSticky());
+    setIsHeaderSticky(!isHeaderSticky);
   };
 
   return (
@@ -18,7 +16,7 @@ export const Header: FC = () => {
         onClick={handleToggle}
         className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded"
       >
-        {isSticky ? "Sticky" : "Static"}
+        {isHeaderSticky ? "Sticky" : "Static"}
       </button>
     </div>
   );

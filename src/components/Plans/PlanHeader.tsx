@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
+import { useAppContext } from "../../context/AppContext";
 import { MonthTotalsContext } from "../../context/MonthTotalsContext";
-import { useAppSelector } from "../../store";
 import { Transaction } from "../../types/entities";
 import { ViewPieChartButton } from "../TransactionMonthButtons/ViewPieChartButton";
 import { ViewTotalsButton } from "../TransactionMonthButtons/ViewTotalsButton";
@@ -18,7 +18,7 @@ type PlanHeaderProps = {
 export const PlanHeader: FC<PlanHeaderProps> = ({
   addTransaction,
 }) => {
-  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
+  const { selectedPlan } = useAppContext();
   if (!selectedPlan) {
     return null;
   }

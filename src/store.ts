@@ -1,7 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-import appStateReducer from "./slices/appStateSlice";
 import categoriesReducer from "./slices/categoriesSlice";
 import modalReducer from "./slices/modalSlice";
 import plansReducer from "./slices/plansSlice";
@@ -12,7 +11,6 @@ export const store = configureStore({
     plans: plansReducer,
     categories: categoriesReducer,
     modal: modalReducer,
-    appState: appStateReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -5,8 +5,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useAppContext } from "../../context/AppContext";
 import { updateTransaction } from "../../slices/plansSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
+import { useAppDispatch } from "../../store";
 import { printDate } from "../../utils/printDate";
 import { processMouseClickForDate } from "../../utils/processMouseClickForDate";
 
@@ -21,7 +22,7 @@ export const TransactionViewDate: FC<TransactionFieldViewerProps> = ({
   viewRef,
 }) => {
   const dispatch = useAppDispatch();
-  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
+  const { selectedPlan } = useAppContext();
 
   const handleForwardClick = (e: React.MouseEvent): void => {
     const updatedTransaction = {

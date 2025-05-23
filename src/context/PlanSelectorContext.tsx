@@ -5,7 +5,7 @@ import { Plan } from "../types/entities";
 export interface PlanSelectorContextType {
   plans: Plan[];
   selectedPlanId: string | null;
-  selectedPlan: Plan | null;
+  selectedPlan: Plan | null | undefined;
   onSelectPlan: (planId: string) => void;
   disableableButtonClass: string;
 }

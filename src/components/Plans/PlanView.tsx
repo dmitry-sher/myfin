@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from "react";
 import { format } from "date-fns";
 
-import { useAppSelector } from "../../store";
+import { useAppContext } from "../../context/AppContext";
 import { Transaction } from "../../types/entities";
 import { monthKeyFormat } from "../../utils/const";
 import { groupTransactions } from "../../utils/groupTransactions";
@@ -17,16 +17,12 @@ export const PlanView: FC<PlanViewProps> = ({
   updateTransaction,
   deleteTransaction,
 }) => {
-  const selectedPlanId =
-    useAppSelector((state) => state.appState.selectedPlan)?.id ?? "";
-  const selectedPlan = useAppSelector((state) =>
-    state.plans.find((p) => p.id === selectedPlanId)
-  );
+  const { selectedPlan } = useAppContext();
   const handleUpdateTransaction = (transaction: Transaction): void =>
-    updateTransaction(selectedPlanId, transaction);
+    updateTransaction(selectedPlan?.id ?? "", transaction);
 
   const handleDeleteTransaction = (id: string): void =>
-    deleteTransaction(selectedPlanId, id);
+    deleteTransaction(selectedPlan?.id ?? "", id);
 
   const transactionsByMonth = useMemo(
     () => groupTransactions(sortTransactions(selectedPlan?.transactions ?? [])),

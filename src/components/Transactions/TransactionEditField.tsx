@@ -7,6 +7,8 @@ import React, {
   useState,
 } from "react";
 
+import { useAppContext } from "../../context/AppContext";
+
 import { TransactionFieldEditorProps } from "./types";
 
 export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
@@ -20,6 +22,7 @@ export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
   className,
   onTab,
 }) => {
+  const { setIsFocused } = useAppContext();
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState(
     initialTransform(transaction[fieldName] as string)
@@ -37,12 +40,14 @@ export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
         [fieldName]: value,
       };
       onChange(updatedTransaction);
+      setIsFocused(false);
       return;
     }
 
     if (event.keyCode === 27) {
       // Escape key pressed
       setIsEditing(false);
+      setIsFocused(false);
       return;
     }
   };
@@ -51,6 +56,7 @@ export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
     if (event.keyCode === 9) {
       // Tab key pressed
       setIsEditing(false);
+      setIsFocused(false);
       const updatedTransaction = {
         ...transaction,
         [fieldName]: value,
@@ -63,13 +69,15 @@ export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
 
   const handleBlur = (): void => {
     setIsEditing(false);
+    setIsFocused(false);
   };
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
+      setIsFocused(true);
     }
-  }, [isEditing]);
+  }, [isEditing, setIsFocused]);
 
   return (
     <span className={className}>

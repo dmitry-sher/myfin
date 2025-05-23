@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 
+import { useAppContext } from "../../context/AppContext";
 import { PlanSelectorContext } from "../../context/PlanSelectorContext";
-import { useAppSelector } from "../../store";
 import { OptionType, Plan } from "../../types/entities";
 import { AddPlanButton } from "../PlanButtons/AddPlanButton";
 import { CategoriesEditorButton } from "../PlanButtons/CategoriesEditorButton";
@@ -23,9 +23,8 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
   plans,
   onSelectPlan,
 }) => {
-  const selectedPlan = useAppSelector((state) => state.appState.selectedPlan);
+  const { selectedPlan, isHeaderSticky } = useAppContext();
   const selectedPlanId = selectedPlan?.id ?? "";
-  const isHeaderSticky = useAppSelector((state): boolean => state.appState.isHeaderSticky);
   const options: OptionType[] = plans.map((plan) => ({
     value: plan.id,
     label: plan.name,
@@ -60,7 +59,9 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
     selectedPlanId ? "" : "opacity-50"
   }`;
 
-  const headerClass = isHeaderSticky ? "sticky top-0 z-10 bg-white border-b shadow-sm" : "";
+  const headerClass = isHeaderSticky
+    ? "sticky top-0 z-10 bg-white border-b shadow-sm"
+    : "";
 
   return (
     <div className={headerClass}>

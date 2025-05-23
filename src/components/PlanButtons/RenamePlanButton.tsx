@@ -3,7 +3,6 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons"; // Import icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { usePlanSelectorContext } from "../../context/PlanSelectorContext";
-import { setSelectedPlan } from "../../slices/appStateSlice";
 import { closeModal, openModal } from "../../slices/modalSlice";
 import { renamePlan } from "../../slices/plansSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -26,10 +25,6 @@ export const RenamePlanButton: FC = () => {
     if (selectedPlan) {
       dispatch(renamePlan({ planId: selectedPlan.id, newName }));
       dispatch(closeModal(ModalCode.renamePlan));
-      dispatch(setSelectedPlan({
-        ...selectedPlan,
-        name: newName,
-      }));
     }
   };
 

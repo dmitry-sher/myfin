@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { useAppContext } from "../../context/AppContext";
 import { addCategory } from "../../slices/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { Category, Transaction } from "../../types/entities";
@@ -29,6 +30,7 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
   onDeleteTransaction,
 }) => {
   const dispatch = useAppDispatch();
+  const { setSelectedTransaction } = useAppContext();
 
   const categories = useAppSelector((state) => state.categories);
   const dateFieldRef = useRef<HTMLSpanElement>(null);
@@ -88,8 +90,20 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
     }, 50);
   };
 
+  const handleMouseEnter = (): void => {
+    setSelectedTransaction(transaction);
+  };
+
+  const handleMouseLeave = (): void => {
+    setSelectedTransaction(null);
+  };
+
   return (
-    <li className="flex justify-between items-center p-2 border-b flex-col sm:flex-row">
+    <li
+      className="flex justify-between items-center p-2 border-b flex-col sm:flex-row hover:bg-gray-100"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="flex sm:w-3/5 w-full">
         <span className="mr-2">
           <input
@@ -132,8 +146,8 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
           viewer={TransactionViewAmount}
           fieldName="amount"
           className="w-1/4 sm:text-right"
-          transformer={(value: string): number => Number(value)}
-          initialTransform={(value: string): number => Number(value)}
+          transformer={(value: string): number => Number(value) ?? 0}
+          initialTransform={(value: string): number => Number(value) ?? 0}
           viewRef={amountFieldRef}
         />
         <span

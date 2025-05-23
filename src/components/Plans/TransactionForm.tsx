@@ -62,7 +62,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   );
   const selectedOption = categoriesOptions.find(
     (option) => option.value === formState.categoryId
-  );
+  ) || null;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
@@ -92,7 +92,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       const newCategory: Category = {
         id: uuidv4(),
         name: selectedOption.label,
-        color: selectedOption.color
+        color: selectedOption.color,
       };
       categoryId = newCategory.id;
       dispatch(addCategory(newCategory));
@@ -111,7 +111,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       categoryId,
     });
 
-    setFormState({ amount: "", description: "", date: "", categoryId });
+    setFormState({ amount: "", description: "", date: "", categoryId: "" });
   };
 
   const handleCreateOption = (newValue: string): void => {

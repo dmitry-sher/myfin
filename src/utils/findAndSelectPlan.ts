@@ -1,20 +1,19 @@
-import { setSelectedPlan } from "../slices/appStateSlice";
-import { store, useAppDispatch } from "../store";
+import { store } from "../store";
 
 export const findAndSelectPlan = (
-  dispatch: ReturnType<typeof useAppDispatch>,
+  setSelectedPlanId: (arg: string | null) => void,
   planId: string
 ): void => {
   const { plans } = store.getState();
   if (!planId) {
-    dispatch(setSelectedPlan(null));
+    setSelectedPlanId(null);
     window.location.hash = "";
     return;
   }
 
   const selectedPlan = plans.find((plan) => plan.id === planId);
   if (selectedPlan) {
-    dispatch(setSelectedPlan(selectedPlan));
+    setSelectedPlanId(planId);
     window.location.hash = planId;
     return;
   }
