@@ -23,6 +23,13 @@ interface ViewTransactionProps {
   onDeleteTransaction: (id: string) => void;
 }
 
+const numberTransformer = (arg: string): number | string => {
+  if (["-", "0-"].indexOf(arg) !== -1) return "-";
+  if (["+", "0+"].indexOf(arg) !== -1) return "+";
+  const value = Number(arg);
+  return isNaN(value) || !isFinite(value) ? 0 : value;
+};
+
 export const ViewTransaction: FC<ViewTransactionProps> = ({
   transaction,
   balance,
@@ -146,8 +153,8 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
           viewer={TransactionViewAmount}
           fieldName="amount"
           className="w-1/4 sm:text-right"
-          transformer={(value: string): number => Number(value) ?? 0}
-          initialTransform={(value: string): number => Number(value) ?? 0}
+          transformer={numberTransformer}
+          initialTransform={numberTransformer}
           viewRef={amountFieldRef}
         />
         <span

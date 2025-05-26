@@ -30,7 +30,7 @@ export const MonthPieCharts: FC = () => {
     }
     const ret = groupTransactionsByCategories(transactions ?? [], categories);
     const { positiveTotal, negativeTotal } = ret;
-    if (positiveTotal > negativeTotal) {
+    if (Math.abs(positiveTotal) > Math.abs(negativeTotal)) {
       const newCategory: GroupedCategory = {
         id: incomeCategoryKey,
         name: "income",
