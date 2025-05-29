@@ -13,7 +13,7 @@ import { GroupedCategory } from "../../types/entities";
 
 interface CategoryPieChartProps {
   data: GroupedCategory[];
-  title: string;
+  categoryIds?: string[];
 }
 
 const extractLabel = ({
@@ -26,10 +26,15 @@ const extractLabel = ({
 
 export const CategoryPieChart: FC<CategoryPieChartProps> = ({
   data,
+  categoryIds = [],
 }) => {
   const { colorMap } = useCategoryLabelMap();
   const chartData = data
     .filter((group) => group.total !== 0)
+    .filter((group) => {
+      if (categoryIds.length === 0) return true;
+      return categoryIds.includes(group.id);
+    })
     .map((group) => ({
       name: group.name,
       value: Math.abs(group.total),

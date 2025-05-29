@@ -9,7 +9,7 @@ Modal.setAppElement("#root");
 interface ModalComponentProps {
   children: ReactNode;
   onClose?: () => void;
-  title?: string;
+  title?: string | null;
   code: string;
 }
 

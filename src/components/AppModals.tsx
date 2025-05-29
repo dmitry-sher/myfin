@@ -58,16 +58,16 @@ export const AppModals: FC = () => {
 
       <ModalComponent
         code={ModalCode.pieChart}
-        title={`${monthKey} pie charts`}
+        title={null}
       >
         <MonthPieCharts />
       </ModalComponent>
 
-      <ModalComponent code={ModalCode.monthGraphs} title={`${monthKey} graph`}>
+      <ModalComponent code={ModalCode.monthGraphs} title={null}>
         <MonthlyBarChart />
       </ModalComponent>
 
-      <ModalComponent code={ModalCode.totalGraphs} title={"Total graph"}>
+      <ModalComponent code={ModalCode.totalGraphs} title={null}>
         <TotalBarChart />
       </ModalComponent>
     </>

@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 
 import { useAppSelector } from "../../store";
 import { Category, GroupedCategory, Transaction } from "../../types/entities";
@@ -7,6 +7,7 @@ import {
   defaultGroupTransactionsByCategories,
   groupTransactionsByCategories,
 } from "../../utils/groupTransactionsByCategories";
+import { CategoryFilter } from "../Filters/CategoryFilter";
 
 import { CategoryPieChart } from "./SinglePieChart";
 
@@ -21,9 +22,15 @@ const isNoData = (
 
 export const MonthPieCharts: FC = () => {
   const categories = useAppSelector((state): Category[] => state.categories);
-  const transactions = useAppSelector(
-    (state): Transaction[] | undefined => state.modal.totalsData.totalsTransactions
+  const { totalsTransactions: transactions, monthKey } = useAppSelector(
+    (state) => state.modal.totalsData
   );
+  const [categoryIds, setCategoryIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCategoryIds([]);
+  }, [monthKey]);
+
   const { positive, negative } = useMemo(() => {
     if (isNoData(transactions, categories)) {
       return defaultGroupTransactionsByCategories;
@@ -42,15 +49,37 @@ export const MonthPieCharts: FC = () => {
     return ret;
   }, [transactions, categories]);
 
+  const handleCategoriesChange = (
+    category: { value: string }[] | null
+  ): void => {
+    if (!category || category.length === 0) {
+      setCategoryIds([]);
+      return;
+    }
+    setCategoryIds(category.map((c) => c.value));
+  };
+
   if (isNoData(transactions, categories)) {
     return null;
   }
 
   return (
-    <div style={{ width: "750px" }}>
-      <CategoryPieChart data={positive} title="Income" />
-      <CategoryPieChart data={negative} title="Expenses" />
-    </div>
+    <>
+      <div
+        className="flex justify-between border-b pb-3 mb-4"
+        style={{ width: "750px" }}
+      >
+        <h2 className="text-xl font-semibold pt-1">{monthKey} pie charts</h2>
+        <CategoryFilter
+          onChange={handleCategoriesChange}
+          className="w-3/4"
+          useAllDefault
+        />
+      </div>
+      <div style={{ width: "750px" }}>
+        <CategoryPieChart data={positive} categoryIds={categoryIds} />
+        <CategoryPieChart data={negative} categoryIds={categoryIds} />
+      </div>
+    </>
   );
 };
-

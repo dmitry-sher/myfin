@@ -6,6 +6,7 @@ import { Transaction } from "../../types/entities";
 import { ViewPieChartButton } from "../Analytics/ViewPieChartButton";
 import { ViewTotalChartButton } from "../Analytics/ViewTotalChartButton";
 import { ViewTotalsButton } from "../Analytics/ViewTotalsButton";
+import { CategoryFilter } from "../Filters/CategoryFilter";
 
 import { TransactionForm } from "./TransactionForm";
 
@@ -16,10 +17,8 @@ type PlanHeaderProps = {
   ) => void;
 };
 
-export const PlanHeader: FC<PlanHeaderProps> = ({
-  addTransaction,
-}) => {
-  const { selectedPlan } = useAppContext();
+export const PlanHeader: FC<PlanHeaderProps> = ({ addTransaction }) => {
+  const { selectedPlan, setCategoriesFilter } = useAppContext();
   if (!selectedPlan) {
     return null;
   }
@@ -33,17 +32,19 @@ export const PlanHeader: FC<PlanHeaderProps> = ({
       }}
     >
       <div className="flex items-center justify-start mb-4 mt-4">
-        <h2 className="text-xl mr-4">
-          Plan: {selectedPlan.name}
-          <span className="text-green-600 ml-2">
-            (Balance:{" "}
-            {selectedPlan.transactions.reduce((acc, t) => acc + t.amount, 0)})
-          </span>
-        </h2>
-
-        <ViewTotalsButton />
-        <ViewPieChartButton />
-        <ViewTotalChartButton />
+        <div className="flex w-1/2">
+          <h2 className="text-xl mr-4">
+            Plan: {selectedPlan.name}
+            <span className="text-green-600 ml-2">
+              (Balance:{" "}
+              {selectedPlan.transactions.reduce((acc, t) => acc + t.amount, 0)})
+            </span>
+          </h2>
+          <ViewTotalsButton />
+          <ViewPieChartButton />
+          <ViewTotalChartButton />
+        </div>
+        <CategoryFilter className="w-1/2" onChange={setCategoriesFilter} />
       </div>
 
       <TransactionForm

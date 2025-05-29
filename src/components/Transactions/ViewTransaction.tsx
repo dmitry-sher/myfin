@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useRef } from "react";
+import React, { ChangeEvent, FC, useMemo, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { useAppContext } from "../../context/AppContext";
@@ -37,12 +37,15 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
   onDeleteTransaction,
 }) => {
   const dispatch = useAppDispatch();
-  const { setSelectedTransaction } = useAppContext();
+  const { setSelectedTransaction, categoriesFilter } = useAppContext();
 
   const categories = useAppSelector((state) => state.categories);
   const dateFieldRef = useRef<HTMLSpanElement>(null);
   const descriptionFieldRef = useRef<HTMLSpanElement>(null);
   const amountFieldRef = useRef<HTMLSpanElement>(null);
+  const filterCategoryIds = useMemo(() => {
+    return categoriesFilter?.map((category) => category.value) || [];
+  }, [categoriesFilter]);
 
   const { isDone } = transaction;
   const cbxProps: Record<string, unknown> = {
@@ -105,9 +108,20 @@ export const ViewTransaction: FC<ViewTransactionProps> = ({
     setSelectedTransaction(null);
   };
 
+  const classes = [
+    "flex justify-between items-center p-2 border-b flex-col sm:flex-row hover:bg-gray-100",
+  ];
+  if (
+    categoriesFilter &&
+    categoriesFilter.length > 0 &&
+    !filterCategoryIds.includes(transaction.categoryId ?? "")
+  ) {
+    classes.push("hidden");
+  }
+
   return (
     <li
-      className="flex justify-between items-center p-2 border-b flex-col sm:flex-row hover:bg-gray-100"
+      className={classes.join(" ")}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

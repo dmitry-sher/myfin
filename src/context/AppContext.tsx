@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { Plan, Transaction } from "../types/entities";
+import { OptionType, Plan, Transaction } from "../types/entities";
 
 export interface AppContextType {
   selectedPlan: Plan | null | undefined;
@@ -11,6 +11,8 @@ export interface AppContextType {
   setIsHeaderSticky: (isSticky: boolean) => void;
   isFocused: boolean;
   setIsFocused: (isFocused: boolean) => void;
+  categoriesFilter: OptionType[] | null;
+  setCategoriesFilter: (isFocused: OptionType[] | null) => void;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -29,6 +31,10 @@ export const AppContext = createContext<AppContextType>({
   isFocused: true,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setIsFocused: () => {},
+
+  categoriesFilter: [],
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setCategoriesFilter: () => {},
 });
 
 export const useAppContext = (): AppContextType => {

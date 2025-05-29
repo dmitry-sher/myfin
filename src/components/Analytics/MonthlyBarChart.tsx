@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { getDaysInMonth, parse } from "date-fns";
 import {
   Bar,
@@ -18,6 +18,7 @@ import { useCategoryLabelMap } from "../../context/CategoryLabelMapContext";
 import { useAppSelector } from "../../store";
 import { Transaction } from "../../types/entities";
 import { monthKeyFormat } from "../../utils/const";
+import { CategoryFilter } from "../Filters/CategoryFilter";
 
 type ChartItem = {
   day: string;
@@ -33,6 +34,11 @@ export const MonthlyBarChart: FC = () => {
     totalsTransactions: transactions,
     monthKey,
   } = useAppSelector((state) => state.modal.totalsData);
+  const [categoryIds, setCategoryIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCategoryIds([]);
+  }, [monthKey]);
 
   const data = useMemo(() => {
     const grouped: Record<string, Transaction[]> = {};
@@ -46,6 +52,8 @@ export const MonthlyBarChart: FC = () => {
     if (!transactions) return [];
 
     for (const tx of transactions) {
+      if (categoryIds.length && !categoryIds.includes(tx.categoryId ?? ""))
+        continue;
       const day = tx.trueDate.getDate().toString().padStart(2, "0");
       if (!grouped[day]) grouped[day] = [];
       grouped[day].push(tx);
@@ -73,7 +81,7 @@ export const MonthlyBarChart: FC = () => {
     }
 
     return sortedDays;
-  }, [transactions, totalsStartingBalance, monthKey]);
+  }, [transactions, totalsStartingBalance, monthKey, categoryIds]);
 
   const allBars = useMemo(() => {
     if (!transactions) return [];
@@ -85,20 +93,41 @@ export const MonthlyBarChart: FC = () => {
     }));
   }, [transactions, colorMap]);
 
+  const formatter = (value: number, key: string): string[] => {
+    const label = allBars.find((b) => b.key === key)?.label ?? key;
+    return [`${value}`, label];
+  };
+
+  const handleCategoriesChange = (
+    category: { value: string }[] | null
+  ): void => {
+    if (!category || category.length === 0) {
+      setCategoryIds([]);
+      return;
+    }
+    setCategoryIds(category.map((c) => c.value));
+  };
+
   return (
     <>
+      <div
+        className="flex justify-between border-b pb-3 mb-4"
+        style={{ width: "750px" }}
+      >
+        <h2 className="text-xl font-semibold pt-1">{monthKey} graphs</h2>
+        <CategoryFilter
+          onChange={handleCategoriesChange}
+          className="w-3/4"
+          useAllDefault
+        />
+      </div>
       <div className="h-72" style={{ width: "750px" }}>
         <ResponsiveContainer>
           <BarChart data={data} barCategoryGap={4} stackOffset="sign">
             <XAxis dataKey="day" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip
-              formatter={(value: number, key: string): string[] => {
-                const label = allBars.find((b) => b.key === key)?.label ?? key;
-                return [`${value}`, label];
-              }}
-            />
+            <Tooltip formatter={formatter} />
             {allBars.map(({ key, color }) => (
               <Bar
                 key={key}
@@ -128,12 +157,7 @@ export const MonthlyBarChart: FC = () => {
               stroke="#8884d8"
               isAnimationActive={false}
             />
-            <Tooltip
-              formatter={(value: number, key: string): string[] => {
-                const label = allBars.find((b) => b.key === key)?.label ?? key;
-                return [`${value}`, label];
-              }}
-            />
+            <Tooltip formatter={formatter} />
           </LineChart>
         </ResponsiveContainer>
       </div>

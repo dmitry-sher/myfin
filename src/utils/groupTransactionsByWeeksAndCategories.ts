@@ -33,7 +33,8 @@ const defaultReturn: GroupTransactionsByWeekAndCategory = {
 export const groupTransactionsByWeekAndCategory = (
   transactions: Transaction[],
   categoryLabelMap: Record<string, string> = {},
-  categoryColorMap: Record<string, string> = {}
+  categoryColorMap: Record<string, string> = {},
+  categoryIds: string[] = []
 ): GroupTransactionsByWeekAndCategory => {
   if (!transactions.length) return defaultReturn;
 
@@ -54,6 +55,7 @@ export const groupTransactionsByWeekAndCategory = (
   for (const tx of sortedTxs) {
     const weekNumber = getWeek(tx.trueDate, { weekStartsOn: 1 });
     const category = tx.categoryId || "uncategorized";
+    if (categoryIds.length > 0 && !categoryIds.includes(category)) continue;
 
     if (!weeksMap.has(weekNumber)) {
       weeksMap.set(weekNumber, {

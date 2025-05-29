@@ -31,6 +31,8 @@ export const TransactionCategory: FC<TransactionCategoryProps> = ({
   const currentLabel = labelMap[categoryId ?? ""] ?? noCategoryName;
 
   // reload categories options when global categories change
+  // this would lead to losing of any created options in select, but
+  // in single user environment that should not happen
   useEffect(() => {
     const newCategoriesOptions = categories.map(prepareOptions);
     setCategoriesOptions(newCategoriesOptions);

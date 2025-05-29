@@ -7,7 +7,7 @@ import { KeyboardShortcuts } from "./components/KeyboardShortcuts/KeyboardShortc
 import { AppContext } from "./context/AppContext";
 import { CategoryLabelMapProvider } from "./context/CategoryLabelMapContext";
 import { addPlan } from "./slices/plansSlice";
-import { Transaction } from "./types/entities";
+import { OptionType, Transaction } from "./types/entities";
 import { findAndSelectPlan } from "./utils/findAndSelectPlan";
 import { saveStore } from "./utils/saveStore";
 import { store, useAppDispatch, useAppSelector } from "./store";
@@ -16,6 +16,7 @@ export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+  const [categoriesFilter, setCategoriesFilter] = useState<OptionType[] | null>([]);
   const [isHeaderSticky, setIsHeaderSticky] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
@@ -55,6 +56,8 @@ export const App: FC = () => {
           setIsHeaderSticky,
           isFocused,
           setIsFocused,
+          categoriesFilter,
+          setCategoriesFilter,
         }}
       >
         <AppLayout />
