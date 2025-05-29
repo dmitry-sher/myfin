@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import {
   faChevronDown,
   faChevronRight,
@@ -6,6 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addMonths, isBefore, parse } from "date-fns";
 
+import { useAppContext } from "../../context/AppContext";
 import { MonthTotalsContext } from "../../context/MonthTotalsContext";
 import { useMonthTotals } from "../../hooks/useMonthTotals";
 import { Transaction } from "../../types/entities";
@@ -40,6 +41,7 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
     monthBalanceFact,
     transactionsBalances,
   } = useMonthTotals({ monthTransactions, startingRunningBalance });
+  const { categoriesFilter } = useAppContext();
 
   const isAllDone = monthTransactions.reduce(
     (acc, next) => acc && next.isDone,
@@ -56,12 +58,24 @@ export const TransactionMonth: FC<TransactionMonthProps> = ({
   const [opened, setOpened] = useState(!isOldMonth);
 
   const monthRef = useRef<HTMLDivElement | null>(null);
+  const categoryIds = useMemo(() => {
+    if (!categoriesFilter || categoriesFilter.length === 0) return [];
+    return categoriesFilter.map((c) => c.value);
+  }, [categoriesFilter]);
+  const isAllHiddenByCategoriesFilter = useMemo(() => {
+    if (!categoryIds || categoryIds.length === 0) return false;
+    return monthTransactions.every(
+      (transaction) => !categoryIds.includes(transaction.categoryId ?? "")
+    );
+  }, [categoryIds, monthTransactions]);
 
   useEffect(() => {
-    if (isCurrentMonth && monthRef.current) {
+    if (isCurrentMonth && monthRef.current && !isAllHiddenByCategoriesFilter) {
       monthRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [isCurrentMonth]);
+  }, [isCurrentMonth, isAllHiddenByCategoriesFilter]);
+
+  if (isAllHiddenByCategoriesFilter) return null;
 
   const divRef = isCurrentMonth ? monthRef : null;
   const icon = opened ? faChevronDown : faChevronRight;
