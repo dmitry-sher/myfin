@@ -3,11 +3,11 @@ import React, { FC } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { MonthTotalsContext } from "../../context/MonthTotalsContext";
 import { Transaction } from "../../types/entities";
-import { ViewPieChartButton } from "../Analytics/ViewPieChartButton";
-import { ViewTotalChartButton } from "../Analytics/ViewTotalChartButton";
-import { ViewTotalsButton } from "../Analytics/ViewTotalsButton";
 import { CategoryFilter } from "../Filters/CategoryFilter";
-import { ExpandPlanButton } from "../Util/Buttons/ExpandPlanButton";
+import { ExpandPlanButton } from "../IconButton/ExpandPlanButton";
+import { ViewPieChartButton } from "../IconButton/ViewPieChartButton";
+import { ViewTotalChartButton } from "../IconButton/ViewTotalChartButton";
+import { ViewTotalsButton } from "../IconButton/ViewTotalsButton";
 
 import { TransactionForm } from "./TransactionForm";
 

@@ -4,7 +4,7 @@ import Select, { SingleValue } from "react-select";
 import { useAppContext } from "../../context/AppContext";
 import { PlanSelectorContext } from "../../context/PlanSelectorContext";
 import { OptionType, Plan } from "../../types/entities";
-import { ClosePlanSelectorButton } from "../Util/Buttons/ClosePlanSelectorButton";
+import { ClosePlanSelectorButton } from "../IconButton/ClosePlanSelectorButton";
 
 import { AddPlanButton } from "./Buttons/AddPlanButton";
 import { CategoriesEditorButton } from "./Buttons/CategoriesEditorButton";

@@ -1,7 +1,7 @@
 import { RefObject } from "react";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
 import { Transaction } from "./entities";
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface TransactionFieldViewerProps {
   transaction: Transaction;

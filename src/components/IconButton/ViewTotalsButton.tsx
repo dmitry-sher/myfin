@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useMonthTotalsContext } from "../../context/MonthTotalsContext";
 import { openModal, setTotalsData } from "../../slices/modalSlice";
 import { useAppDispatch } from "../../store";
 import { IconButtonProps } from "../../types/uiTypes";
 import { ModalCode } from "../../utils/const";
+
+import { GeneralIconButton } from "./GeneralIconButton";
 
 export const ViewTotalsButton: FC<IconButtonProps> = ({ size }) => {
   const { monthTransactions, monthKey, startingBalance } =
@@ -24,19 +25,11 @@ export const ViewTotalsButton: FC<IconButtonProps> = ({ size }) => {
   };
 
   return (
-    <span className="hidden sm:block">
-      <button
-        className={"text-black py-2 rounded mr-2 mb-2 sm:mb-0"}
-        onClick={handleShowTotals}
-        title="totals"
-      >
-        <div className="sm:hidden">totals</div>
-        <FontAwesomeIcon
-          icon={faEye}
-          className="hidden sm:block"
-          size={size}
-        />
-      </button>
-    </span>
+    <GeneralIconButton
+      onClick={handleShowTotals}
+      title="totals"
+      icon={faEye}
+      size={size}
+    />
   );
 };
