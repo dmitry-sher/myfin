@@ -1,8 +1,8 @@
 import React, { FC, ReactNode } from "react";
 import Modal from "react-modal";
 
-import { closeModal } from "../slices/modalSlice";
-import { useAppDispatch, useAppSelector } from "../store";
+import { closeModal } from "../../slices/modalSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 Modal.setAppElement("#root");
 

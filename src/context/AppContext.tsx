@@ -13,6 +13,8 @@ export interface AppContextType {
   setIsFocused: (isFocused: boolean) => void;
   categoriesFilter: OptionType[] | null;
   setCategoriesFilter: (isFocused: OptionType[] | null) => void;
+  isHeaderExpanded: boolean;
+  setIsHeaderExpanded: (isExpanded: boolean) => void;
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -35,6 +37,10 @@ export const AppContext = createContext<AppContextType>({
   categoriesFilter: [],
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setCategoriesFilter: () => {},
+
+  isHeaderExpanded: true,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setIsHeaderExpanded: () => {},
 });
 
 export const useAppContext = (): AppContextType => {

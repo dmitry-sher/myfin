@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 
-import { TransactionFieldViewerProps } from "./types";
+import { TransactionFieldViewerProps } from "../../types/uiTypes";
 
 export const TransactionViewAmount: FC<TransactionFieldViewerProps> = ({
   transaction,
   onClick,
-  viewRef
+  viewRef,
 }) => {
   return (
     <span

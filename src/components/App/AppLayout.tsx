@@ -1,24 +1,25 @@
 import React, { FC } from "react";
 
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
 import {
   addTransaction,
   deleteTransaction,
   updateTransaction,
-} from "../slices/plansSlice";
-import { useAppDispatch, useAppSelector } from "../store";
-import { Transaction } from "../types/entities";
-import { findAndSelectPlan } from "../utils/findAndSelectPlan";
+} from "../../slices/plansSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { Transaction } from "../../types/entities";
+import { findAndSelectPlan } from "../../utils/findAndSelectPlan";
+import { PlanHeader } from "../Plans/PlanHeader";
+import { PlanSelector } from "../Plans/PlanSelector";
+import { PlanView } from "../Plans/PlanView";
 
-import { PlanHeader } from "./Plans/PlanHeader";
-import { PlanSelector } from "./Plans/PlanSelector";
-import { PlanView } from "./Plans/PlanView";
 import { Header } from "./Header";
 
 export const AppLayout: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
-  const { isHeaderSticky, setSelectedPlanId } = useAppContext();
+  const { isHeaderSticky, setSelectedPlanId, isHeaderExpanded } =
+    useAppContext();
 
   const handleAddTransaction = (
     planId: string,
@@ -47,7 +48,7 @@ export const AppLayout: FC = () => {
     : "p-4 sm:p-6";
 
   const headerClass = isHeaderSticky
-    ? "sticky top-0 z-10 bg-white border-b shadow-sm"
+    ? "sticky top-0 z-10 bg-white border-b shadow-lg"
     : "";
 
   return (
@@ -55,8 +56,12 @@ export const AppLayout: FC = () => {
       <div className="mx-auto bg-white shadow-md rounded-lg print:p-0 print:shadow-none print:m-0">
         <div className={wrapperClass}>
           <div className={`print:hidden ${headerClass}`}>
-            <Header />
-            <PlanSelector plans={plans} onSelectPlan={handleSelectPlan} />
+            {isHeaderExpanded ? (
+              <>
+                <Header />
+                <PlanSelector plans={plans} onSelectPlan={handleSelectPlan} />
+              </>
+            ) : null}
 
             <PlanHeader addTransaction={handleAddTransaction} />
           </div>

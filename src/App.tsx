@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { AppLayout } from "./components/AppLayout";
-import { AppModals } from "./components/AppModals";
+import { AppLayout } from "./components/App/AppLayout";
+import { AppModals } from "./components/App/AppModals";
 import { KeyboardShortcuts } from "./components/KeyboardShortcuts/KeyboardShortcuts";
 import { AppContext } from "./context/AppContext";
 import { CategoryLabelMapProvider } from "./context/CategoryLabelMapContext";
@@ -16,8 +16,11 @@ export const App: FC = () => {
   const dispatch = useAppDispatch();
   const plans = useAppSelector((state) => state.plans);
   const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
-  const [categoriesFilter, setCategoriesFilter] = useState<OptionType[] | null>([]);
+  const [categoriesFilter, setCategoriesFilter] = useState<OptionType[] | null>(
+    []
+  );
   const [isHeaderSticky, setIsHeaderSticky] = useState(true);
+  const [isHeaderExpanded, setIsHeaderExpanded] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
     React.useState<Transaction | null>(null);
@@ -58,6 +61,8 @@ export const App: FC = () => {
           setIsFocused,
           categoriesFilter,
           setCategoriesFilter,
+          isHeaderExpanded,
+          setIsHeaderExpanded,
         }}
       >
         <AppLayout />

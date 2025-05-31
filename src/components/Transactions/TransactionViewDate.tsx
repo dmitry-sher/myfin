@@ -8,10 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppContext } from "../../context/AppContext";
 import { updateTransaction } from "../../slices/plansSlice";
 import { useAppDispatch } from "../../store";
+import { TransactionFieldViewerProps } from "../../types/uiTypes";
 import { printDate } from "../../utils/printDate";
 import { processMouseClickForDate } from "../../utils/processMouseClickForDate";
-
-import { TransactionFieldViewerProps } from "./types";
 
 const helperTitle =
   "Simple click: one day; with Cmd key one week; with Shift key one month";

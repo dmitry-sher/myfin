@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { printAmount } from "../utils/printAmount";
+import { printAmount } from "../../utils/printAmount";
 
 type ViewAmountProps = {
   className?: string;

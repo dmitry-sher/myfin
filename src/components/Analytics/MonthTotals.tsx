@@ -6,7 +6,7 @@ import {
   defaultGroupTransactionsByCategories,
   groupTransactionsByCategories,
 } from "../../utils/groupTransactionsByCategories";
-import { ViewAmount } from "../ViewAmount";
+import { ViewAmount } from "../Util/ViewAmount";
 
 const isNoData = (
   transactions: Transaction[] | undefined,

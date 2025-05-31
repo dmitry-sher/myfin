@@ -2,11 +2,10 @@ import React, { FC } from "react";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { removeCategory, updateColor } from "../slices/categoriesSlice";
-import { useAppDispatch } from "../store";
-import { Category } from "../types/entities";
-
-import { ColorPicker } from "./ColorPicker";
+import { removeCategory, updateColor } from "../../slices/categoriesSlice";
+import { useAppDispatch } from "../../store";
+import { Category } from "../../types/entities";
+import { ColorPicker } from "../Util/ColorPicker";
 
 interface CategoryListProps {
   categories: Category[];

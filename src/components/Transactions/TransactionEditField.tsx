@@ -8,8 +8,7 @@ import React, {
 } from "react";
 
 import { useAppContext } from "../../context/AppContext";
-
-import { TransactionFieldEditorProps } from "./types";
+import { TransactionFieldEditorProps } from "../../types/uiTypes";
 
 export const TransactionEditField: FC<TransactionFieldEditorProps> = ({
   transaction,
