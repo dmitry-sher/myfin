@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { useAppContext } from "../context/AppContext";
+import { useAppContext } from "../../context/AppContext";
 
 export const Header: FC = () => {
   const { isHeaderSticky, setIsHeaderSticky } = useAppContext();
@@ -9,8 +9,13 @@ export const Header: FC = () => {
     setIsHeaderSticky(!isHeaderSticky);
   };
 
+  const headerClass = [
+    "flex items-center justify-between mb-4",
+    isHeaderSticky ? "pt-2" : ""
+  ].join(" ");
+
   return (
-    <div className="flex items-center justify-between mb-4">
+    <div className={headerClass}>
       <h1 className="text-2xl font-bold">MyFin</h1>
       <button
         onClick={handleToggle}

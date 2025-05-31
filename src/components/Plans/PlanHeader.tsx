@@ -7,6 +7,7 @@ import { ViewPieChartButton } from "../Analytics/ViewPieChartButton";
 import { ViewTotalChartButton } from "../Analytics/ViewTotalChartButton";
 import { ViewTotalsButton } from "../Analytics/ViewTotalsButton";
 import { CategoryFilter } from "../Filters/CategoryFilter";
+import { ExpandPlanButton } from "../Util/Buttons/ExpandPlanButton";
 
 import { TransactionForm } from "./TransactionForm";
 
@@ -18,10 +19,24 @@ type PlanHeaderProps = {
 };
 
 export const PlanHeader: FC<PlanHeaderProps> = ({ addTransaction }) => {
-  const { selectedPlan, setCategoriesFilter } = useAppContext();
+  const {
+    selectedPlan,
+    setCategoriesFilter,
+    setIsHeaderExpanded,
+    isHeaderExpanded,
+  } = useAppContext();
   if (!selectedPlan) {
     return null;
   }
+
+  const handlePlanTitleClick = (): void => {
+    setIsHeaderExpanded(!isHeaderExpanded);
+  };
+
+  const wrapperClass = [
+    "flex items-center justify-between mb-4",
+    isHeaderExpanded ? "pt-4" : "pt-2",
+  ].join(" ");
 
   return (
     <MonthTotalsContext.Provider
@@ -31,20 +46,27 @@ export const PlanHeader: FC<PlanHeaderProps> = ({ addTransaction }) => {
         monthKey: "Full plan",
       }}
     >
-      <div className="flex items-center justify-start mb-4 mt-4">
-        <div className="flex w-1/2">
-          <h2 className="text-xl mr-4">
+      <div className={wrapperClass}>
+        <div className="flex w-1/4">
+          <h2
+            className="text-xl mr-4 cursor-pointer"
+            title="Expand plan selector"
+            onClick={handlePlanTitleClick}
+          >
             Plan: {selectedPlan.name}
             <span className="text-green-600 ml-2">
               (Balance:{" "}
               {selectedPlan.transactions.reduce((acc, t) => acc + t.amount, 0)})
             </span>
           </h2>
-          <ViewTotalsButton />
-          <ViewPieChartButton />
-          <ViewTotalChartButton />
         </div>
         <CategoryFilter className="w-1/2" onChange={setCategoriesFilter} />
+        <div className="flex justify-end ml-4 w-1/4">
+          <ViewTotalsButton size="lg" />
+          <ViewPieChartButton size="lg" />
+          <ViewTotalChartButton size="lg" />
+          <ExpandPlanButton size="lg" />
+        </div>
       </div>
 
       <TransactionForm

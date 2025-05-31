@@ -7,7 +7,7 @@ import { closeModal, openModal } from "../../../slices/modalSlice";
 import { renamePlan } from "../../../slices/plansSlice";
 import { useAppDispatch, useAppSelector } from "../../../store";
 import { ModalCode } from "../../../utils/const";
-import { ModalComponent } from "../../ModalComponent";
+import { ModalComponent } from "../../Util/ModalComponent";
 import { RenamePlanForm } from "../RenamePlanForm";
 
 export const RenamePlanButton: FC = () => {

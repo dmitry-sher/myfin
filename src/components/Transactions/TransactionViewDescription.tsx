@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { TransactionFieldViewerProps } from "./types";
+import { TransactionFieldViewerProps } from "../../types/uiTypes";
 
 export const TransactionViewDescription: FC<TransactionFieldViewerProps> = ({
   transaction,

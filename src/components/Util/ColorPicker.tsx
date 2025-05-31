@@ -3,10 +3,10 @@
 import React, { FC, useState } from "react";
 import { ColorChangeHandler, HuePicker } from "react-color";
 
-import { PleasantLightness, PleasantSaturation } from "../utils/const";
+import { PleasantLightness, PleasantSaturation } from "../../utils/const";
 import {
   hslToHex,
-} from "../utils/generatePleasantColor";
+} from "../../utils/generatePleasantColor";
 
 type ColorPickerProps = {
   color: string;

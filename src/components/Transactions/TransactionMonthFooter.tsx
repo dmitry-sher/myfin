@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { ViewMonthGraphsButton } from "../Analytics/ViewMonthGraphsButton";
 import { ViewPieChartButton } from "../Analytics/ViewPieChartButton";
 import { ViewTotalsButton } from "../Analytics/ViewTotalsButton";
-import { ViewAmount } from "../ViewAmount";
+import { ViewAmount } from "../Util/ViewAmount";
 
 interface TransactionMonthFooterProps {
   monthKey: string;

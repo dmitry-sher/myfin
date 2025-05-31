@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMonthTotalsContext } from "../../context/MonthTotalsContext";
 import { openModal, setTotalsData } from "../../slices/modalSlice";
 import { useAppDispatch } from "../../store";
+import { IconButtonProps } from "../../types/uiTypes";
 import { ModalCode } from "../../utils/const";
 
-export const ViewMonthGraphsButton: FC = () => {
+export const ViewMonthGraphsButton: FC<IconButtonProps> = ({ size }) => {
   const dispatch = useAppDispatch();
   const { monthTransactions, monthKey, startingBalance } =
     useMonthTotalsContext();
@@ -30,7 +31,11 @@ export const ViewMonthGraphsButton: FC = () => {
         title="month graph"
       >
         <div className="sm:hidden">month graph</div>
-        <FontAwesomeIcon icon={faChartSimple} className="hidden sm:block" />
+        <FontAwesomeIcon
+          icon={faChartSimple}
+          className="hidden sm:block"
+          size={size}
+        />
       </button>
     </span>
   );

@@ -4,6 +4,7 @@ import Select, { SingleValue } from "react-select";
 import { useAppContext } from "../../context/AppContext";
 import { PlanSelectorContext } from "../../context/PlanSelectorContext";
 import { OptionType, Plan } from "../../types/entities";
+import { ClosePlanSelectorButton } from "../Util/Buttons/ClosePlanSelectorButton";
 
 import { AddPlanButton } from "./Buttons/AddPlanButton";
 import { CategoriesEditorButton } from "./Buttons/CategoriesEditorButton";
@@ -62,7 +63,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
 
   const headerClass = isHeaderSticky
     ? "sticky top-0 z-10 bg-white border-b shadow-sm"
-    : "";
+    : "border-b shadow-sm";
 
   return (
     <div className={headerClass}>
@@ -86,7 +87,7 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
               className="flex-1"
             />
           </div>
-          <div className="w-full sm:w-fit sm:block flex mb-2 sm:mb-0 flex-wrap">
+          <div className="w-full sm:block flex mb-2 sm:mb-0 flex-wrap">
             <AddPlanButton />
             <DuplicatePlanButton />
             <RenamePlanButton />
@@ -96,6 +97,9 @@ export const PlanSelector: FC<PlanSelectorProps> = ({
             <PrintPlanButton />
             <CategoriesEditorButton />
             <SetDefaultPlanButton />
+          </div>
+          <div className="w-full sm:w-1/12 text-right">
+            <ClosePlanSelectorButton size="lg" />
           </div>
         </div>
       </PlanSelectorContext.Provider>

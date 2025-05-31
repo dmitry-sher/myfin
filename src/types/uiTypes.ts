@@ -1,6 +1,7 @@
 import { RefObject } from "react";
 
-import { Transaction } from "../../types/entities";
+import { Transaction } from "./entities";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface TransactionFieldViewerProps {
   transaction: Transaction;
@@ -19,4 +20,8 @@ export interface TransactionFieldEditorProps {
   initialTransform?: (value: string) => string | number;
   className?: string;
   onTab?: () => void;
+}
+
+export interface IconButtonProps {
+  size?: SizeProp;
 }

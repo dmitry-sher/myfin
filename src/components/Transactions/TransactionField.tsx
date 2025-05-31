@@ -1,9 +1,9 @@
 import React, { FC, RefObject, useState } from "react";
 
 import { Transaction } from "../../types/entities";
+import { TransactionFieldViewerProps } from "../../types/uiTypes";
 
 import { TransactionEditField } from "./TransactionEditField";
-import { TransactionFieldViewerProps } from "./types";
 
 interface TransactionFieldProps {
   viewer: FC<TransactionFieldViewerProps>;
