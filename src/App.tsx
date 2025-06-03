@@ -45,6 +45,10 @@ export const App: FC = () => {
         findAndSelectPlan(setSelectedPlanId, newPlanId);
       }, 250);
     }
+
+    if (!selectedPlan) {
+      setIsHeaderExpanded(true);
+    }
   }, [plans, dispatch, selectedPlan]);
 
   return (
