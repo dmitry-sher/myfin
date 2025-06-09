@@ -44,7 +44,7 @@ export const AppLayout: FC = () => {
   };
 
   const wrapperClass = isHeaderSticky
-    ? "overflow-y-auto h-[calc(100vh-25px)] print:overflow-hidden print:h-auto px-4 sm:px-6 "
+    ? "overflow-y-auto h-[calc(100vh-25px)] print:overflow-hidden print:h-auto "
     : "p-4 sm:p-6";
 
   const headerClass = isHeaderSticky
@@ -55,7 +55,7 @@ export const AppLayout: FC = () => {
     <div className="min-h-screen bg-gray-100 p-0 print:p-2">
       <div className="mx-auto bg-white shadow-md rounded-lg print:p-0 print:shadow-none print:m-0">
         <div className={wrapperClass}>
-          <div className={`print:hidden ${headerClass}`}>
+          <div className={`print:hidden px-4 sm:px-6 ${headerClass}`}>
             {isHeaderExpanded ? (
               <>
                 <Header />

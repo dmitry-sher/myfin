@@ -37,7 +37,7 @@ export const PlanView: FC<PlanViewProps> = ({
   let runningBalance = 0;
 
   return (
-    <div>
+    <div className="px-4 sm:px-6">
       <div className="flex flex-col sm:flex-row justify-between font-semibold p-2 border-b mb-6">
         <div className="sm:w-2/5 w-full flex">
           <span className="sm:w-1/2 w-1/5">Date</span>
